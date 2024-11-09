@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './src/pages/Home';
 import Login from './src/pages/Login';
 import Register from './src/pages/Register';
-import { title } from 'process';
+import "./global.css"
 
 export type RootStackParamList = {
   Login: undefined;
@@ -18,7 +18,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Login'>
-        <Stack.Screen name="Login" component={Login} options={{ title: "Hola mundo jeje" }} />
+        <Stack.Screen name="Login" component={Login} options={{ title: "myRestaurant" }} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="Home" component={Home} />
       </Stack.Navigator>

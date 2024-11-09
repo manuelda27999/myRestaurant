@@ -1,117 +1,76 @@
 import { Link, useNavigation } from "@react-navigation/native";
 import { useState } from "react";
-import { View, Text, Alert, TextInput, TouchableOpacity, Button, StyleSheet } from "react-native";
+import { View, Text, TextInput, TouchableOpacity } from "react-native";
 
-import { NativeStackNavigationProp } from "@react-navigation/native-stack"
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../App";
-import { error } from "console";
 import loginUser from "../logic/loginUser";
-import { emitWarning } from "process";
 
-type LoginScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "Login">
-
-
+type LoginScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "Login"
+>;
 
 const Login: React.FC = () => {
-    //Uso de navigation para moverse entre pantallas
-    const navigation = useNavigation<LoginScreenNavigationProp>()
-    //Manejo de estado de usuario y contraseña
-    const [email, setEmail] = useState<string>("")
-    const [password, setPassword] = useState<string>("")
-    const [error, setError] = useState<string | null>(null)
+  const navigation = useNavigation<LoginScreenNavigationProp>();
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
-    const handleLogin = () => {
-        try {
-            loginUser(email, password)
-                .then((user) => {
-                    console.log(user)
-                    navigation.navigate("Home")
-                })
-                .catch((error) => {
-                    alert(error.message)
-                })
-        } catch (Error) {
-            alert(Error)
-        }
+  const handleLogin = () => {
+    try {
+      loginUser(email, password)
+        .then((user) => {
+          console.log(user);
+          navigation.navigate("Home");
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    } catch (Error) {
+      alert(Error);
     }
+  };
 
-    return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Login Screen</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="email"
-                value={email}
-                onChangeText={setEmail}
-                autoCapitalize="none" />
+  return (
+    <View className="flex flex-1 justify-center items-center bg-white p-6">
+      <Text className="text-2xl font-bold text-black mb-6">
+        ¡Bienvenid@ a myRestaurant!
+      </Text>
 
-            <TextInput
-                style={styles.input}
-                placeholder="password"
-                value={password}
-                onChangeText={setPassword}
-                autoCapitalize="none" />
+      <TextInput
+        placeholder="Correo electrónico"
+        placeholderTextColor="rgb(248, 113, 113)"
+        value={email}
+        onChangeText={setEmail}
+        autoCapitalize="none"
+        className="w-full mb-4 p-4 border border-red-500 rounded-lg bg-white shadow-sm focus:outline-none focus:border-red-700"
+      />
 
-            <TouchableOpacity style={styles.button} onPress={handleLogin}>
-                <Text style={styles.buttonText}>Login</Text>
-            </TouchableOpacity>
+      <TextInput
+        placeholder="Contraseña"
+        placeholderTextColor="rgb(248, 113, 113)"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+        autoCapitalize="none"
+        className="w-full mb-6 p-4 border border-red-500 rounded-lg bg-white shadow-sm focus:outline-none focus:border-red-700"
+      />
 
-            <Text>Don't have an account?</Text>
-            <TouchableOpacity style={styles.registerText} onPress={() => navigation.navigate("Register")}>
-                <Text style={styles.registerLink}>Register</Text>
-            </TouchableOpacity>
-        </View>
-    );
-}
+      <TouchableOpacity
+        onPress={handleLogin}
+        className="w-full bg-red-500 py-3 rounded-lg shadow-md active:bg-red-700 hover:scale-105"
+      >
+        <Text className="text-center text-white text-lg font-semibold">
+          Iniciar Sesión
+        </Text>
+      </TouchableOpacity>
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#FAF3E0', // Fondo cálido y acogedor
-    },
-    title: {
-        fontSize: 28,
-        fontWeight: 'bold',
-        color: '#4E342E', // Marrón oscuro, evocando madera
-        marginBottom: 20,
-    },
-    input: {
-        width: '80%',
-        padding: 10,
-        marginVertical: 10,
-        borderWidth: 1,
-        borderColor: '#BDBDBD', // Gris suave para los bordes
-        borderRadius: 8, // Bordes redondeados para un aspecto moderno y acogedor
-        backgroundColor: '#FFF', // Fondo blanco para entradas de texto
-    },
-    errorText: {
-        color: 'red',
-        marginBottom: 10,
-    },
-    button: {
-        width: '80%',
-        backgroundColor: '#8BC34A', // Verde fresco, evocando ingredientes frescos
-        padding: 15,
-        borderRadius: 8,
-        alignItems: 'center',
-        marginVertical: 10,
-    },
-    buttonText: {
-        color: '#FFF',
-        fontWeight: 'bold',
-        fontSize: 16,
-    },
-    registerText: {
-        marginTop: 20,
-        color: '#795548', // Color vino, evocando un ambiente de bar o restaurante
-    },
-    registerLink: {
-        color: '#D32F2F', // Rojo oscuro para resaltar el enlace de registro
-        fontWeight: 'bold',
-        marginTop: 5,
-    }
-});
+      <Text className="mt-4 text-red-600">¿No tienes una cuenta?</Text>
+      <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+        <Text className="mt-2 text-red-800 font-bold">Regístrate aquí</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
 
-export default Login
+export default Login;
