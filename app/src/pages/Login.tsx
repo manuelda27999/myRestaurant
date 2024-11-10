@@ -33,7 +33,7 @@ const Login: React.FC = () => {
 
   return (
     <View className="flex flex-1 justify-center items-center bg-white p-6">
-      <Text className="text-2xl font-bold text-black mb-6">
+      <Text className="text-3xl font-bold text-black mb-6">
         ¡Bienvenid@ a myRestaurant!
       </Text>
 
@@ -43,7 +43,7 @@ const Login: React.FC = () => {
         value={email}
         onChangeText={setEmail}
         autoCapitalize="none"
-        className="w-full mb-4 p-4 border border-red-500 rounded-lg bg-white shadow-sm focus:outline-none focus:border-red-700"
+        className="w-full mb-4 p-4 border-2 border-red-500 rounded-lg bg-white shadow-sm focus:outline-none focus:border-red-700"
       />
 
       <TextInput
@@ -53,7 +53,7 @@ const Login: React.FC = () => {
         onChangeText={setPassword}
         secureTextEntry
         autoCapitalize="none"
-        className="w-full mb-6 p-4 border border-red-500 rounded-lg bg-white shadow-sm focus:outline-none focus:border-red-700"
+        className="w-full mb-4 p-4 border-2 border-red-500 rounded-lg bg-white shadow-sm focus:outline-none focus:border-red-700"
       />
 
       <TouchableOpacity
@@ -67,7 +67,9 @@ const Login: React.FC = () => {
 
       <Text className="mt-4 text-red-600">¿No tienes una cuenta?</Text>
       <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-        <Text className="mt-2 text-red-800 font-bold">Regístrate aquí</Text>
+        <Text className="mt-2 text-red-800 font-bold underline">
+          Regístrate aquí
+        </Text>
       </TouchableOpacity>
     </View>
   );
