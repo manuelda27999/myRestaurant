@@ -45,12 +45,13 @@ public class ApiApplication implements CommandLineRunner {
 	private void apiAplicationTest() {
 		logger.info("*** Zona lanzada con el run ***");
 
+		/*
 		User user = userService.getUserByEmailAndPassword("CarlosJose@gmail.com", "12345");
 		if (user != null) {
 			logger.info(user.toString());
 		} else {
 			System.out.println("null");
 		}
-
+*/
 	}
 }
