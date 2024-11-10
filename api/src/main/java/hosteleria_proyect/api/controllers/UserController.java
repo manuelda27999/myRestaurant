@@ -1,7 +1,7 @@
 package hosteleria_proyect.api.controllers;
 
 import hosteleria_proyect.api.entitys.User;
-import hosteleria_proyect.api.error.MyException;
+import hosteleria_proyect.api.error.CustomException;
 import hosteleria_proyect.api.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +29,7 @@ public class UserController {
     }
 
     @PostMapping("/users/auth")
-    public User getUserByEmailAndPassword(@RequestBody Map<String, Object> requestBody) throws MyException {
+    public User getUserByEmailAndPassword(@RequestBody Map<String, Object> requestBody) throws CustomException {
         String email = (String) requestBody.get("email");
         String password = (String) requestBody.get("password");
 
@@ -44,7 +44,7 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}")
-    public User getUserById(@PathVariable Integer id) throws MyException {
+    public User getUserById(@PathVariable Integer id) throws CustomException {
         User user = userService.getUserById(id);
 
         return user;
@@ -56,7 +56,7 @@ public class UserController {
     }
 
     @DeleteMapping("/users/{id}")
-    public void deleteUser(@PathVariable Integer id) throws MyException {
+    public void deleteUser(@PathVariable Integer id) throws CustomException {
         User user = userService.getUserById(id);
         userService.deleteUser(user);
     }
