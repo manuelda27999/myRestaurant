@@ -16,18 +16,16 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     try {
-      loginUser(email, password)
-        .then((user) => {
-          console.log(user);
-          navigation.navigate("Home");
-        })
-        .catch((error) => {
-          alert(error.message);
-        });
-    } catch (Error) {
-      alert(Error);
+      const user = await loginUser(email, password);
+      if (user) {
+        setEmail("");
+        setPassword("");
+        navigation.navigate("Home");
+      }
+    } catch (error: any) {
+      alert(error.message);
     }
   };
 

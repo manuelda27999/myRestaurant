@@ -1,5 +1,3 @@
-import { Alert } from "react-native";
-
 type User = {
   user_id: number;
   name: string;
@@ -16,26 +14,21 @@ export default async function loginUser(
   email: string,
   password: string
 ): Promise<void | LoginUserResponse> {
-  try {
-    const response = await fetch(
-      "http://192.168.1.133:8080/hosteleria-proyect/users/auth",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      }
-    );
-
+  return fetch("http://192.168.1.133:8080/hosteleria-proyect/users/auth", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  }).then((response) => {
     if (response.status === 200) {
-      const user: User = await response.json();
-      Alert.alert("User authenticated succesfully");
-      return { user };
+      return response.json().then((body) => {
+        const user = body;
+
+        return user;
+      });
     } else {
-      const errorBody = await response.json();
-      const errorMessage = errorBody.error || "Error to authenticate the user";
-      return { error: errorMessage };
+      return response.json().then((body) => {
+        throw new Error(body.message);
+      });
     }
-  } catch (error) {
-    return { error: "An unecpected error ocurred" };
-  }
+  });
 }

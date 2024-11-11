@@ -30,6 +30,9 @@ const Register: React.FC = () => {
     try {
       registerUser(name, email, password)
         .then(() => {
+          setName("");
+          setEmail("");
+          setPassword("");
           navigation.navigate("Login");
         })
         .catch((error) => {
