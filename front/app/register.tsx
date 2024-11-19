@@ -1,27 +1,10 @@
-import {
-  View,
-  Text,
-  TextInput,
-  Button,
-  Alert,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
-
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../App";
+import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import React from "react";
 import { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
-import registerUser from "../logic/registerUser";
-
-type RegisterScreenNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  "Register"
->;
+import { Link, router } from "expo-router";
+import registerUser from "./../logic/registerUser";
 
 const Register: React.FC = () => {
-  const navigation = useNavigation<RegisterScreenNavigationProp>();
-
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -33,7 +16,6 @@ const Register: React.FC = () => {
           setName("");
           setEmail("");
           setPassword("");
-          navigation.navigate("Login");
         })
         .catch((error) => {
           alert(error.message);
@@ -84,11 +66,9 @@ const Register: React.FC = () => {
       </TouchableOpacity>
 
       <Text className="mt-4 text-red-600">Ya tengo una cuenta</Text>
-      <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-        <Text className="mt-2 text-red-800 font-bold underline">
-          Iniciar sesión
-        </Text>
-      </TouchableOpacity>
+      <Link href={"/"} className="mt-2 text-red-800 font-bold underline">
+        Iniciar sesión
+      </Link>
     </View>
   );
 };

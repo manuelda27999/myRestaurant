@@ -14,7 +14,7 @@ export default async function loginUser(
   email: string,
   password: string
 ): Promise<void | LoginUserResponse> {
-  return fetch("http://192.168.1.133:8080/hosteleria-proyect/users/auth", {
+  return fetch("http://192.168.1.128:8080/hosteleria-proyect/users/auth", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
