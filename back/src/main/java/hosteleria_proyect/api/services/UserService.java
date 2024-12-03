@@ -22,16 +22,23 @@ public class UserService implements InterfaceUserService {
     }
 
     @Override
-    public User getUserByEmailAndPassword(String email, String password) throws CustomException {
+    public int getUserIdByEmailAndPassword(String email, String password) throws CustomException {
         User user = userInterface.findByEmail(email).orElse(null);
 
         if (user == null) throw new CustomException(HttpStatus.NOT_FOUND, "User not found");
 
         if (password.equals(user.getPassword())) {
-            return user;
+            return user.getUser_id();
         } else {
             throw  new CustomException(HttpStatus.UNAUTHORIZED,"Invalid password");
         }
+    }
+
+    @Override
+    public String getNameById(Integer user_id) throws CustomException {
+        User user = userInterface.findById(user_id).orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "User not found"));
+
+        return user.getName();
     }
 
     @Override
@@ -42,6 +49,8 @@ public class UserService implements InterfaceUserService {
 
         return user;
     }
+
+
 
     @Override
     public void saveUser(User user) {

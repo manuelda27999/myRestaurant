@@ -66,7 +66,7 @@ const Register: React.FC = () => {
       </TouchableOpacity>
 
       <Text className="mt-4 text-red-600">Ya tengo una cuenta</Text>
-      <Link href={"/"} className="mt-2 text-red-800 font-bold underline">
+      <Link href={"/login"} className="mt-2 text-red-800 font-bold underline">
         Iniciar sesión
       </Link>
     </View>

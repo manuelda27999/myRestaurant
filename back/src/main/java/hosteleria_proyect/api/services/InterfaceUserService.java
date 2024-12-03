@@ -8,7 +8,9 @@ import java.util.List;
 public interface InterfaceUserService {
     public List<User> getUsers();  //Para obtener todos los usuarios
 
-    public User getUserByEmailAndPassword(String email, String password) throws CustomException;
+    public int getUserIdByEmailAndPassword(String email, String password) throws CustomException;
+
+    public String getNameById(Integer user_id) throws CustomException;
 
     public User getUserById(Integer user_id) throws CustomException;  //Para obtener un solo usuario a través de su Id
 

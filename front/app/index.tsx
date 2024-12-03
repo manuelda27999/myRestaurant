@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import React from "react";
 import { Link, router } from "expo-router";
 import loginUser from "../logic/loginUser";
+import storage from "../utilities/encryptedStorage";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
@@ -10,10 +11,14 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const user = await loginUser(email, password);
-      if (user) {
+      const userId = await loginUser(email, password);
+      if (userId && typeof userId === "number") {
         setEmail("");
         setPassword("");
+
+        const userIdString = String(userId);
+        await storage.storeData("user_id", userIdString);
+
         router.push("(home)/tables");
       }
     } catch (error: any) {

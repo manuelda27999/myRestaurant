@@ -6,8 +6,11 @@ import hosteleria_proyect.api.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,18 +32,19 @@ public class UserController {
     }
 
     @PostMapping("/users/auth")
-    public User getUserByEmailAndPassword(@RequestBody Map<String, Object> requestBody) throws CustomException {
-        String email = (String) requestBody.get("email");
-        String password = (String) requestBody.get("password");
+    public ResponseEntity<Object> getUserByEmailAndPassword(@RequestBody Map<String, Object> requestBody) throws CustomException {
+        try {
+            String email = (String) requestBody.get("email");
+            String password = (String) requestBody.get("password");
 
-        System.out.println("Este es el email: " + email);
-        System.out.println("Esta es la contraseña: " + password);
+            int userId = userService.getUserIdByEmailAndPassword(email, password);
+            Map<String, Integer> result = new HashMap<String, Integer>();
+            result.put("userId", userId);
 
-        var user = userService.getUserByEmailAndPassword(email, password);
-
-        System.out.println("Este es el usuario: " + user);
-
-        return user;
+            return ResponseEntity.ok(result);
+        } catch (CustomException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found or bad credentials");
+        }
     }
 
     @GetMapping("/users/{id}")
@@ -48,6 +52,19 @@ public class UserController {
         User user = userService.getUserById(id);
 
         return user;
+    }
+
+    @GetMapping("/users/name/{id}")
+    public ResponseEntity<Object> getNameById(@PathVariable Integer id) throws CustomException {
+        try {
+            String name = userService.getNameById(id);
+            Map<String, String> result = new HashMap<String, String>();
+            result.put("name", name);
+
+            return ResponseEntity.ok(result);
+        } catch (CustomException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Name of user with this id not found");
+        }
     }
 
     @PostMapping("/users")

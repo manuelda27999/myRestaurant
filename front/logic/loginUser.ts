@@ -14,16 +14,18 @@ export default async function loginUser(
   email: string,
   password: string
 ): Promise<void | LoginUserResponse> {
-  return fetch("http://192.168.1.128:8080/hosteleria-proyect/users/auth", {
+  const apiUrl = process.env.EXPO_PUBLIC_API_URL;
+
+  return fetch(`${apiUrl}:8080/hosteleria-proyect/users/auth`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
   }).then((response) => {
     if (response.status === 200) {
       return response.json().then((body) => {
-        const user = body;
+        const userId = body.userId;
 
-        return user;
+        return userId;
       });
     } else {
       return response.json().then((body) => {

@@ -1,14 +1,15 @@
 import { Tabs } from "expo-router";
-import { TouchableOpacity, View } from "react-native";
 import React from "react";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 
 const HomeTabs = () => {
   return (
     <Tabs
+      initialRouteName="tables"
       screenOptions={{
         headerStyle: {
           backgroundColor: "red",
@@ -19,13 +20,6 @@ const HomeTabs = () => {
           fontSize: 22,
         },
         tabBarActiveTintColor: "red",
-        headerRight: () => (
-          <View className="mr-4">
-            <TouchableOpacity>
-              <Ionicons name="settings-sharp" size={28} color="white" />
-            </TouchableOpacity>
-          </View>
-        ),
         tabBarStyle: {
           height: 50,
         },
@@ -64,6 +58,15 @@ const HomeTabs = () => {
           title: "Facturas",
           tabBarIcon: ({ color, size }) => (
             <FontAwesome6 name="file-invoice-dollar" size={24} color="black" />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="(profile)"
+        options={{
+          title: "Perfil",
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome5 name="user-alt" size={24} color="black" />
           ),
         }}
       />

@@ -7,7 +7,9 @@ export default async function registerUser(
   email: string,
   password: string
 ): Promise<boolean | RegisterUserResponse> {
-  return fetch("http://192.168.1.128:8080/hosteleria-proyect/users", {
+  const apiUrl = process.env.EXPO_PUBLIC_API_URL;
+
+  return fetch(`${apiUrl}:8080/hosteleria-proyect/users`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name, email, password }),
