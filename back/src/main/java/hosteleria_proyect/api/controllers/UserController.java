@@ -68,8 +68,23 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public void saveUser(@RequestBody User newOrUpdateUser) {
-        userService.saveUser(newOrUpdateUser);
+    public ResponseEntity<String> saveUser(@RequestBody User newUser) {
+        try {
+            userService.saveUser(newUser);
+            return new ResponseEntity<>("User created successfully", HttpStatus.CREATED);
+        } catch (CustomException exception) {
+            return new ResponseEntity<>(exception.getMessage(), exception.getStatus());
+        }
+    }
+
+    @PostMapping("/users/{id}")
+    public ResponseEntity<String> updateUser(@PathVariable Integer id, @RequestBody User updateUser) {
+        try {
+            userService.updateNameUser(id, updateUser);
+            return new ResponseEntity<>("User updated successfully", HttpStatus.ACCEPTED);
+        } catch (CustomException exception) {
+            return new ResponseEntity<>(exception.getMessage(), exception.getStatus());
+        }
     }
 
     @DeleteMapping("/users/{id}")

@@ -14,7 +14,11 @@ public interface InterfaceUserService {
 
     public User getUserById(Integer user_id) throws CustomException;  //Para obtener un solo usuario a través de su Id
 
-    public void saveUser(User user);  //Para crear y actualizar un usuario, si proporciono el Id se actualiza y si es null se crea
+    public void saveUser(User user);//Para crear un usuario
+
+    public void updateNameUser(Integer user_id, User user);//Para crear actualizar un usuario
+
+    public void updatePasswordUser(Integer user_id, User user);//Para crear actualizar un usuario
 
     public void deleteUser(User user);  //Para eliminar un cliente
 }

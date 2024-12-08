@@ -54,6 +54,36 @@ public class UserService implements InterfaceUserService {
 
     @Override
     public void saveUser(User user) {
+        User findUser = userInterface.findByEmail(user.getEmail()).orElse(null);
+
+        if (findUser == null ) {
+            userInterface.save(user);
+        } else {
+            throw new CustomException(HttpStatus.CONFLICT, "This email is not available");
+        }
+    }
+
+    @Override
+    public void updateNameUser(Integer user_id, User updateUser) {
+        User user = userInterface.findById(user_id).orElse(null);
+
+        if (user == null ) throw new CustomException(HttpStatus.NOT_FOUND, "User not found");
+        if(updateUser.getName() == null) throw new CustomException(HttpStatus.NO_CONTENT, "Name to change not found");
+        if(updateUser.getName().isEmpty()) throw new CustomException(HttpStatus.NO_CONTENT, "Name is empty");
+
+        user.setName(updateUser.getName());
+        userInterface.save(user);
+    }
+
+    @Override
+    public void updatePasswordUser(Integer user_id, User updateUser) {
+        User user = userInterface.findById(user_id).orElse(null);
+
+        if (user == null ) throw new CustomException(HttpStatus.NOT_FOUND, "User not found");
+        if(updateUser.getPassword() == null) throw new CustomException(HttpStatus.NO_CONTENT, "Password to change not found");
+        if(updateUser.getName().isEmpty()) throw new CustomException(HttpStatus.NO_CONTENT, "Name is empty");
+
+        user.setName(updateUser.getName());
         userInterface.save(user);
     }
 
