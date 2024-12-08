@@ -77,13 +77,33 @@ public class UserController {
         }
     }
 
-    @PostMapping("/users/{id}")
-    public ResponseEntity<String> updateUser(@PathVariable Integer id, @RequestBody User updateUser) {
+    @PatchMapping("/users/{id}")
+    public ResponseEntity<Map<String, String>> updateNameUser(@PathVariable Integer id, @RequestBody User updateUser) {
         try {
             userService.updateNameUser(id, updateUser);
-            return new ResponseEntity<>("User updated successfully", HttpStatus.ACCEPTED);
+
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "User update successfully");
+            return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
         } catch (CustomException exception) {
-            return new ResponseEntity<>(exception.getMessage(), exception.getStatus());
+            Map<String, String> response = new HashMap<>();
+            response.put("message", exception.getMessage());
+            return new ResponseEntity<>(response, exception.getStatus());
+        }
+    }
+
+    @PatchMapping("users/{id}/changePassword")
+    public ResponseEntity<Map<String, String>> updatePassword(@PathVariable Integer id, @RequestBody Map<String, String> payload ) {
+        try {
+            userService.updatePasswordUser(id, payload);
+
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Password change successfully");
+            return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+        } catch (CustomException exception) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", exception.getMessage());
+            return new ResponseEntity<>(response, exception.getStatus());
         }
     }
 

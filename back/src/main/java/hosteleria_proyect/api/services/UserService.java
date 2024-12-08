@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserService implements InterfaceUserService {
@@ -51,7 +52,6 @@ public class UserService implements InterfaceUserService {
     }
 
 
-
     @Override
     public void saveUser(User user) {
         User findUser = userInterface.findByEmail(user.getEmail()).orElse(null);
@@ -68,22 +68,33 @@ public class UserService implements InterfaceUserService {
         User user = userInterface.findById(user_id).orElse(null);
 
         if (user == null ) throw new CustomException(HttpStatus.NOT_FOUND, "User not found");
-        if(updateUser.getName() == null) throw new CustomException(HttpStatus.NO_CONTENT, "Name to change not found");
-        if(updateUser.getName().isEmpty()) throw new CustomException(HttpStatus.NO_CONTENT, "Name is empty");
+        if(updateUser.getName() == null) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Name to change not found");
+        if(updateUser.getName().isEmpty()) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Name is empty");
 
         user.setName(updateUser.getName());
         userInterface.save(user);
     }
 
     @Override
-    public void updatePasswordUser(Integer user_id, User updateUser) {
+    public void updatePasswordUser(Integer user_id, Map<String, String> payload) {
+        String lastPassword = payload.get("lastPassword");
+        String newPassword = payload.get("newPassword");
+        String newPasswordRepeat = payload.get("newPasswordRepeat");
+
         User user = userInterface.findById(user_id).orElse(null);
 
         if (user == null ) throw new CustomException(HttpStatus.NOT_FOUND, "User not found");
-        if(updateUser.getPassword() == null) throw new CustomException(HttpStatus.NO_CONTENT, "Password to change not found");
-        if(updateUser.getName().isEmpty()) throw new CustomException(HttpStatus.NO_CONTENT, "Name is empty");
 
-        user.setName(updateUser.getName());
+        if(lastPassword.isEmpty()) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Currect password is empty");
+        if(newPassword.isEmpty()) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "New password is empty");
+        if(newPasswordRepeat.isEmpty()) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "New password is empty");
+
+
+        if (!user.getPassword().equals(lastPassword)) throw new CustomException(HttpStatus.UNAUTHORIZED, "Incorrect current password");
+        if ((!newPassword.equals(newPasswordRepeat))) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "The new password is not the same");
+
+        user.setPassword(newPassword);
+
         userInterface.save(user);
     }
 
