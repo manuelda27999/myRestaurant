@@ -11,7 +11,8 @@ import Toast from "react-native-root-toast";
 const ChangeNameModal = () => {
   const [newName, setNewName] = useState<string>("");
   const [userId, setUserId] = useState<number | null>(null);
-  const userCreateToast = () => {
+
+  const userNameChangeToast = () => {
     Toast.show("Nombre de usuario actualizado con éxito", {
       duration: Toast.durations.SHORT,
       position: Toast.positions.CENTER,
@@ -44,7 +45,7 @@ const ChangeNameModal = () => {
     try {
       changeNameUser(userId, newName)
         .then(() => {
-          userCreateToast();
+          userNameChangeToast();
 
           router.push("profile", { relativeToDirectory: true });
         })
@@ -64,7 +65,7 @@ const ChangeNameModal = () => {
   }, [userId]);
 
   return (
-    <View className="w-full h-full flex flex-col justify-start items-center py-4 px-4">
+    <View className="w-full h-full flex flex-col justify-start items-center py-4 px-8">
       <Text className="font-bold text-2xl text-center ">
         Introuduce tu nuevo nombre de usuario
       </Text>
@@ -80,7 +81,7 @@ const ChangeNameModal = () => {
         onPress={() => {
           handleChangeName();
         }}
-        className="bg-red-600 rounded-lg w-1/2 h-12 flex justify-center"
+        className="bg-red-600 rounded-lg w-1/2 h-12 flex justify-center mt-2"
       >
         <Text className="text-white font-semibold text-3xl text-center">
           Cambiar

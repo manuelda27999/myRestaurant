@@ -9,7 +9,7 @@ export default async function changeNameUser(
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
   return fetch(`${apiUrl}:8080/hosteleria-proyect/users/${userId}`, {
-    method: "POST",
+    method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name }),
   }).then((response) => {
