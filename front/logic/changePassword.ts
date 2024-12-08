@@ -24,7 +24,6 @@ export default async function changePassword(
       return true;
     } else {
       return response.json().then((body) => {
-        console.log(body.message);
         throw new Error(body.message);
       });
     }

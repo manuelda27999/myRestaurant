@@ -27,7 +27,7 @@ const getData = async (key: string) => {
 const deleteData = async (key: string) => {
   try {
     await AsyncStorage.removeItem(key);
-    console.log("Data deleted successfully");
+    //console.log("Data deleted successfully");
   } catch (e) {
     console.error("Error when you try the delete de data with the key: " + key);
   }

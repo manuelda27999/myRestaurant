@@ -1,3 +1,9 @@
+import {
+  validateEmail,
+  validateName,
+  validatePassword,
+} from "../utilities/validators";
+
 interface RegisterUserResponse {
   error?: string;
 }
@@ -8,6 +14,10 @@ export default async function registerUser(
   password: string
 ): Promise<boolean | RegisterUserResponse> {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
+
+  validateName(name);
+  validateEmail(email);
+  validatePassword(password);
 
   return fetch(`${apiUrl}:8080/hosteleria-proyect/users`, {
     method: "POST",

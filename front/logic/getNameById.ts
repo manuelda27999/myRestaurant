@@ -1,3 +1,5 @@
+import { validateId } from "../utilities/validators";
+
 interface GetNameByIdInterface {
   string?: string;
   error?: string;
@@ -7,6 +9,8 @@ export default async function getNameById(
   userId: number
 ): Promise<void | GetNameByIdInterface> {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
+
+  validateId(userId);
 
   return fetch(`${apiUrl}:8080/hosteleria-proyect/users/name/${userId}`, {
     method: "GET",

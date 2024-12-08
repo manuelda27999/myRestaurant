@@ -1,3 +1,5 @@
+import { validateId, validateName } from "../utilities/validators";
+
 interface ChangeNameUserResponse {
   error?: string;
 }
@@ -7,6 +9,9 @@ export default async function changeNameUser(
   name: string
 ): Promise<boolean | ChangeNameUserResponse> {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
+
+  validateId(userId);
+  validateName(name);
 
   return fetch(`${apiUrl}:8080/hosteleria-proyect/users/${userId}`, {
     method: "PATCH",

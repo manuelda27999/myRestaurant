@@ -1,3 +1,5 @@
+import { validateEmail, validatePassword } from "../utilities/validators";
+
 type User = {
   user_id: number;
   name: string;
@@ -15,6 +17,9 @@ export default async function loginUser(
   password: string
 ): Promise<void | LoginUserResponse> {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
+
+  validateEmail(email);
+  validatePassword(password);
 
   return fetch(`${apiUrl}:8080/hosteleria-proyect/users/auth`, {
     method: "POST",
