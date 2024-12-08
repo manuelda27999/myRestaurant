@@ -4,6 +4,8 @@ import { View, Text } from "react-native";
 import "./../global.css";
 import storage from "../utilities/encryptedStorage";
 import { ActivityIndicator } from "react-native";
+import { router } from "expo-router";
+import { RootSiblingParent } from "react-native-root-siblings";
 
 const RootRender = () => {
   const [userId, setUserId] = useState<string | undefined>(undefined);
@@ -12,7 +14,6 @@ const RootRender = () => {
 
   const handleGetId = async () => {
     try {
-      debugger;
       const resultUserId = await storage.getData("user_id");
       setUserId(resultUserId);
       setInitialRouteName(setUserId ? "(home)" : "index");
@@ -27,7 +28,15 @@ const RootRender = () => {
     handleGetId();
   }, []);
 
-  console.log(userId);
+  useEffect(() => {
+    if (!isLoading) {
+      if (userId) {
+        router.replace("(home)/tables");
+      } else {
+        router.replace("/");
+      }
+    }
+  }, [isLoading, userId]);
 
   if (isLoading) {
     return (
@@ -39,20 +48,22 @@ const RootRender = () => {
   }
 
   return (
-    <Stack initialRouteName={initialRouteName}>
-      <Stack.Screen
-        name="index"
-        options={{ title: "Login", headerShown: false }}
-      />
-      <Stack.Screen
-        name="register"
-        options={{ title: "Register", headerShown: false }}
-      />
-      <Stack.Screen
-        name="(home)"
-        options={{ title: "Home", headerShown: false }}
-      />
-    </Stack>
+    <RootSiblingParent>
+      <Stack initialRouteName={initialRouteName}>
+        <Stack.Screen
+          name="index"
+          options={{ title: "Login", headerShown: false }}
+        />
+        <Stack.Screen
+          name="register"
+          options={{ title: "Register", headerShown: false }}
+        />
+        <Stack.Screen
+          name="(home)"
+          options={{ title: "Home", headerShown: false }}
+        />
+      </Stack>
+    </RootSiblingParent>
   );
 };
 

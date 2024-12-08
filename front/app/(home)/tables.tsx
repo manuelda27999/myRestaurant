@@ -27,7 +27,9 @@ const Tables = () => {
 
   useEffect(() => {
     getUserId();
-    handleGetNameById();
+    if (userId !== null) {
+      handleGetNameById();
+    }
   }, [userId]);
 
   return (
