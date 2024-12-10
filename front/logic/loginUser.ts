@@ -28,9 +28,9 @@ export default async function loginUser(
   }).then((response) => {
     if (response.status === 200) {
       return response.json().then((body) => {
-        const userId = body.userId;
+        const token = body.token;
 
-        return userId;
+        return token;
       });
     } else {
       return response.json().then((body) => {

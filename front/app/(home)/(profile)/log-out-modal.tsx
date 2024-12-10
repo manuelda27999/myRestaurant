@@ -6,7 +6,7 @@ import storage from "../../../utilities/encryptedStorage";
 
 const Logout = () => {
   const handleLogout = async () => {
-    await storage.deleteData("user_id");
+    await storage.deleteData("token");
     router.push("/");
   };
 

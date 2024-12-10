@@ -11,13 +11,13 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const userId = await loginUser(email, password);
-      if (userId && typeof userId === "number") {
+      const token = await loginUser(email, password);
+      if (token && typeof token === "string") {
         setEmail("");
         setPassword("");
 
-        const userIdString = String(userId);
-        await storage.storeData("user_id", userIdString);
+        console.log(token);
+        await storage.storeData("token", token);
 
         router.push("(home)/tables");
       }

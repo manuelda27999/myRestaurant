@@ -10,7 +10,7 @@ import Toast from "react-native-root-toast";
 
 const ChangeNameModal = () => {
   const [newName, setNewName] = useState<string>("");
-  const [userId, setUserId] = useState<number | null>(null);
+  const [token, setToken] = useState<string | null>(null);
 
   const userNameChangeToast = () => {
     Toast.show("Nombre de usuario actualizado con éxito", {
@@ -23,15 +23,15 @@ const ChangeNameModal = () => {
     });
   };
 
-  const getUserId = async () => {
-    const userIdResult = await storage.getData("user_id");
+  const getToken = async () => {
+    const tokenResult = await storage.getData("token");
 
-    setUserId(Number(userIdResult));
+    setToken(tokenResult);
   };
 
   const handleGetNameById = async () => {
     try {
-      const result = await getNameById(userId);
+      const result = await getNameById(token);
 
       if (result && typeof result === "string") {
         setNewName(result);
@@ -43,7 +43,7 @@ const ChangeNameModal = () => {
 
   const handleChangeName = () => {
     try {
-      changeNameUser(userId, newName)
+      changeNameUser(token, newName)
         .then(() => {
           userNameChangeToast();
 
@@ -58,11 +58,11 @@ const ChangeNameModal = () => {
   };
 
   useEffect(() => {
-    getUserId();
-    if (userId !== null) {
+    getToken();
+    if (token !== null) {
       handleGetNameById();
     }
-  }, [userId]);
+  }, [token]);
 
   return (
     <View className="w-full h-full flex flex-col justify-start items-center py-4 px-8">

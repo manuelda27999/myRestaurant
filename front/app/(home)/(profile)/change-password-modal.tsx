@@ -7,7 +7,7 @@ import Toast from "react-native-root-toast";
 import changePassword from "../../../logic/changePassword";
 
 const ChangePasswordModal = () => {
-  const [userId, setUserId] = useState<number | null>(null);
+  const [token, setToken] = useState<string | null>(null);
   const [currentPassword, setCurrentPassword] = useState<string>("");
   const [newPassword, setNewPassword] = useState<string>("");
   const [newPasswordRepeat, setNewPasswordRepeat] = useState<string>("");
@@ -23,15 +23,15 @@ const ChangePasswordModal = () => {
     });
   };
 
-  const getUserId = async () => {
-    const userIdResult = await storage.getData("user_id");
+  const getToken = async () => {
+    const tokenResult = await storage.getData("token");
 
-    setUserId(Number(userIdResult));
+    setToken(tokenResult);
   };
 
   const handleChangePassword = async () => {
     try {
-      changePassword(userId, currentPassword, newPassword, newPasswordRepeat)
+      changePassword(token, currentPassword, newPassword, newPasswordRepeat)
         .then(() => {
           passwordChangeToast();
 
@@ -46,8 +46,8 @@ const ChangePasswordModal = () => {
   };
 
   useEffect(() => {
-    getUserId();
-  }, [userId]);
+    getToken();
+  }, [token]);
 
   return (
     <View className="w-full h-full flex flex-col justify-start items-center py-4">
@@ -60,6 +60,7 @@ const ChangePasswordModal = () => {
           value={currentPassword}
           onChangeText={setCurrentPassword}
           autoCapitalize="none"
+          secureTextEntry
           className="w-full my-4 p-4 border-2 border-red-700 rounded-lg bg-white shadow-sm focus:outline-none focus:border-red-800"
         />
         <TextInput
@@ -67,6 +68,7 @@ const ChangePasswordModal = () => {
           value={newPassword}
           onChangeText={setNewPassword}
           autoCapitalize="none"
+          secureTextEntry
           className="w-full my-4 p-4 border-2 border-red-700 rounded-lg bg-white shadow-sm focus:outline-none focus:border-red-800"
         />
         <TextInput
@@ -74,6 +76,7 @@ const ChangePasswordModal = () => {
           value={newPasswordRepeat}
           onChangeText={setNewPasswordRepeat}
           autoCapitalize="none"
+          secureTextEntry
           className="w-full my-4 p-4 border-2 border-red-700 rounded-lg bg-white shadow-sm focus:outline-none focus:border-red-800"
         />
       </View>

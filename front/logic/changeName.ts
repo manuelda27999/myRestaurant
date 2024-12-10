@@ -5,17 +5,20 @@ interface ChangeNameUserResponse {
 }
 
 export default async function changeNameUser(
-  userId: number,
+  token: string,
   name: string
 ): Promise<boolean | ChangeNameUserResponse> {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
-  validateId(userId);
+  validateId(token);
   validateName(name);
 
-  return fetch(`${apiUrl}:8080/hosteleria-proyect/users/${userId}`, {
+  return fetch(`${apiUrl}:8080/hosteleria-proyect/users/`, {
     method: "PATCH",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify({ name }),
   }).then((response) => {
     if (response.status === 202) {

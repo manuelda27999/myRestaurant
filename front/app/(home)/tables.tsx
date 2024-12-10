@@ -5,17 +5,17 @@ import storage from "../../utilities/encryptedStorage";
 
 const Tables = () => {
   const [name, setName] = useState<string>("un desconocido");
-  const [userId, setUserId] = useState<number | null>(null);
+  const [token, setToken] = useState<string | null>(null);
 
-  const getUserId = async () => {
-    const userIdResult = await storage.getData("user_id");
+  const getToken = async () => {
+    const tokenResult = await storage.getData("token");
 
-    setUserId(Number(userIdResult));
+    setToken(tokenResult);
   };
 
   const handleGetNameById = async () => {
     try {
-      const result = await getNameById(userId);
+      const result = await getNameById(token);
 
       if (result && typeof result === "string") {
         setName(result);
@@ -26,11 +26,11 @@ const Tables = () => {
   };
 
   useEffect(() => {
-    getUserId();
-    if (userId !== null) {
+    getToken();
+    if (token !== null) {
       handleGetNameById();
     }
-  }, [userId]);
+  }, [token]);
 
   return (
     <View className="flex flex-1">

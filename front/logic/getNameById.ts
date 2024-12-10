@@ -6,15 +6,19 @@ interface GetNameByIdInterface {
 }
 
 export default async function getNameById(
-  userId: number
+  token: string
 ): Promise<void | GetNameByIdInterface> {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
-  validateId(userId);
+  validateId(token);
+  console.log(token);
 
-  return fetch(`${apiUrl}:8080/hosteleria-proyect/users/name/${userId}`, {
+  return fetch(`${apiUrl}:8080/hosteleria-proyect/users/name/`, {
     method: "GET",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
   }).then((response) => {
     if (response.status === 200) {
       return response.json().then((body) => {

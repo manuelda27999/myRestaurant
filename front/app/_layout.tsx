@@ -8,17 +8,17 @@ import { router } from "expo-router";
 import { RootSiblingParent } from "react-native-root-siblings";
 
 const RootRender = () => {
-  const [userId, setUserId] = useState<string | undefined>(undefined);
+  const [token, setToken] = useState<string | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [initialRouteName, setInitialRouteName] = useState<string>("index");
 
   const handleGetId = async () => {
     try {
-      const resultUserId = await storage.getData("user_id");
-      setUserId(resultUserId);
-      setInitialRouteName(setUserId ? "(home)" : "index");
+      const resultToken = await storage.getData("token");
+      setToken(resultToken);
+      setInitialRouteName(setToken ? "(home)" : "index");
     } catch (error) {
-      console.error("Error retrieving user_id:", error);
+      console.error("Error retrieving token:", error);
     } finally {
       setIsLoading(false);
     }
@@ -30,13 +30,13 @@ const RootRender = () => {
 
   useEffect(() => {
     if (!isLoading) {
-      if (userId) {
+      if (token) {
         router.replace("(home)/tables");
       } else {
         router.replace("/");
       }
     }
-  }, [isLoading, userId]);
+  }, [isLoading, token]);
 
   if (isLoading) {
     return (
