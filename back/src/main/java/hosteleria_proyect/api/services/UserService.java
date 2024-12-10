@@ -89,9 +89,9 @@ public class UserService implements InterfaceUserService {
         if(newPassword.isEmpty()) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "New password is empty");
         if(newPasswordRepeat.isEmpty()) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "New password is empty");
 
-
         if (!user.getPassword().equals(lastPassword)) throw new CustomException(HttpStatus.UNAUTHORIZED, "Incorrect current password");
         if ((!newPassword.equals(newPasswordRepeat))) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "The new password is not the same");
+        if (lastPassword.equals(newPassword)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "The current password and the new password are the same");
 
         user.setPassword(newPassword);
 

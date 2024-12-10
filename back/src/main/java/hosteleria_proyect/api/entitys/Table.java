@@ -17,7 +17,7 @@ public class Table {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer table_id;
-    private Integer table_number;
+    private Integer table_;
     private Boolean available;
     private Integer user_id;
 

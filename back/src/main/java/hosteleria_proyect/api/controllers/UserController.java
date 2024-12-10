@@ -3,6 +3,7 @@ package hosteleria_proyect.api.controllers;
 import hosteleria_proyect.api.entitys.User;
 import hosteleria_proyect.api.error.CustomException;
 import hosteleria_proyect.api.services.UserService;
+import hosteleria_proyect.api.utilities.JWTUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ public class UserController {
     private UserService userService;
 
     //http://192.168.1.129:8080/hosteleria-proyect/users
+    //Pruebas
     @GetMapping("/users")
     public List<User> getUsers() {
         var users = userService.getUsers();
@@ -32,55 +34,75 @@ public class UserController {
     }
 
     @PostMapping("/users/auth")
-    public ResponseEntity<Object> getUserByEmailAndPassword(@RequestBody Map<String, Object> requestBody) throws CustomException {
+    public ResponseEntity<Map<String, String>> getUserByEmailAndPassword(@RequestBody Map<String, Object> requestBody) throws CustomException {
         try {
             String email = (String) requestBody.get("email");
             String password = (String) requestBody.get("password");
 
             int userId = userService.getUserIdByEmailAndPassword(email, password);
-            Map<String, Integer> result = new HashMap<String, Integer>();
-            result.put("userId", userId);
+
+            String token = JWTUtils.generateToken(userId);
+
+            Map<String, String> result = new HashMap<String, String>();
+            result.put("token", token);
 
             return ResponseEntity.ok(result);
-        } catch (CustomException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found or bad credentials");
+        } catch (CustomException exception) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", exception.getMessage());
+            return new ResponseEntity<>(response, exception.getStatus());
         }
     }
 
+    //Pruebas
     @GetMapping("/users/{id}")
-    public User getUserById(@PathVariable Integer id) throws CustomException {
-        User user = userService.getUserById(id);
-
-        return user;
+    public ResponseEntity<?> getUserById(@PathVariable Integer id) throws CustomException {
+        try {
+            User user = userService.getUserById(id);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } catch (CustomException exception) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", exception.getMessage());
+            return new ResponseEntity<>(response, exception.getStatus());
+        }
     }
 
-    @GetMapping("/users/name/{id}")
-    public ResponseEntity<Object> getNameById(@PathVariable Integer id) throws CustomException {
+    @GetMapping("/users/name/")
+    public ResponseEntity<Object> getNameById(@RequestHeader("Authorization") String bearerToken) throws CustomException {
         try {
-            String name = userService.getNameById(id);
+            String token = bearerToken.replace("Bearer ", "");
+            int user_id = JWTUtils.getIdFromToken(token);
+
+            String name = userService.getNameById(user_id);
             Map<String, String> result = new HashMap<String, String>();
             result.put("name", name);
 
             return ResponseEntity.ok(result);
-        } catch (CustomException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Name of user with this id not found");
-        }
+        } catch (CustomException exception) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", exception.getMessage());
+            return new ResponseEntity<>(response, exception.getStatus());        }
     }
 
     @PostMapping("/users")
-    public ResponseEntity<String> saveUser(@RequestBody User newUser) {
+    public ResponseEntity<?> createUser(@RequestBody User newUser) {
         try {
             userService.saveUser(newUser);
             return new ResponseEntity<>("User created successfully", HttpStatus.CREATED);
         } catch (CustomException exception) {
-            return new ResponseEntity<>(exception.getMessage(), exception.getStatus());
+            Map<String, String> response = new HashMap<>();
+            response.put("message", exception.getMessage());
+            return new ResponseEntity<>(response, exception.getStatus());
         }
     }
 
-    @PatchMapping("/users/{id}")
-    public ResponseEntity<Map<String, String>> updateNameUser(@PathVariable Integer id, @RequestBody User updateUser) {
+    @PatchMapping("/users/")
+    public ResponseEntity<Map<String, String>> updateNameUser(@RequestHeader("Authorization") String bearerToken, @RequestBody User updateUser) {
         try {
-            userService.updateNameUser(id, updateUser);
+            String token = bearerToken.replace("Bearer ", "");
+            int user_id = JWTUtils.getIdFromToken(token);
+
+            userService.updateNameUser(user_id, updateUser);
 
             Map<String, String> response = new HashMap<>();
             response.put("message", "User update successfully");
@@ -92,11 +114,13 @@ public class UserController {
         }
     }
 
-    @PatchMapping("users/{id}/changePassword")
-    public ResponseEntity<Map<String, String>> updatePassword(@PathVariable Integer id, @RequestBody Map<String, String> payload ) {
+    @PatchMapping("users/changePassword")
+    public ResponseEntity<Map<String, String>> updatePassword(@RequestHeader("Authorization") String bearerToken, @RequestBody Map<String, String> payload ) {
         try {
-            userService.updatePasswordUser(id, payload);
+            String token = bearerToken.replace("Bearer ", "");
+            int user_id = JWTUtils.getIdFromToken(token);
 
+            userService.updatePasswordUser(user_id, payload);
             Map<String, String> response = new HashMap<>();
             response.put("message", "Password change successfully");
             return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
@@ -107,6 +131,7 @@ public class UserController {
         }
     }
 
+    //Pruebas
     @DeleteMapping("/users/{id}")
     public void deleteUser(@PathVariable Integer id) throws CustomException {
         User user = userService.getUserById(id);
