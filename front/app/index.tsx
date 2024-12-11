@@ -16,7 +16,6 @@ const Login = () => {
         setEmail("");
         setPassword("");
 
-        console.log(token);
         await storage.storeData("token", token);
 
         router.push("(home)/tables");

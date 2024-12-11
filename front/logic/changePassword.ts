@@ -10,7 +10,7 @@ export default async function changePassword(
 ): Promise<boolean | ChangePasswordResponse> {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
-  return fetch(`${apiUrl}:8080/hosteleria-proyect/users/changePassword`, {
+  return fetch(`${apiUrl}/users/changePassword`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",

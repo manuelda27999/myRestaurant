@@ -11,9 +11,8 @@ export default async function getNameById(
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
   validateId(token);
-  console.log(token);
 
-  return fetch(`${apiUrl}:8080/hosteleria-proyect/users/name/`, {
+  return fetch(`${apiUrl}/users/name/`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

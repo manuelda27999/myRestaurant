@@ -13,7 +13,7 @@ export default async function changeNameUser(
   validateId(token);
   validateName(name);
 
-  return fetch(`${apiUrl}:8080/hosteleria-proyect/users/`, {
+  return fetch(`${apiUrl}/users/`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",

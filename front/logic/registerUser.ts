@@ -19,7 +19,7 @@ export default async function registerUser(
   validateEmail(email);
   validatePassword(password);
 
-  return fetch(`${apiUrl}:8080/hosteleria-proyect/users`, {
+  return fetch(`${apiUrl}/users`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name, email, password }),
