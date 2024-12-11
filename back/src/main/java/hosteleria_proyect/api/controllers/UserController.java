@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("hosteleria-proyect") //Establece parte de la ruta para hacer las peticiones -> Quedaría de la siguiente forma: http://localhost:8080/hosteleria-proyect/...
+@RequestMapping("myRestaurant") //Establece parte de la ruta para hacer las peticiones -> Quedaría de la siguiente forma: http://localhost:8080/hosteleria-proyect/...
 @CrossOrigin(value = {"*"}) //Notación para hacer peticiones desde el front-end, puerto 3000
 public class UserController {
 

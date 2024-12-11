@@ -1,7 +1,6 @@
 package hosteleria_proyect.api;
 
-import hosteleria_proyect.api.entitys.Invoice;
-import hosteleria_proyect.api.entitys.User;
+
 import hosteleria_proyect.api.services.InterfaceUserService;
 import hosteleria_proyect.api.services.InvoiceService;
 import hosteleria_proyect.api.services.UserService;
@@ -12,7 +11,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.List;
 
 @SpringBootApplication
 public class ApiApplication implements CommandLineRunner {
