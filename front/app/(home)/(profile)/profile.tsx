@@ -8,7 +8,6 @@ const Profile = () => {
   const [name, setName] = useState<string>("");
   const [token, setToken] = useState<string | null>(null);
 
-  debugger;
   const getToken = async () => {
     const tokenResult = await storage.getData("token");
 
