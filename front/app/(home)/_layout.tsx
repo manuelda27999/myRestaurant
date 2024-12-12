@@ -44,20 +44,20 @@ const HomeTabs = () => {
         }}
       />
       <Tabs.Screen
-        name="products"
-        options={{
-          title: "Productos",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="restaurant" size={24} color="black" />
-          ),
-        }}
-      />
-      <Tabs.Screen
         name="invoices"
         options={{
           title: "Facturas",
           tabBarIcon: ({ color, size }) => (
             <FontAwesome6 name="file-invoice-dollar" size={24} color="black" />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="products"
+        options={{
+          title: "Productos",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="restaurant" size={24} color="black" />
           ),
         }}
       />

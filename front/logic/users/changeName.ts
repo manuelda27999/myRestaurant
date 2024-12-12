@@ -1,4 +1,4 @@
-import { validateId, validateName } from "../utilities/validators";
+import { validateId, validateName } from "../../utilities/validators";
 
 interface ChangeNameUserResponse {
   error?: string;

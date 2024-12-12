@@ -2,7 +2,7 @@ import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import React from "react";
 import { useState } from "react";
 import { Link, router } from "expo-router";
-import registerUser from "./../logic/registerUser";
+import registerUser from "./../logic/users/registerUser";
 
 const Register: React.FC = () => {
   const [name, setName] = useState<string>("");

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import React from "react";
 import { Link, router } from "expo-router";
-import loginUser from "../logic/loginUser";
+import loginUser from "../logic/users/loginUser";
 import storage from "../utilities/encryptedStorage";
 
 const Login = () => {

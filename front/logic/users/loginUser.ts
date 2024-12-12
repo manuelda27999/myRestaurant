@@ -1,4 +1,4 @@
-import { validateEmail, validatePassword } from "../utilities/validators";
+import { validateEmail, validatePassword } from "../../utilities/validators";
 
 type User = {
   user_id: number;

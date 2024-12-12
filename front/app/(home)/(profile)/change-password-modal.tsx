@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { router } from "expo-router";
 import storage from "../../../utilities/encryptedStorage";
 import Toast from "react-native-root-toast";
-import changePassword from "../../../logic/changePassword";
+import changePassword from "../../../logic/users/changePassword";
 
 const ChangePasswordModal = () => {
   const [token, setToken] = useState<string | null>(null);

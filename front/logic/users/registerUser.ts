@@ -2,7 +2,7 @@ import {
   validateEmail,
   validateName,
   validatePassword,
-} from "../utilities/validators";
+} from "../../utilities/validators";
 
 interface RegisterUserResponse {
   error?: string;

@@ -1,7 +1,7 @@
 import { Pressable, Text, View } from "react-native";
 import React, { useState, useEffect } from "react";
 import storage from "../../../utilities/encryptedStorage";
-import getNameById from "../../../logic/getNameById";
+import getNameById from "../../../logic/users/getNameById";
 import { router } from "expo-router";
 
 const Profile = () => {

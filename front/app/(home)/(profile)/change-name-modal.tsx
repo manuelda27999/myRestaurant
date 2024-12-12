@@ -3,9 +3,9 @@ import React, { useState, useEffect } from "react";
 import { Pressable } from "react-native";
 import { router, Link } from "expo-router";
 import storage from "../../../utilities/encryptedStorage";
-import getNameById from "../../../logic/getNameById";
+import getNameById from "../../../logic/users/getNameById";
 import { TextInput } from "react-native";
-import changeNameUser from "../../../logic/changeName";
+import changeNameUser from "../../../logic/users/changeName";
 import Toast from "react-native-root-toast";
 
 const ChangeNameModal = () => {

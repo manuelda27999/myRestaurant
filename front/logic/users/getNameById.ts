@@ -1,33 +1,29 @@
-import { validateId } from "../utilities/validators";
+import { validateId } from "../../utilities/validators";
 
-type Table = {
-  table_id: number;
-  table_name: string;
-  available: boolean;
-};
-
-interface GetTables {
-  tables: Array<Table>;
+interface GetNameByIdInterface {
+  string?: string;
   error?: string;
 }
 
-export default async function getTables(
+export default async function getNameById(
   token: string
-): Promise<Array<Table> | null> {
+): Promise<void | GetNameByIdInterface> {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
   validateId(token);
 
-  return fetch(`${apiUrl}/tables`, {
+  return fetch(`${apiUrl}/users/name/`, {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
   }).then((response) => {
     if (response.status === 200) {
       return response.json().then((body) => {
-        return body;
+        const name = body.name;
+
+        return name;
       });
     } else {
       return response.json().then((body) => {

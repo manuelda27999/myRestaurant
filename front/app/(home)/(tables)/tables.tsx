@@ -1,9 +1,11 @@
 import { View, Text, Pressable } from "react-native";
 import React, { useEffect, useState } from "react";
-import getNameById from "../../../logic/getNameById";
+import getNameById from "../../../logic/users/getNameById";
 import storage from "../../../utilities/encryptedStorage";
-import getTables from "../../../logic/getTables";
+import getTables from "../../../logic/tables/getTables";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import { router } from "expo-router";
 
 type Table = {
   table_id: number;
@@ -64,23 +66,33 @@ const Tables = () => {
             className="border-b-2 border-solid px-4 py-1 flex flex-row w-full"
           >
             <View className="flex flex-col w-2/6">
-              <Text className="text-lg">{table.table_name}</Text>
+              <Text className="text-lg font-bold">{table.table_name}</Text>
               <Text className="text-lg">
-                {table.available ? "Vacía" : "Ocupada"}
+                {table.available ? "Libre" : "Ocupada"}
               </Text>
             </View>
-            <View className="flex flex-row flex-1 h-full justify-end items-center gap-5">
+            <View className="flex flex-row flex-1 h-full justify-end items-center gap-8">
               <Pressable>
-                <MaterialIcons name="edit" size={28} color="black" />{" "}
+                <MaterialIcons name="edit-note" size={44} color="black" />{" "}
               </Pressable>
               <Pressable>
-                <MaterialIcons name="delete" size={28} color="black" />
+                <FontAwesome6
+                  name="file-invoice-dollar"
+                  size={28}
+                  color="black"
+                />{" "}
+              </Pressable>
+              <Pressable>
+                <MaterialIcons name="edit" size={32} color="black" />{" "}
               </Pressable>
             </View>
           </View>
         ))}
       </View>
-      <Pressable className="bg-red-600 w-2/4 my-4 py-3 rounded-2xl">
+      <Pressable
+        className="bg-red-600 w-2/4 my-4 py-3 rounded-2xl"
+        onPress={() => router.push("new-table-modal")}
+      >
         <Text className="text-center text-white text-xl font-extrabold">
           Nueva mesa
         </Text>
