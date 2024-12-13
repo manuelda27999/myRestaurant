@@ -82,7 +82,14 @@ const Tables = () => {
                   color="black"
                 />{" "}
               </Pressable>
-              <Pressable>
+              <Pressable
+                onPress={() =>
+                  router.push({
+                    pathname: "edit-table-modal",
+                    params: { table_id_prop: table.table_id },
+                  })
+                }
+              >
                 <MaterialIcons name="edit" size={32} color="black" />{" "}
               </Pressable>
             </View>

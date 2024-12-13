@@ -1,30 +1,22 @@
 import { validateId } from "../../utilities/validators";
 
-type Table = {
-  table_id: number;
-  table_name: string;
-  available: boolean;
-  user_id: null;
-};
-
-export default async function getTables(
+export default async function deleteTable(
+  table_id: number,
   token: string
-): Promise<Array<Table> | null> {
+): Promise<boolean | string> {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
   validateId(token);
 
-  return fetch(`${apiUrl}/tables`, {
-    method: "GET",
+  return fetch(`${apiUrl}/tables/${table_id}`, {
+    method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
   }).then((response) => {
-    if (response.status === 200) {
-      return response.json().then((body) => {
-        return body;
-      });
+    if (response.status === 204) {
+      return true;
     } else {
       return response.json().then((body) => {
         throw new Error(body.message);

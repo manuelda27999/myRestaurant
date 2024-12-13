@@ -7,14 +7,15 @@ type Table = {
   user_id: null;
 };
 
-export default async function getTables(
+export default async function getTable(
+  table_id: number,
   token: string
-): Promise<Array<Table> | null> {
+): Promise<Table | string> {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
   validateId(token);
 
-  return fetch(`${apiUrl}/tables`, {
+  return fetch(`${apiUrl}/tables/${table_id}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,

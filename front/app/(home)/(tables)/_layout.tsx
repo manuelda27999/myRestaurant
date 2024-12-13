@@ -9,6 +9,10 @@ const Layout = () => {
         name="new-table-modal"
         options={{ presentation: "modal", title: "Nueva mesa" }}
       />
+      <Stack.Screen
+        name="edit-table-modal"
+        options={{ presentation: "modal", title: "Editar mesa" }}
+      />
     </Stack>
   );
 };
