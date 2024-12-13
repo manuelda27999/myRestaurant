@@ -14,7 +14,7 @@ public class JWTUtils {
         return Jwts.builder()
                 .setSubject(userId_string)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 86400000))
+                //.setExpiration(new Date(System.currentTimeMillis() + 86400000)) //Recomendable por seguridad pero para las pruebas es un coñazo
                 .signWith(SignatureAlgorithm.HS512, dotnev.get("JWT_SECRET_KEY"))
                 .compact();
     }

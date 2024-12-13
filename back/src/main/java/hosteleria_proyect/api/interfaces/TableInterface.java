@@ -14,6 +14,6 @@ public interface TableInterface extends JpaRepository<Table, Integer> {
     @Query(value = "SELECT * FROM tables WHERE user_id = ?1", nativeQuery = true)
     List<Table> findAllByUser_id(Integer user_id);
 
-    @Query(value = "SELECT * FROM tables WHERE table_name = ?1", nativeQuery = true)
-    Optional<Table> findByTable_name(String table_name);
+    @Query(value = "SELECT * FROM tables WHERE table_name = ?1 AND user_id = ?2", nativeQuery = true)
+    Optional<Table> findByTable_name(String table_name, Integer user_id);
 }

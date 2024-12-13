@@ -1,11 +1,9 @@
 package hosteleria_proyect.api.controllers;
 
-import hosteleria_proyect.api.entitys.Table;
+import hosteleria_proyect.api.entitys.CategoryProduct;
 import hosteleria_proyect.api.error.CustomException;
-import hosteleria_proyect.api.services.TableService;
+import hosteleria_proyect.api.services.CategoryProductService;
 import hosteleria_proyect.api.utilities.JWTUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,19 +16,19 @@ import java.util.Map;
 @RestController
 @RequestMapping("myRestaurant")
 @CrossOrigin(value = {"*"})
-public class TableController {
+public class CategoryProductController {
 
     @Autowired
-    private TableService tableService;
+    private CategoryProductService categoryProductService;
 
-    @GetMapping("/tables")
-    public ResponseEntity<?> getTables(@RequestHeader("Authorization") String bearerToken) {
+    @GetMapping("/categoryProduct")
+    public ResponseEntity<?> getCategories(@RequestHeader("Authorization") String bearerToken) {
         try {
             String token = bearerToken.replace("Bearer ", "");
             int user_id = JWTUtils.getIdFromToken(token);
 
-            List<Table> tables = tableService.getTables(user_id);
-            return ResponseEntity.ok(tables);
+            List<CategoryProduct> categories = categoryProductService.getCategories(user_id);
+            return ResponseEntity.ok(categories);
         } catch (CustomException exception) {
             Map<String, String> response = new HashMap<>();
             response.put("message", exception.getMessage());
@@ -38,14 +36,14 @@ public class TableController {
         }
     }
 
-    @GetMapping("/tables/{table_id}")
-    public ResponseEntity<?> getTableById(@PathVariable Integer table_id, @RequestHeader("Authorization") String bearerToken) {
+    @GetMapping("/categoryProduct/{category_id}")
+    public ResponseEntity<?> getCategory(@PathVariable Integer category_id, @RequestHeader("Authorization") String bearerToken) {
         try {
             String token = bearerToken.replace("Bearer ", "");
             int user_id = JWTUtils.getIdFromToken(token);
 
-            Table table = tableService.getTableById(table_id, user_id);
-            return ResponseEntity.ok(table);
+            CategoryProduct category = categoryProductService.getCategory(user_id, category_id);
+            return ResponseEntity.ok(category);
         } catch (CustomException exception) {
             Map<String, String> response = new HashMap<>();
             response.put("message", exception.getMessage());
@@ -53,14 +51,14 @@ public class TableController {
         }
     }
 
-    @PostMapping("/tables")
-    public ResponseEntity<?> createTable(@RequestBody Table table, @RequestHeader("Authorization") String bearerToken) {
+    @PostMapping("/categoryProduct/")
+    public ResponseEntity<?> createCategory(@RequestHeader("Authorization") String bearerToken, @RequestBody CategoryProduct category) {
         try {
             String token = bearerToken.replace("Bearer ", "");
             int user_id = JWTUtils.getIdFromToken(token);
 
-            tableService.createTable(table, user_id);
-            return new ResponseEntity<>("Mesa creada con éxito", HttpStatus.CREATED);
+            categoryProductService.createCategory(user_id, category);
+            return new ResponseEntity<>("Categoría creada con éxito", HttpStatus.CREATED);
         } catch (CustomException exception) {
             Map<String, String> response = new HashMap<>();
             response.put("message", exception.getMessage());
@@ -68,14 +66,14 @@ public class TableController {
         }
     }
 
-    @PatchMapping("/tables/{table_id}")
-    public ResponseEntity<?> editTable(@RequestBody Table table, @RequestHeader("Authorization") String bearerToken, @PathVariable Integer table_id) {
+    @PatchMapping("/categoryProduct/{category_id}")
+    public ResponseEntity<?> editCategory(@PathVariable Integer category_id,@RequestHeader("Authorization") String bearerToken, @RequestBody CategoryProduct category) {
         try {
             String token = bearerToken.replace("Bearer ", "");
             int user_id = JWTUtils.getIdFromToken(token);
 
-            tableService.editTable(table, table_id, user_id);
-            return new ResponseEntity<>("Mesa actualizada con éxito", HttpStatus.NO_CONTENT);
+            categoryProductService.editCategory(user_id, category_id, category);
+            return new ResponseEntity<>("Categoría editada con éxito", HttpStatus.NO_CONTENT);
         } catch (CustomException exception) {
             Map<String, String> response = new HashMap<>();
             response.put("message", exception.getMessage());
@@ -83,14 +81,14 @@ public class TableController {
         }
     }
 
-    @DeleteMapping("/tables/{table_id}")
-    public ResponseEntity<?> deleteTable(@PathVariable Integer table_id, @RequestHeader("Authorization") String bearerToken) {
+    @DeleteMapping("/categoryProduct/{category_id}")
+    public ResponseEntity<?> deleteTable(@PathVariable Integer category_id, @RequestHeader("Authorization") String bearerToken) {
         try {
             String token = bearerToken.replace("Bearer ", "");
             int user_id = JWTUtils.getIdFromToken(token);
 
-            tableService.deleteTable(table_id, user_id);
-            return new ResponseEntity<>("Mesa eliminada", HttpStatus.NO_CONTENT);
+            categoryProductService.deleteCategory(user_id, category_id);
+            return new ResponseEntity<>("Categoría eliminada", HttpStatus.NO_CONTENT);
         } catch (CustomException exception) {
             Map<String, String> response = new HashMap<>();
             response.put("message", exception.getMessage());

@@ -40,7 +40,7 @@ public class TableService implements InterfaceTableService {
 
     @Override
     public void createTable(Table table, Integer user_id) {
-        Table repeatTable = tableInterface.findByTable_name(table.getTable_name()).orElse(null);
+        Table repeatTable = tableInterface.findByTable_name(table.getTable_name(), user_id).orElse(null);
 
         if (repeatTable != null) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Este nombre de mesa ya está siendo utilizado");
 
@@ -51,8 +51,10 @@ public class TableService implements InterfaceTableService {
     @Override
     public void editTable(Table table, Integer table_id, Integer user_id) {
         Table tableToEdit = tableInterface.findById(table_id).orElse(null);
+        Table repeatedTable = tableInterface.findByTable_name(table.getTable_name(), user_id).orElse(null);
 
         if (tableToEdit == null) throw new CustomException(HttpStatus.NOT_FOUND, "Mesa no encontrada");
+        if (repeatedTable != null) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Este nombre ya está siendo utilizado en otra tabla");
         if (!tableToEdit.getUser_id().equals(user_id)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Esta mesa no pertenece a este usuario");
 
         tableToEdit.setTable_name(table.getTable_name());
