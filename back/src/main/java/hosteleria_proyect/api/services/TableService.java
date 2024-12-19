@@ -54,7 +54,7 @@ public class TableService implements InterfaceTableService {
         Table repeatedTable = tableInterface.findByTable_name(table.getTable_name(), user_id).orElse(null);
 
         if (tableToEdit == null) throw new CustomException(HttpStatus.NOT_FOUND, "Mesa no encontrada");
-        if (repeatedTable != null) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Este nombre ya está siendo utilizado en otra tabla");
+        if (repeatedTable != null && !repeatedTable.getTable_id().equals(table_id)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Este nombre ya está siendo utilizado en otra mesa");
         if (!tableToEdit.getUser_id().equals(user_id)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Esta mesa no pertenece a este usuario");
 
         tableToEdit.setTable_name(table.getTable_name());

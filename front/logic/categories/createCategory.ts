@@ -1,22 +1,21 @@
 import { validateId, validateName } from "../../utilities/validators";
 
-export default async function createTable(
-  table_name: string,
-  available: boolean,
+export default async function createCategory(
+  category_name: string,
   token: string
 ): Promise<boolean> {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
   validateId(token);
-  validateName(table_name);
+  validateName(category_name);
 
-  return fetch(`${apiUrl}/tables`, {
+  return fetch(`${apiUrl}/categoryProduct/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ table_name, available }),
+    body: JSON.stringify({ category_name }),
   }).then((response) => {
     if (response.status === 201) {
       return true;

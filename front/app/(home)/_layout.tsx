@@ -9,7 +9,7 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 const HomeTabs = () => {
   return (
     <Tabs
-      initialRouteName="(tables)"
+      initialRouteName="(products)"
       screenOptions={{
         headerStyle: {
           backgroundColor: "red",
@@ -53,7 +53,7 @@ const HomeTabs = () => {
         }}
       />
       <Tabs.Screen
-        name="products"
+        name="(products)"
         options={{
           title: "Productos",
           tabBarIcon: ({ color, size }) => (

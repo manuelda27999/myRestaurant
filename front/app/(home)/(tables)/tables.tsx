@@ -73,14 +73,14 @@ const Tables = () => {
             </View>
             <View className="flex flex-row flex-1 h-full justify-end items-center gap-8">
               <Pressable>
-                <MaterialIcons name="edit-note" size={44} color="black" />{" "}
+                <MaterialIcons name="edit-note" size={44} color="black" />
               </Pressable>
               <Pressable>
                 <FontAwesome6
                   name="file-invoice-dollar"
                   size={28}
                   color="black"
-                />{" "}
+                />
               </Pressable>
               <Pressable
                 onPress={() =>
@@ -90,7 +90,7 @@ const Tables = () => {
                   })
                 }
               >
-                <MaterialIcons name="edit" size={32} color="black" />{" "}
+                <MaterialIcons name="edit" size={32} color="black" />
               </Pressable>
             </View>
           </View>
@@ -98,7 +98,7 @@ const Tables = () => {
       </View>
       <Pressable
         className="bg-red-600 w-2/4 my-4 py-3 rounded-2xl"
-        onPress={() => router.push("new-table-modal")}
+        onPress={() => router.push("(tables)/new-table-modal")}
       >
         <Text className="text-center text-white text-xl font-extrabold">
           Nueva mesa
