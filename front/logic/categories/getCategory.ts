@@ -1,3 +1,5 @@
+//ESTO NO SE ESTÁ UTILIZANDO
+
 import { validateId } from "../../utilities/validators";
 
 type Category = {
@@ -6,14 +8,15 @@ type Category = {
   user_id: null;
 };
 
-export default async function getCategories(
-  token: string
-): Promise<Array<Category>> {
+export default async function getCategory(
+  token: string,
+  categoryId: string
+): Promise<Category> {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
   validateId(token);
 
-  return fetch(`${apiUrl}/categoryProduct`, {
+  return fetch(`${apiUrl}/categoryProduct/${categoryId}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,

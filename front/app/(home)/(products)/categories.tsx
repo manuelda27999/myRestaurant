@@ -10,7 +10,7 @@ type Category = {
   user_id: null;
 };
 
-const ProductCategories = () => {
+const Categories = () => {
   const [token, setToken] = useState<string | null>(null);
   const [categories, setCategories] = useState<Array<Category>>([]);
 
@@ -41,8 +41,17 @@ const ProductCategories = () => {
       <View className="flex flex-1 flex-wrap flex-row justify-between">
         {categories.map((category) => (
           <Pressable
-            className="w-1/2 h-24 p-3 bg-red-100 flex justify-center"
+            className="w-1/2 h-24 p-3 bg-red-100 flex justify-center active:bg-red-200"
             key={category.category_id}
+            onPress={() =>
+              router.push({
+                pathname: "one-category",
+                params: {
+                  categoryIdProp: category.category_id,
+                  categoryNameProp: category.category_name,
+                },
+              })
+            }
           >
             {/* <Image
               source={require("../../../images/sabercomprar_carne_Mediano.jpg")}
@@ -65,4 +74,4 @@ const ProductCategories = () => {
   );
 };
 
-export default ProductCategories;
+export default Categories;
