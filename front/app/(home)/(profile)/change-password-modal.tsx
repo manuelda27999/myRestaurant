@@ -2,26 +2,15 @@ import { Alert, Pressable, Text, TextInput, View } from "react-native";
 import { Link } from "expo-router";
 import React, { useState, useEffect } from "react";
 import { router } from "expo-router";
-import Toast from "react-native-root-toast";
 import changePassword from "../../../logic/users/changePassword";
 import { getData } from "../../../utilities/encryptedStorage";
+import createToastClass from "../../../utilities/toastClass";
 
 const ChangePasswordModal = () => {
   const [token, setToken] = useState<string | null>(null);
   const [currentPassword, setCurrentPassword] = useState<string>("");
   const [newPassword, setNewPassword] = useState<string>("");
   const [newPasswordRepeat, setNewPasswordRepeat] = useState<string>("");
-
-  const passwordChangeToast = () => {
-    Toast.show("Contraseña actualizada correctamente", {
-      duration: Toast.durations.SHORT,
-      position: Toast.positions.CENTER,
-      backgroundColor: "red",
-      textColor: "white",
-      shadow: true,
-      animation: true,
-    });
-  };
 
   const getToken = async () => {
     const tokenResult = await getData("token");
@@ -33,7 +22,7 @@ const ChangePasswordModal = () => {
     try {
       changePassword(token, currentPassword, newPassword, newPasswordRepeat)
         .then(() => {
-          passwordChangeToast();
+          createToastClass("Contraseña cambiada con éxito");
 
           router.push("profile", { relativeToDirectory: true });
         })

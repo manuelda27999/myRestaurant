@@ -4,37 +4,15 @@ import { useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import getCategory from "../../../logic/categories/getCategory";
 import editCategory from "../../../logic/categories/editCategory";
-import Toast from "react-native-root-toast";
 import { router } from "expo-router";
 import deleteCategory from "../../../logic/categories/deleteCategory";
 import { getData } from "../../../utilities/encryptedStorage";
+import createToastClass from "../../../utilities/toastClass";
 
 const EditCategoryModal = () => {
   const [token, setToken] = useState<string | null>(null);
   const { categoryIdProp } = useLocalSearchParams<{ categoryIdProp: string }>();
   const [categoryName, setCategoryName] = useState<string>(null);
-
-  const categoryEditToast = () => {
-    Toast.show("Categoría actualizada", {
-      duration: Toast.durations.SHORT,
-      position: Toast.positions.CENTER,
-      backgroundColor: "red",
-      textColor: "white",
-      shadow: true,
-      animation: true,
-    });
-  };
-
-  const categoryDeletedToast = () => {
-    Toast.show("Categoría eliminada", {
-      duration: Toast.durations.SHORT,
-      position: Toast.positions.CENTER,
-      backgroundColor: "red",
-      textColor: "white",
-      shadow: true,
-      animation: true,
-    });
-  };
 
   const getToken = async () => {
     const tokenResult = await getData("token");
@@ -60,7 +38,7 @@ const EditCategoryModal = () => {
       );
 
       if (result) {
-        categoryEditToast();
+        createToastClass("Categoría editada");
         router.push("categories");
       }
     } catch (error) {
@@ -75,7 +53,7 @@ const EditCategoryModal = () => {
         token
       );
       if (result) {
-        categoryDeletedToast();
+        createToastClass("Categoría eliminada");
         router.push("categories");
       }
     } catch (error) {

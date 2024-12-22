@@ -1,25 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, TextInput, Pressable } from "react-native";
 import { Link, router } from "expo-router";
-import Toast from "react-native-root-toast";
-import storage from "../../../utilities/encryptedStorage";
+import { getData } from "../../../utilities/encryptedStorage";
 import createTable from "../../../logic/tables/createTable";
+import createToastClass from "../../../utilities/toastClass";
 
 const NewTableModal = () => {
   const [tableName, setTableName] = useState<string>("");
   const [available, setAvailable] = useState<boolean>(true);
   const [token, setToken] = useState<string | null>(null);
-
-  const tableCreatedToast = () => {
-    Toast.show("Mesa creada", {
-      duration: Toast.durations.SHORT,
-      position: Toast.positions.CENTER,
-      backgroundColor: "red",
-      textColor: "white",
-      shadow: true,
-      animation: true,
-    });
-  };
 
   const getToken = async () => {
     const tokenResult = await getData("token");
@@ -32,7 +21,8 @@ const NewTableModal = () => {
       const result = await createTable(tableName, available, token);
 
       if (result) {
-        tableCreatedToast();
+        createToastClass("Mesa creada");
+
         router.push("tables");
       }
     } catch (error) {

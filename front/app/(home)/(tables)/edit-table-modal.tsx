@@ -1,12 +1,13 @@
 import { Text, View, TextInput, Pressable } from "react-native";
 import React, { useEffect, useState } from "react";
 import getTable from "../../../logic/tables/getTable";
-import storage from "../../../utilities/encryptedStorage";
+import { getData } from "../../../utilities/encryptedStorage";
 import { useSearchParams } from "expo-router/build/hooks";
 import deleteTable from "../../../logic/tables/deleteTable";
 import Toast from "react-native-root-toast";
 import { router } from "expo-router";
 import editTable from "../../../logic/tables/editTable";
+import createToastClass from "../../../utilities/toastClass";
 
 type Table = {
   available: boolean;
@@ -20,28 +21,6 @@ const EditTableModal = () => {
   const [token, setToken] = useState<string | null>(null);
   const [tableName, setTableName] = useState<string>("");
   const [available, setAvailable] = useState<boolean>(null);
-
-  const tableDeletedToast = () => {
-    Toast.show("Mesa eliminada", {
-      duration: Toast.durations.SHORT,
-      position: Toast.positions.CENTER,
-      backgroundColor: "red",
-      textColor: "white",
-      shadow: true,
-      animation: true,
-    });
-  };
-
-  const tableEditToast = () => {
-    Toast.show("Mesa actualizada", {
-      duration: Toast.durations.SHORT,
-      position: Toast.positions.CENTER,
-      backgroundColor: "red",
-      textColor: "white",
-      shadow: true,
-      animation: true,
-    });
-  };
 
   const getToken = async () => {
     const tokenResult = await getData("token");
@@ -75,7 +54,7 @@ const EditTableModal = () => {
         token
       );
       if (result && typeof result === "boolean") {
-        tableEditToast();
+        createToastClass("Mesa editada");
         router.push("tables");
       }
     } catch (error) {
@@ -89,7 +68,7 @@ const EditTableModal = () => {
 
       const result: boolean | string = await deleteTable(tableIdNumber, token);
       if (result && typeof result === "boolean") {
-        tableDeletedToast();
+        createToastClass("Mesa eliminada");
         router.push("tables");
       }
     } catch (error) {

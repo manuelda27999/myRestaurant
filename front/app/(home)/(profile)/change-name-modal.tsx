@@ -5,23 +5,12 @@ import { router, Link } from "expo-router";
 import getNameById from "../../../logic/users/getNameById";
 import { TextInput } from "react-native";
 import changeNameUser from "../../../logic/users/changeName";
-import Toast from "react-native-root-toast";
 import { getData } from "../../../utilities/encryptedStorage";
+import createToastClass from "../../../utilities/toastClass";
 
 const ChangeNameModal = () => {
   const [newName, setNewName] = useState<string>("");
   const [token, setToken] = useState<string | null>(null);
-
-  const userNameChangeToast = () => {
-    Toast.show("Nombre de usuario actualizado con éxito", {
-      duration: Toast.durations.SHORT,
-      position: Toast.positions.CENTER,
-      backgroundColor: "red",
-      textColor: "white",
-      shadow: true,
-      animation: true,
-    });
-  };
 
   const getToken = async () => {
     const tokenResult = await getData("token");
@@ -45,7 +34,7 @@ const ChangeNameModal = () => {
     try {
       changeNameUser(token, newName)
         .then(() => {
-          userNameChangeToast();
+          createToastClass("Nombre cambiado con éxito");
 
           router.push("profile", { relativeToDirectory: true });
         })

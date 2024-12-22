@@ -1,7 +1,7 @@
 import { View, Text, Pressable } from "react-native";
 import React, { useEffect, useState } from "react";
 import getNameById from "../../../logic/users/getNameById";
-import storage from "../../../utilities/encryptedStorage";
+import { getData } from "../../../utilities/encryptedStorage";
 import getTables from "../../../logic/tables/getTables";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";

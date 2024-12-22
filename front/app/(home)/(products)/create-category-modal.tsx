@@ -3,23 +3,12 @@ import React, { useState, useEffect } from "react";
 import createCategory from "../../../logic/categories/createCategory";
 import { getData } from "../../../utilities/encryptedStorage";
 import { Link } from "expo-router";
-import Toast from "react-native-root-toast";
 import { router } from "expo-router";
+import createToastClass from "../../../utilities/toastClass";
 
 const CreateCategoryModal = () => {
   const [categoryName, setCategoryName] = useState<string>(null);
   const [token, setToken] = useState<string | null>(null);
-
-  const categoryCreatedToast = () => {
-    Toast.show("Categoría creada", {
-      duration: Toast.durations.SHORT,
-      position: Toast.positions.CENTER,
-      backgroundColor: "red",
-      textColor: "white",
-      shadow: true,
-      animation: true,
-    });
-  };
 
   const getToken = async () => {
     const tokenResult = await getData("token");
@@ -32,7 +21,7 @@ const CreateCategoryModal = () => {
       const result = await createCategory(categoryName, token);
 
       if (result) {
-        categoryCreatedToast();
+        createToastClass("Categoría creada");
         router.push("(products)/product-categories");
       }
     } catch (Error) {
