@@ -2,11 +2,11 @@ import { Text, View } from "react-native";
 import React from "react";
 import { Pressable } from "react-native";
 import { router } from "expo-router";
-import storage from "../../../utilities/encryptedStorage";
+import { deleteData } from "../../../utilities/encryptedStorage";
 
 const Logout = () => {
   const handleLogout = async () => {
-    await storage.deleteData("token");
+    await deleteData("token");
     router.push("/");
   };
 

@@ -1,7 +1,7 @@
 import { View, Text, TextInput, Pressable } from "react-native";
 import React, { useState, useEffect } from "react";
 import createCategory from "../../../logic/categories/createCategory";
-import storage from "../../../utilities/encryptedStorage";
+import { getData } from "../../../utilities/encryptedStorage";
 import { Link } from "expo-router";
 import Toast from "react-native-root-toast";
 import { router } from "expo-router";
@@ -22,7 +22,7 @@ const CreateCategoryModal = () => {
   };
 
   const getToken = async () => {
-    const tokenResult = await storage.getData("token");
+    const tokenResult = await getData("token");
 
     setToken(tokenResult);
   };

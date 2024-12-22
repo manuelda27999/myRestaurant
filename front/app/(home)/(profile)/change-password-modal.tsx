@@ -2,9 +2,9 @@ import { Alert, Pressable, Text, TextInput, View } from "react-native";
 import { Link } from "expo-router";
 import React, { useState, useEffect } from "react";
 import { router } from "expo-router";
-import storage from "../../../utilities/encryptedStorage";
 import Toast from "react-native-root-toast";
 import changePassword from "../../../logic/users/changePassword";
+import { getData } from "../../../utilities/encryptedStorage";
 
 const ChangePasswordModal = () => {
   const [token, setToken] = useState<string | null>(null);
@@ -24,7 +24,7 @@ const ChangePasswordModal = () => {
   };
 
   const getToken = async () => {
-    const tokenResult = await storage.getData("token");
+    const tokenResult = await getData("token");
 
     setToken(tokenResult);
   };

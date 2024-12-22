@@ -2,11 +2,11 @@ import { Text, View } from "react-native";
 import React, { useState, useEffect } from "react";
 import { Pressable } from "react-native";
 import { router, Link } from "expo-router";
-import storage from "../../../utilities/encryptedStorage";
 import getNameById from "../../../logic/users/getNameById";
 import { TextInput } from "react-native";
 import changeNameUser from "../../../logic/users/changeName";
 import Toast from "react-native-root-toast";
+import { getData } from "../../../utilities/encryptedStorage";
 
 const ChangeNameModal = () => {
   const [newName, setNewName] = useState<string>("");
@@ -24,7 +24,7 @@ const ChangeNameModal = () => {
   };
 
   const getToken = async () => {
-    const tokenResult = await storage.getData("token");
+    const tokenResult = await getData("token");
 
     setToken(tokenResult);
   };

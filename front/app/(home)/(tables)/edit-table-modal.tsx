@@ -44,7 +44,7 @@ const EditTableModal = () => {
   };
 
   const getToken = async () => {
-    const tokenResult = await storage.getData("token");
+    const tokenResult = await getData("token");
 
     setToken(tokenResult);
   };

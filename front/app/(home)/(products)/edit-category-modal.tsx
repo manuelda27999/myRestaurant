@@ -2,12 +2,12 @@ import { View, Text, Pressable, TextInput } from "react-native";
 import React, { useEffect } from "react";
 import { useLocalSearchParams } from "expo-router";
 import { useState } from "react";
-import storage from "../../../utilities/encryptedStorage";
 import getCategory from "../../../logic/categories/getCategory";
 import editCategory from "../../../logic/categories/editCategory";
 import Toast from "react-native-root-toast";
 import { router } from "expo-router";
 import deleteCategory from "../../../logic/categories/deleteCategory";
+import { getData } from "../../../utilities/encryptedStorage";
 
 const EditCategoryModal = () => {
   const [token, setToken] = useState<string | null>(null);
@@ -37,7 +37,7 @@ const EditCategoryModal = () => {
   };
 
   const getToken = async () => {
-    const tokenResult = await storage.getData("token");
+    const tokenResult = await getData("token");
 
     setToken(tokenResult);
   };

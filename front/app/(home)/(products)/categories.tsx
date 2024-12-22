@@ -1,8 +1,8 @@
 import { View, Text, Pressable, Image } from "react-native";
 import React, { useEffect, useState } from "react";
 import getCategories from "../../../logic/categories/getCategories";
-import storage from "../../../utilities/encryptedStorage";
 import { router } from "expo-router";
+import { getData } from "../../../utilities/encryptedStorage";
 
 type Category = {
   category_id: number;
@@ -15,7 +15,7 @@ const Categories = () => {
   const [categories, setCategories] = useState<Array<Category>>([]);
 
   const getToken = async () => {
-    const tokenResult = await storage.getData("token");
+    const tokenResult = await getData("token");
 
     setToken(tokenResult);
   };

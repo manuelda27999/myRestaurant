@@ -1,6 +1,6 @@
 import { Pressable, Text, View } from "react-native";
 import React, { useState, useEffect } from "react";
-import storage from "../../../utilities/encryptedStorage";
+import { getData } from "../../../utilities/encryptedStorage";
 import getNameById from "../../../logic/users/getNameById";
 import { router } from "expo-router";
 
@@ -9,7 +9,7 @@ const Profile = () => {
   const [token, setToken] = useState<string | null>(null);
 
   const getToken = async () => {
-    const tokenResult = await storage.getData("token");
+    const tokenResult = await getData("token");
 
     setToken(tokenResult);
   };

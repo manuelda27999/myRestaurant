@@ -19,7 +19,7 @@ const Tables = () => {
   const [tables, setTables] = useState<Array<Table>>([]);
 
   const getToken = async () => {
-    const tokenResult = await storage.getData("token");
+    const tokenResult = await getData("token");
 
     setToken(tokenResult);
   };

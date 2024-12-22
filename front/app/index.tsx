@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import React from "react";
 import { Link, router } from "expo-router";
 import loginUser from "../logic/users/loginUser";
-import storage from "../utilities/encryptedStorage";
+import { setData } from "../utilities/encryptedStorage";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
@@ -16,7 +16,7 @@ const Login = () => {
         setEmail("");
         setPassword("");
 
-        await storage.storeData("token", token);
+        await setData("token", token);
 
         router.push("(home)/tables");
       }

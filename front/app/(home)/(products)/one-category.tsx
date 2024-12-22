@@ -1,8 +1,7 @@
 import { View, Text } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router/build/hooks";
-import storage from "../../../utilities/encryptedStorage";
-
+import { getData } from "../../../utilities/encryptedStorage";
 const OneCategory = ({ route }) => {
   const [token, setToken] = useState(null);
   const { categoryIdProp, categoryNameProp } = useLocalSearchParams<{
@@ -11,7 +10,7 @@ const OneCategory = ({ route }) => {
   }>();
 
   const getToken = async () => {
-    const tokenResult = await storage.getData("token");
+    const tokenResult = await getData("token");
 
     setToken(tokenResult);
   };

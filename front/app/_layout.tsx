@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Stack } from "expo-router";
 import { View, Text } from "react-native";
 import "./../global.css";
-import storage from "../utilities/encryptedStorage";
 import { ActivityIndicator } from "react-native";
 import { router } from "expo-router";
 import { RootSiblingParent } from "react-native-root-siblings";
+import { getData } from "../utilities/encryptedStorage";
 
 const RootRender = () => {
   const [token, setToken] = useState<string | undefined>(undefined);
@@ -14,7 +14,7 @@ const RootRender = () => {
 
   const handleGetId = async () => {
     try {
-      const resultToken = await storage.getData("token");
+      const resultToken = await getData("token");
       setToken(resultToken);
       setInitialRouteName(setToken ? "(home)" : "index");
     } catch (error) {
