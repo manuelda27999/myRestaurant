@@ -2,12 +2,11 @@ import { Text, View, TextInput, Pressable } from "react-native";
 import React, { useEffect, useState } from "react";
 import getTable from "../../../logic/tables/getTable";
 import { getData } from "../../../utilities/encryptedStorage";
-import { useSearchParams } from "expo-router/build/hooks";
 import deleteTable from "../../../logic/tables/deleteTable";
-import Toast from "react-native-root-toast";
 import { router } from "expo-router";
 import editTable from "../../../logic/tables/editTable";
 import createToastClass from "../../../utilities/toastClass";
+import { useLocalSearchParams } from "expo-router";
 
 type Table = {
   available: boolean;
@@ -17,7 +16,7 @@ type Table = {
 };
 
 const EditTableModal = () => {
-  const [tableIdProp] = useSearchParams();
+  const { tableIdProp } = useLocalSearchParams<{ tableIdProp: string }>();
   const [token, setToken] = useState<string | null>(null);
   const [tableName, setTableName] = useState<string>("");
   const [available, setAvailable] = useState<boolean>(null);
@@ -30,7 +29,7 @@ const EditTableModal = () => {
 
   const handleGetTable = async () => {
     try {
-      const tableIdNumber = Number(tableIdProp[1]);
+      const tableIdNumber = Number(tableIdProp);
 
       const result: Table | string = await getTable(tableIdNumber, token);
 

@@ -86,7 +86,7 @@ const Tables = () => {
                 onPress={() =>
                   router.push({
                     pathname: "edit-table-modal",
-                    params: { table_id_prop: table.table_id },
+                    params: { tableIdProp: table.table_id },
                   })
                 }
               >
