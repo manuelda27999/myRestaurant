@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.Optional;
 
-public interface CategoryProductInterface extends JpaRepository<CategoryProduct, Integer> {
+public interface CategoryInterface extends JpaRepository<CategoryProduct, Integer> {
 
     @Query(value = "SELECT * FROM product_categories WHERE user_id = ?1", nativeQuery = true)
     List<CategoryProduct> findAllByUserId(Integer user_id);

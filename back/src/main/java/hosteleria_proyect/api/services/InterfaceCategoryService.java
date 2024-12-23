@@ -4,7 +4,7 @@ import hosteleria_proyect.api.entitys.CategoryProduct;
 
 import java.util.List;
 
-public interface InterfaceCategoryProductService {
+public interface InterfaceCategoryService {
     public List<CategoryProduct> getCategories(Integer user_id);
 
     public CategoryProduct getCategory(Integer user_id, Integer category_id);

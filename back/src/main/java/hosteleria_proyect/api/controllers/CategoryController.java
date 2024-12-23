@@ -2,7 +2,7 @@ package hosteleria_proyect.api.controllers;
 
 import hosteleria_proyect.api.entitys.CategoryProduct;
 import hosteleria_proyect.api.error.CustomException;
-import hosteleria_proyect.api.services.CategoryProductService;
+import hosteleria_proyect.api.services.CategoryService;
 import hosteleria_proyect.api.utilities.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,10 +16,10 @@ import java.util.Map;
 @RestController
 @RequestMapping("myRestaurant")
 @CrossOrigin(value = {"*"})
-public class CategoryProductController {
+public class CategoryController {
 
     @Autowired
-    private CategoryProductService categoryProductService;
+    private CategoryService categoryProductService;
 
     @GetMapping("/categoryProduct")
     public ResponseEntity<?> getCategories(@RequestHeader("Authorization") String bearerToken) {
@@ -82,7 +82,7 @@ public class CategoryProductController {
     }
 
     @DeleteMapping("/categoryProduct/{category_id}")
-    public ResponseEntity<?> deleteTable(@PathVariable Integer category_id, @RequestHeader("Authorization") String bearerToken) {
+    public ResponseEntity<?> deleteCategory(@PathVariable Integer category_id, @RequestHeader("Authorization") String bearerToken) {
         try {
             String token = bearerToken.replace("Bearer ", "");
             int user_id = JWTUtils.getIdFromToken(token);
