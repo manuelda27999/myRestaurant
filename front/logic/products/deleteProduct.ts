@@ -1,30 +1,22 @@
 import { validateId } from "../../utilities/validators";
 
-type Category = {
-  category_id: number;
-  category_name: string;
-  user_id: null;
-};
-
-export default async function getCategory(
+export default async function deleteProduct(
   token: string,
-  categoryId: number
-): Promise<Category> {
+  product_id: number
+): Promise<boolean> {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
   validateId(token);
 
-  return fetch(`${apiUrl}/categoryProduct/${categoryId}`, {
-    method: "GET",
+  return fetch(`${apiUrl}/products/${product_id}`, {
+    method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
   }).then((response) => {
-    if (response.status === 200) {
-      return response.json().then((body) => {
-        return body;
-      });
+    if (response.status === 204) {
+      return true;
     } else {
       return response.json().then((body) => {
         throw new Error(body.message);

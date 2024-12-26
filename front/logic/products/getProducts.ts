@@ -1,20 +1,25 @@
 import { validateId } from "../../utilities/validators";
 
-type Category = {
-  category_id: number;
-  category_name: string;
+type Product = {
+  product_id: number;
+  product_name: string;
+  description: string;
+  ingredients: string;
+  allergens: string;
+  price: number;
   user_id: null;
+  category_id: number;
 };
 
-export default async function getCategory(
+export default async function getProducts(
   token: string,
-  categoryId: number
-): Promise<Category> {
+  category_id: number
+): Promise<Array<Product>> {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
   validateId(token);
 
-  return fetch(`${apiUrl}/categoryProduct/${categoryId}`, {
+  return fetch(`${apiUrl}/products/${category_id}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,

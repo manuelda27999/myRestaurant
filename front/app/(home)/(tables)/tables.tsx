@@ -5,6 +5,7 @@ import { getData } from "../../../utilities/encryptedStorage";
 import getTables from "../../../logic/tables/getTables";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { router } from "expo-router";
 
 type Table = {
@@ -72,9 +73,11 @@ const Tables = () => {
               </Text>
             </View>
             <View className="flex flex-row flex-1 h-full justify-end items-center gap-8">
-              <Pressable>
-                <MaterialIcons name="edit-note" size={44} color="black" />
-              </Pressable>
+              <MaterialCommunityIcons
+                name="file-document-edit-outline"
+                size={34}
+                color="black"
+              />
               <Pressable>
                 <FontAwesome6
                   name="file-invoice-dollar"

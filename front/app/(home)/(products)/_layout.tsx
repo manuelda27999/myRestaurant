@@ -22,6 +22,14 @@ const Layout = () => {
         options={{ presentation: "modal", title: "Editar categoría" }}
       />
       <Stack.Screen
+        name="create-product-modal"
+        options={{ presentation: "modal", title: "Nueva producto" }}
+      />
+      <Stack.Screen
+        name="edit-product-modal"
+        options={{ presentation: "modal", title: "Editar producto" }}
+      />
+      <Stack.Screen
         name="one-category"
         options={({ route }: { route: { params?: OneCategoryParams } }) => ({
           presentation: "card",

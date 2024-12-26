@@ -47,7 +47,6 @@ public class ProductService implements InterfaceProductService{
         product.setCategory_id(category_id);
         product.setUser_id(user_id);
 
-        product.setProduct_id(user_id);
         productInterface.save(product);
     }
 
@@ -57,7 +56,7 @@ public class ProductService implements InterfaceProductService{
         Product productRepeat = productInterface.findByProduct_name(product.getProduct_name(), user_id).orElse(null);
 
         if (productToEdit == null) throw new CustomException(HttpStatus.NOT_FOUND, "Producto no encontrado");
-        if (productRepeat != null) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Este nombre ya está siendo utilizado en otro producto");
+        if (productRepeat != null && !productRepeat.getProduct_id().equals(product_id)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Este nombre ya está siendo utilizado en otro producto");
         if (!productToEdit.getUser_id().equals(user_id)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Esta producto no pertenece a este usuario");
 
         productToEdit.setProduct_name(product.getProduct_name());
