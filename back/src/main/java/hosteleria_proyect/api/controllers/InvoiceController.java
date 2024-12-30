@@ -67,4 +67,19 @@ public class InvoiceController {
             return new ResponseEntity<>(response, exception.getStatus());
         }
     }
+
+    @PatchMapping("/invoices/{invoice_id}")
+    public ResponseEntity<?> editInvoice(@PathVariable Integer invoice_id ,@RequestHeader("Authorization") String bearerToken, @RequestBody Invoice invoice) {
+        try {
+            String token = bearerToken.replace("Bearer ", "");
+            int user_id = JWTUtils.getIdFromToken(token);
+
+            invoiceService.editInvoice(user_id, invoice_id, invoice);
+            return new ResponseEntity<>("Factura editada", HttpStatus.NO_CONTENT);
+        } catch (CustomException exception) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", exception.getMessage());
+            return new ResponseEntity<>(response, exception.getStatus());
+        }
+    }
 }

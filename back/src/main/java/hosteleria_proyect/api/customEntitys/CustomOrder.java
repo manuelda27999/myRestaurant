@@ -11,9 +11,14 @@ import java.sql.Timestamp;
 @EqualsAndHashCode
 public class CustomOrder {
     private Integer order_id;
+    private Integer table_id;
+    private String table_name;
+    private Integer product_id;
     private String product_name;
-    private Double price;
     private Integer quantity;
+    private Double price;
     private Double total;
     private Timestamp order_date;
+    private OrderStatus status;
+    private Integer invoice_id;
 }

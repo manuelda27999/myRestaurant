@@ -65,7 +65,18 @@ public class InvoiceService implements InterfaceInvoiceService {
         orders.forEach(order -> {
             Product product = productInterface.findById(order.getProduct_id()).orElse(null);
 
-            CustomOrder customOrder = new CustomOrder(order.getOrder_id(), product.getProduct_name(), product.getPrice(), order.getQuantity(), product.getPrice() * order.getQuantity(), order.getOrder_date());
+            CustomOrder customOrder = new CustomOrder();
+            customOrder.setOrder_id(order.getOrder_id());
+            customOrder.setProduct_name(product.getProduct_name());
+            customOrder.setTable_id(order.getTable_id());
+            customOrder.setTable_name(table.getTable_name());
+            customOrder.setProduct_id(order.getProduct_id());
+            customOrder.setProduct_name(product.getProduct_name());
+            customOrder.setPrice(product.getPrice());
+            customOrder.setQuantity(order.getQuantity());
+            customOrder.setTotal(product.getPrice() * order.getQuantity());
+            customOrder.setOrder_date(order.getOrder_date());
+            customOrder.setStatus(order.getStatus());
 
             customOrders.add(customOrder);
         });
@@ -94,11 +105,13 @@ public class InvoiceService implements InterfaceInvoiceService {
 
     @Override
     public void editInvoice(Integer user_id, Integer invoice_id, Invoice invoice) {
+        Invoice invoiceToEdit = invoiceInterface.findById(invoice_id).orElse(null);
 
-    }
+        if (invoiceToEdit == null) throw new CustomException(HttpStatus.NOT_FOUND, "Factura no encontrada.");
+        if (!invoiceToEdit.getUser_id().equals(user_id)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY ,"El usuario no tiene permiso para modificar esta factura.");
 
-    @Override
-    public void deleteInvoice(Integer user_id, Integer invoice_id) {
+        invoiceToEdit.setTable_id(invoice.getTable_id());
 
+        invoiceInterface.save(invoiceToEdit);
     }
 }

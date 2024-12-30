@@ -1,11 +1,11 @@
 package hosteleria_proyect.api.entitys;
 
+import hosteleria_proyect.api.customEntitys.OrderStatus;
 import jakarta.persistence.*;
 import jakarta.persistence.Table;
 import lombok.*;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 @Entity
 @Table(name = "orders")
@@ -24,4 +24,9 @@ public class Order {
     private Integer invoice_id;
     private Integer user_id;
     private Timestamp order_date;
+
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
 }
+
+

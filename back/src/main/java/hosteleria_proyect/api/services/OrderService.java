@@ -1,17 +1,21 @@
 package hosteleria_proyect.api.services;
 
+import hosteleria_proyect.api.customEntitys.CustomOrder;
 import hosteleria_proyect.api.entitys.Invoice;
 import hosteleria_proyect.api.entitys.Order;
 import hosteleria_proyect.api.entitys.Product;
+import hosteleria_proyect.api.entitys.Table;
 import hosteleria_proyect.api.error.CustomException;
 import hosteleria_proyect.api.interfaces.InvoiceInterface;
 import hosteleria_proyect.api.interfaces.OrderInterface;
 import hosteleria_proyect.api.interfaces.ProductInterface;
+import hosteleria_proyect.api.interfaces.TableInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,25 +30,57 @@ public class OrderService implements InterfaceOrderService {
     @Autowired
     private ProductInterface productInterface;
 
+    @Autowired
+    private TableInterface tableInterface;
+
     @Override
-    public Order getOrderById(Integer user_id, Integer order_id) {
+    public CustomOrder getOrderById(Integer user_id, Integer order_id) {
+        CustomOrder customOrder = new CustomOrder();
         Order order = orderInterface.findById(order_id).orElse(null);
 
         if (order == null) throw new CustomException(HttpStatus.NOT_FOUND, "Pedido no encontrado");
         if (!order.getUser_id().equals(user_id)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Este pedido no pertenece a este usuario");
 
-        order.setUser_id(null);
+        Product product = productInterface.findById(order.getProduct_id()).orElse(null);
+        Table table = tableInterface.findById(order.getTable_id()).orElse(null);
 
-        return order;
+        customOrder.setOrder_id(order.getOrder_id());
+        customOrder.setTable_id(order.getTable_id());
+        customOrder.setTable_name(table.getTable_name());
+        customOrder.setProduct_id(order.getProduct_id());
+        customOrder.setProduct_name(product.getProduct_name());
+        customOrder.setQuantity(order.getQuantity());
+        customOrder.setOrder_date(order.getOrder_date());
+        customOrder.setStatus(order.getStatus());
+        customOrder.setInvoice_id(order.getInvoice_id());
+
+        return customOrder;
     }
 
     @Override
-    public List<Order> getOrders(Integer user_id) {
+    public List<CustomOrder> getOrders(Integer user_id) {
+        List<CustomOrder> customOrders = new ArrayList<>();
         List<Order> orders = orderInterface.getOrdersByUserId(user_id);
 
-        orders.forEach(order -> order.setUser_id(null));
+        orders.forEach(order -> {
+            Product product = productInterface.findById(order.getProduct_id()).orElse(null);
+            Table table = tableInterface.findById(order.getTable_id()).orElse(null);
 
-        return orders;
+            CustomOrder customOrder = new CustomOrder();
+            customOrder.setOrder_id(order.getOrder_id());
+            customOrder.setTable_id(order.getTable_id());
+            customOrder.setTable_name(table.getTable_name());
+            customOrder.setProduct_id(order.getProduct_id());
+            customOrder.setProduct_name(product.getProduct_name());
+            customOrder.setQuantity(order.getQuantity());
+            customOrder.setOrder_date(order.getOrder_date());
+            customOrder.setStatus(order.getStatus());
+            customOrder.setInvoice_id(order.getInvoice_id());
+
+            customOrders.add(customOrder);
+        });
+
+        return customOrders;
     }
 
     @Override
@@ -79,11 +115,42 @@ public class OrderService implements InterfaceOrderService {
 
     @Override
     public void editOrder(Integer user_id, Integer order_id, Order order) {
+        Order orderToEdit = orderInterface.findById(order_id).orElse(null);
+        Invoice invoiceToEdit = invoiceInterface.findById(orderToEdit.getInvoice_id()).orElse(null);
+        Product oldProduct = productInterface.findById(orderToEdit.getProduct_id()).orElse(null);
+        Product newProduct = productInterface.findById(order.getProduct_id()).orElse(null);
 
+        if (orderToEdit == null) throw new CustomException(HttpStatus.NOT_FOUND, "Pedido no encontrado");
+        if (!orderToEdit.getUser_id().equals(user_id)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Este pedido no pertenece a este usuario");
+        if (invoiceToEdit == null) throw new CustomException(HttpStatus.NOT_FOUND, "Factura no encontrada");
+        if (!invoiceToEdit.getUser_id().equals(user_id)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Esta factura no pertenece a este usuario");
+
+        invoiceToEdit.setTotal(invoiceToEdit.getTotal() - (orderToEdit.getQuantity() * oldProduct.getPrice()));
+        invoiceToEdit.setTotal(invoiceToEdit.getTotal() + (order.getQuantity() * newProduct.getPrice()));
+
+        orderToEdit.setQuantity(order.getQuantity());
+        orderToEdit.setProduct_id(order.getProduct_id());
+        orderToEdit.setStatus(order.getStatus());
+        orderToEdit.setTable_id(order.getTable_id());
+
+        orderInterface.save(orderToEdit);
+        invoiceInterface.save(invoiceToEdit);
     }
 
     @Override
     public void deleteOrder(Integer user_id, Integer order_id) {
+        Order orderToDelete = orderInterface.findById(order_id).orElse(null);
+        Invoice invoiceToEdit = invoiceInterface.findById(orderToDelete.getInvoice_id()).orElse(null);
+        Product product = productInterface.findById(orderToDelete.getProduct_id()).orElse(null);
 
+        if (orderToDelete == null) throw new CustomException(HttpStatus.NOT_FOUND, "Pedido no encontrado");
+        if (!orderToDelete.getUser_id().equals(user_id)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Este pedido no pertenece a este usuario");
+        if (invoiceToEdit == null) throw new CustomException(HttpStatus.NOT_FOUND, "Factura no encontrada");
+        if (!invoiceToEdit.getUser_id().equals(user_id)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Esta factura no pertenece a este usuario");
+
+        invoiceToEdit.setTotal(invoiceToEdit.getTotal() - (orderToDelete.getQuantity() * product.getPrice()));
+
+        invoiceInterface.save(invoiceToEdit);
+        orderInterface.delete(orderToDelete);
     }
 }

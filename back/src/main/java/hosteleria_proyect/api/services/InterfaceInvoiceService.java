@@ -15,6 +15,4 @@ public interface InterfaceInvoiceService {
     public void changePaid(Integer user_id, Integer invoice_id);
 
     public void editInvoice(Integer user_id, Integer invoice_id, Invoice invoice);
-
-    public void deleteInvoice(Integer user_id, Integer invoice_id);
 }
