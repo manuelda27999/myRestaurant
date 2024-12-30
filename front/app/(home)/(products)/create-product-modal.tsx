@@ -35,7 +35,6 @@ const CreateProductModal = () => {
 
   const handleCreateProduct = async () => {
     try {
-      debugger;
       const result: boolean = await createProduct(
         token,
         Number(categoryIdProp),

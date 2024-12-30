@@ -1,11 +1,10 @@
 package hosteleria_proyect.api.controllers;
 
-import hosteleria_proyect.api.customEntitys.CustomInvoice;
-import hosteleria_proyect.api.entitys.Invoice;
+import hosteleria_proyect.api.entitys.Order;
+import hosteleria_proyect.api.entitys.Product;
 import hosteleria_proyect.api.error.CustomException;
-import hosteleria_proyect.api.services.InvoiceService;
+import hosteleria_proyect.api.services.OrderService;
 import hosteleria_proyect.api.utilities.JWTUtils;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,20 +16,20 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("myRestaurant")
-@CrossOrigin(value = "{*}")
-public class InvoiceController {
+@CrossOrigin(value = {"*"})
+public class OrderController {
 
     @Autowired
-    private InvoiceService invoiceService;
+    private OrderService orderService;
 
-    @GetMapping("/invoices")
-    public ResponseEntity<?> getInvoices(@RequestHeader("Authorization") String bearerToken) {
+    @GetMapping("/orders/{order_id}")
+    public ResponseEntity<?> getOrder(@PathVariable Integer order_id, @RequestHeader("Authorization") String bearerToken) {
         try {
             String token = bearerToken.replace("Bearer ", "");
             int user_id = JWTUtils.getIdFromToken(token);
 
-            List<Invoice> invoices = invoiceService.getInvoices(user_id);
-            return ResponseEntity.ok(invoices);
+            Order order = orderService.getOrderById(user_id, order_id);
+            return ResponseEntity.ok(order);
         } catch (CustomException exception) {
             Map<String, String> response = new HashMap<>();
             response.put("message", exception.getMessage());
@@ -38,14 +37,14 @@ public class InvoiceController {
         }
     }
 
-    @GetMapping("/invoices/{invoice_id}")
-    public ResponseEntity<?> getCustomInvoice(@PathVariable Integer invoice_id ,@RequestHeader("Authorization") String bearerToken) {
+    @GetMapping("/orders")
+    public ResponseEntity<?> getOrders(@RequestHeader("Authorization") String bearerToken) {
         try {
             String token = bearerToken.replace("Bearer ", "");
             int user_id = JWTUtils.getIdFromToken(token);
 
-            CustomInvoice customInvoices = invoiceService.getCustomInvoices(user_id, invoice_id);
-            return ResponseEntity.ok(customInvoices);
+            List<Order> orders = orderService.getOrders(user_id);
+            return ResponseEntity.ok(orders);
         } catch (CustomException exception) {
             Map<String, String> response = new HashMap<>();
             response.put("message", exception.getMessage());
@@ -53,14 +52,14 @@ public class InvoiceController {
         }
     }
 
-    @PatchMapping("/invoices/{invoice_id}/paid")
-    public ResponseEntity<?> changePaid(@PathVariable Integer invoice_id ,@RequestHeader("Authorization") String bearerToken) {
+    @PostMapping("/orders")
+    public ResponseEntity<?> createOrder(@RequestHeader("Authorization") String bearerToken ,@RequestBody Order order) {
         try {
             String token = bearerToken.replace("Bearer ", "");
             int user_id = JWTUtils.getIdFromToken(token);
 
-            invoiceService.changePaid(user_id, invoice_id);
-            return new ResponseEntity<>("Estado de la factura cambiado", HttpStatus.NO_CONTENT);
+            orderService.createOrder(user_id, order);
+            return new ResponseEntity<>("Pedido creado con éxito", HttpStatus.CREATED);
         } catch (CustomException exception) {
             Map<String, String> response = new HashMap<>();
             response.put("message", exception.getMessage());

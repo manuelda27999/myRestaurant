@@ -1,18 +1,14 @@
 package hosteleria_proyect.api.controllers;
 
-import hosteleria_proyect.api.entitys.CategoryProduct;
 import hosteleria_proyect.api.entitys.Product;
 import hosteleria_proyect.api.error.CustomException;
 import hosteleria_proyect.api.services.ProductService;
 import hosteleria_proyect.api.utilities.JWTUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.plaf.ListUI;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,8 +17,6 @@ import java.util.Map;
 @RequestMapping("myRestaurant")
 @CrossOrigin(value = {"*"})
 public class ProductController {
-
-    private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 
     @Autowired
     private ProductService productService;

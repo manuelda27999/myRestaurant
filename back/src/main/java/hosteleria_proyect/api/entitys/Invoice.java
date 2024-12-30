@@ -7,8 +7,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
 
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.sql.Timestamp;
+
 
 @Entity
 @Table(name = "invoices")
@@ -22,7 +22,7 @@ public class Invoice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer invoice_id;
     private Double total;
-    private LocalDateTime invoice_date;
+    private Timestamp invoice_date;
     private Boolean paid;
     private Integer table_id;
     private Integer user_id;
