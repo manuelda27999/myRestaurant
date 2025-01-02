@@ -35,7 +35,7 @@ const HomeTabs = () => {
         }}
       />
       <Tabs.Screen
-        name="orders"
+        name="(orders)"
         options={{
           title: "Pedidos",
           tabBarIcon: ({ color, size }) => (

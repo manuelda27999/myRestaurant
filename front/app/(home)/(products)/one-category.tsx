@@ -76,7 +76,7 @@ const OneCategory = () => {
                 Precio: <Text className="font-normal">{product.price}€ </Text>
               </Text>
             </View>
-            <View className="flex flex-col justify-between items-center min-h-36 w-min pb-1">
+            <View className="flex flex-col justify-between items-center min-h-36 w-10 pb-1">
               <Pressable
                 onPress={() =>
                   router.push({
