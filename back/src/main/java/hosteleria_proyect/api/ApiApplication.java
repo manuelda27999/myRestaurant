@@ -1,6 +1,5 @@
 package hosteleria_proyect.api;
 
-
 import hosteleria_proyect.api.services.InterfaceUserService;
 import hosteleria_proyect.api.services.InvoiceService;
 import hosteleria_proyect.api.services.UserService;

@@ -1,6 +1,7 @@
 package hosteleria_proyect.api.services;
 
 import hosteleria_proyect.api.customEntitys.CustomOrder;
+import hosteleria_proyect.api.customEntitys.OrderStatus;
 import hosteleria_proyect.api.entitys.Invoice;
 import hosteleria_proyect.api.entitys.Order;
 import hosteleria_proyect.api.entitys.Product;
@@ -15,7 +16,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -50,7 +54,11 @@ public class OrderService implements InterfaceOrderService {
         customOrder.setProduct_id(order.getProduct_id());
         customOrder.setProduct_name(product.getProduct_name());
         customOrder.setQuantity(order.getQuantity());
-        customOrder.setOrder_date(order.getOrder_date());
+
+        LocalDateTime dateTime = order.getOrder_date().toLocalDateTime();
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        customOrder.setOrder_date(dateTime.format(dateFormatter));
+
         customOrder.setStatus(order.getStatus());
         customOrder.setInvoice_id(order.getInvoice_id());
 
@@ -73,7 +81,11 @@ public class OrderService implements InterfaceOrderService {
             customOrder.setProduct_id(order.getProduct_id());
             customOrder.setProduct_name(product.getProduct_name());
             customOrder.setQuantity(order.getQuantity());
-            customOrder.setOrder_date(order.getOrder_date());
+
+            LocalDateTime dateTime = order.getOrder_date().toLocalDateTime();
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+            customOrder.setOrder_date(dateTime.format(dateFormatter));
             customOrder.setStatus(order.getStatus());
             customOrder.setInvoice_id(order.getInvoice_id());
 
@@ -109,6 +121,7 @@ public class OrderService implements InterfaceOrderService {
 
         order.setUser_id(user_id);
         order.setOrder_date(new Timestamp(System.currentTimeMillis()));
+        order.setStatus(OrderStatus.PENDING);
 
         orderInterface.save(order);
     }
@@ -135,6 +148,31 @@ public class OrderService implements InterfaceOrderService {
 
         orderInterface.save(orderToEdit);
         invoiceInterface.save(invoiceToEdit);
+    }
+
+    @Override
+    public void changeStatus(Integer user_id, Integer order_id) {
+        Order orderToEdit = orderInterface.findById(order_id).orElse(null);
+
+        if (orderToEdit == null) throw new CustomException(HttpStatus.NOT_FOUND, "Pedido no encontrado");
+        if (!orderToEdit.getUser_id().equals(user_id)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Este pedido no pertenece a este usuario");
+
+        switch (orderToEdit.getStatus()) {
+            case OrderStatus.PENDING:
+                orderToEdit.setStatus(OrderStatus.PREPARING);
+                break;
+            case OrderStatus.PREPARING:
+                orderToEdit.setStatus(OrderStatus.READY);
+                break;
+            case OrderStatus.READY:
+                orderToEdit.setStatus(OrderStatus.DELIVERED);
+                break;
+            case OrderStatus.DELIVERED:
+                orderToEdit.setStatus(OrderStatus.PENDING);
+                break;
+        }
+
+        orderInterface.save(orderToEdit);
     }
 
     @Override

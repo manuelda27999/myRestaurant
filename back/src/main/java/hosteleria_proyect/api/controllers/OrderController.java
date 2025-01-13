@@ -83,6 +83,21 @@ public class OrderController {
         }
     }
 
+    @PatchMapping("/orders/{order_id}/status")
+    public ResponseEntity<?> editStatus(@RequestHeader("Authorization") String bearerToken, @PathVariable Integer order_id) {
+        try {
+            String token = bearerToken.replace("Bearer ", "");
+            int user_id = JWTUtils.getIdFromToken(token);
+
+            orderService.changeStatus(user_id, order_id);
+            return new ResponseEntity<>("Estado editado con éxito", HttpStatus.NO_CONTENT);
+        } catch (CustomException exception) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", exception.getMessage());
+            return new ResponseEntity<>(response, exception.getStatus());
+        }
+    }
+
     @DeleteMapping("/orders/{order_id}")
     public ResponseEntity<?> deleteOrder(@PathVariable Integer order_id, @RequestHeader("Authorization") String bearerToken) {
         try {

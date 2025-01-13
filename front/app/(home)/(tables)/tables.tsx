@@ -66,7 +66,7 @@ const Tables = () => {
             key={table.table_id}
             className="border-b-2 border-solid px-4 py-1 flex flex-row w-full"
           >
-            <View className="flex flex-col w-2/6">
+            <View className="flex flex-col w-3/6">
               <Text className="text-lg font-bold">{table.table_name}</Text>
               <Text className="text-lg">
                 {table.available ? "Libre" : "Ocupada"}

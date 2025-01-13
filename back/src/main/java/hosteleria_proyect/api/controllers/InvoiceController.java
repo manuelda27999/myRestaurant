@@ -44,7 +44,7 @@ public class InvoiceController {
             String token = bearerToken.replace("Bearer ", "");
             int user_id = JWTUtils.getIdFromToken(token);
 
-            CustomInvoice customInvoices = invoiceService.getCustomInvoices(user_id, invoice_id);
+            CustomInvoice customInvoices = invoiceService.getCustomInvoice(user_id, invoice_id);
             return ResponseEntity.ok(customInvoices);
         } catch (CustomException exception) {
             Map<String, String> response = new HashMap<>();

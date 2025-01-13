@@ -18,7 +18,7 @@ public class CustomOrder {
     private Integer quantity;
     private Double price;
     private Double total;
-    private Timestamp order_date;
+    private String order_date;
     private OrderStatus status;
     private Integer invoice_id;
 }

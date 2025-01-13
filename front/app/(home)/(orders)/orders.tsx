@@ -4,6 +4,9 @@ import { getData } from "../../../utilities/encryptedStorage";
 import getOrders from "../../../logic/orders/getOrders";
 import { FontAwesome6, MaterialIcons } from "@expo/vector-icons";
 import classNames from "classnames";
+import changeStatus from "../../../logic/orders/changeStatus";
+import lodash from "lodash";
+import { router } from "expo-router";
 
 type Order = {
   order_id: number;
@@ -33,8 +36,35 @@ const Orders = () => {
     try {
       const result = await getOrders(token);
 
-      console.log(result);
       setOrders(result);
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  const handleChangeStatus = async (order_id: number) => {
+    try {
+      const result = await changeStatus(token, order_id);
+
+      const ordersEdited = lodash.cloneDeep(orders);
+      const index = orders.findIndex((order) => order.order_id == order_id);
+
+      switch (ordersEdited[index].status) {
+        case "PENDING":
+          ordersEdited[index].status = "PREPARING";
+          break;
+        case "PREPARING":
+          ordersEdited[index].status = "READY";
+          break;
+        case "READY":
+          ordersEdited[index].status = "DELIVERED";
+          break;
+        case "DELIVERED":
+          ordersEdited[index].status = "PENDING";
+          break;
+      }
+
+      setOrders(ordersEdited);
     } catch (error) {
       alert(error);
     }
@@ -52,11 +82,11 @@ const Orders = () => {
       <ScrollView className="flex flex-col w-full">
         {orders.map((order) => (
           <View key={order.order_id} className="flex flex-col border-b-4">
-            <View className="px-2 border-b-2">
-              <Text className="text-xl">{order.table_name}</Text>
-              <Text>
+            <View className="px-2 border-b-2 py-1">
+              <Text className="text-lg font-semibold">
                 {order.product_name} X {order.quantity}
               </Text>
+              <Text>{order.table_name}</Text>
               <Text className="">Fecha: {order.order_date}</Text>
             </View>
             <View
@@ -70,22 +100,36 @@ const Orders = () => {
                 }
               )}
             >
-              <Text className="w-2/5 font-semibold text-lg">
-                {order.status === "PENDING"
-                  ? "Pendiente"
-                  : order.status === "PREPARING"
-                  ? "Preparando"
-                  : order.status === "READY"
-                  ? "Listo"
-                  : "Entregado"}
-              </Text>
+              <Pressable
+                className="w-2/5"
+                onPress={() => handleChangeStatus(order.order_id)}
+              >
+                <Text className="font-semibold text-lg">
+                  {order.status === "PENDING"
+                    ? "Pendiente"
+                    : order.status === "PREPARING"
+                    ? "Preparando"
+                    : order.status === "READY"
+                    ? "Listo"
+                    : "Entregado"}
+                </Text>
+              </Pressable>
               <View className="flex flex-row-reverse w-2/5 gap-6 py-1 pr-1">
                 <FontAwesome6
                   name="file-invoice-dollar"
                   size={28}
                   color="black"
                 />
-                <MaterialIcons name="edit" size={32} color="black" />
+                <Pressable
+                  onPress={() =>
+                    router.push({
+                      pathname: "edit-order-modal",
+                      params: { orderIdProp: order.order_id },
+                    })
+                  }
+                >
+                  <MaterialIcons name="edit" size={32} color="black" />
+                </Pressable>
               </View>
             </View>
           </View>
@@ -93,8 +137,7 @@ const Orders = () => {
       </ScrollView>
       <Pressable
         className="bg-red-600 w-2/4 my-3 py-3 rounded-2xl"
-        /*               onPress={() => router.push("(tables)/new-table-modal")}
-         */
+        onPress={() => router.push({ pathname: "new-order-modal" })}
       >
         <Text className="text-center text-white text-xl font-extrabold">
           Nueva orden

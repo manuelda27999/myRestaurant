@@ -14,5 +14,7 @@ public interface InterfaceOrderService {
 
     public void editOrder(Integer user_id, Integer order_id, Order order);
 
+    public void changeStatus(Integer user_id, Integer order_id);
+
     public void deleteOrder(Integer user_id, Integer order_id);
 }

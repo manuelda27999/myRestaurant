@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +45,7 @@ public class InvoiceService implements InterfaceInvoiceService {
     }
 
     @Override
-    public CustomInvoice getCustomInvoices(Integer user_id, Integer invoice_id) {
+    public CustomInvoice getCustomInvoice(Integer user_id, Integer invoice_id) {
         CustomInvoice customInvoice = new CustomInvoice();
         List<CustomOrder> customOrders = new ArrayList<>();
 
@@ -75,7 +77,11 @@ public class InvoiceService implements InterfaceInvoiceService {
             customOrder.setPrice(product.getPrice());
             customOrder.setQuantity(order.getQuantity());
             customOrder.setTotal(product.getPrice() * order.getQuantity());
-            customOrder.setOrder_date(order.getOrder_date());
+
+            LocalDateTime dateTime = order.getOrder_date().toLocalDateTime();
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            customOrder.setOrder_date(dateTime.format(dateFormatter));
+
             customOrder.setStatus(order.getStatus());
 
             customOrders.add(customOrder);
