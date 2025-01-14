@@ -2,32 +2,13 @@ import { Text, View, TextInput, Pressable } from "react-native";
 import React, { useEffect, useState } from "react";
 import { getData } from "../../../utilities/encryptedStorage";
 import { useLocalSearchParams } from "expo-router";
-import getOrder from "../../../logic/orders/getOrder";
 import getCategories from "../../../logic/categories/getCategories";
 import getProducts from "../../../logic/products/getProducts";
 import RNPickerSelect from "react-native-picker-select";
 import getTables from "../../../logic/tables/getTables";
-import getProduct from "../../../logic/products/getProduct";
-import classNames from "classnames";
-import editOrder from "../../../logic/orders/editOrder";
 import createToastClass from "../../../utilities/toastClass";
 import { router } from "expo-router";
-import deleteOrder from "../../../logic/orders/deleteOrder";
 import createOrder from "../../../logic/orders/createOrder";
-
-type Order = {
-  order_id: number;
-  table_id: number;
-  table_name: string;
-  product_id: number;
-  product_name: string;
-  quantity: number;
-  price: null;
-  total: null;
-  order_date: string;
-  status: string;
-  invoice_id: number;
-};
 
 type Table = {
   table_id: number;
@@ -74,6 +55,10 @@ const pickerSelectStyles = {
 };
 
 const NewOrderModal = () => {
+  const { tableIdProp } = useLocalSearchParams<{ tableIdProp: string }>();
+  const { productIdProp } = useLocalSearchParams<{ productIdProp: string }>();
+  const { categoryIdProp } = useLocalSearchParams<{ categoryIdProp: string }>();
+
   const [token, setToken] = useState<string | null>(null);
 
   const [tableId, setTableId] = useState<number>(null);
@@ -135,6 +120,7 @@ const NewOrderModal = () => {
 
   useEffect(() => {
     getToken();
+    setTableId(Number(tableIdProp));
 
     if (token != null) {
       handleGetTables();
@@ -143,8 +129,14 @@ const NewOrderModal = () => {
   }, [token]);
 
   useEffect(() => {
-    if (category_id) handleGetProducts();
-  }, [category_id]);
+    if (category_id && token) handleGetProducts();
+  }, [token, category_id]);
+
+  useEffect(() => {
+    if (tableIdProp) setTableId(Number(tableIdProp));
+    if (productIdProp) setProduct_id(Number(productIdProp));
+    if (categoryIdProp) setCategory_id(Number(categoryIdProp));
+  }, [tableIdProp, productIdProp, categoryIdProp]);
 
   return (
     <View className="w-full h-full flex flex-col justify-start items-center py-4 px-8">
@@ -169,6 +161,7 @@ const NewOrderModal = () => {
               value: category.category_id,
             };
           })}
+          value={category_id}
           style={pickerSelectStyles}
           placeholder={{ label: "Selecciones una categoría", value: null }}
         />
@@ -180,6 +173,7 @@ const NewOrderModal = () => {
               value: product.product_id,
             };
           })}
+          value={product_id}
           placeholder={{ label: "Seleccione un producto", value: null }}
           style={pickerSelectStyles}
         />
@@ -195,13 +189,27 @@ const NewOrderModal = () => {
           autoCapitalize="none"
           className="w-full my-4 p-4 border-2 border-red-700 rounded-lg bg-white shadow-sm focus:outline-none focus:border-red-800"
         />
+        <Pressable
+          onPress={() => handleNewOrder()}
+          className="bg-red-600 rounded-lg w-1/2 h-12 flex justify-center mt-2 mb-4"
+        >
+          <Text className="text-white font-semibold text-3xl text-center">
+            Crear
+          </Text>
+        </Pressable>
       </View>
       <Pressable
-        onPress={() => handleNewOrder()}
-        className="bg-red-600 rounded-lg w-1/2 h-12 flex justify-center mt-2 mb-4"
+        onPress={() => {
+          setTableId(null);
+          setCategory_id(null);
+          setProduct_id(null);
+          setQuantity(null);
+          router.push("orders");
+        }}
+        className=" w-1/2 h-12 flex justify-center mt-2 mb-4"
       >
-        <Text className="text-white font-semibold text-3xl text-center">
-          Crear
+        <Text className="text-red-800 font-bold text-center underline mt-4 text-lg">
+          Cancelar
         </Text>
       </Pressable>
     </View>

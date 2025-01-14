@@ -129,17 +129,50 @@ public class OrderService implements InterfaceOrderService {
     @Override
     public void editOrder(Integer user_id, Integer order_id, Order order) {
         Order orderToEdit = orderInterface.findById(order_id).orElse(null);
-        Invoice invoiceToEdit = invoiceInterface.findById(orderToEdit.getInvoice_id()).orElse(null);
         Product oldProduct = productInterface.findById(orderToEdit.getProduct_id()).orElse(null);
         Product newProduct = productInterface.findById(order.getProduct_id()).orElse(null);
+        Invoice oldInvoice = invoiceInterface.findById(orderToEdit.getInvoice_id()).orElse(null);
 
         if (orderToEdit == null) throw new CustomException(HttpStatus.NOT_FOUND, "Pedido no encontrado");
         if (!orderToEdit.getUser_id().equals(user_id)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Este pedido no pertenece a este usuario");
-        if (invoiceToEdit == null) throw new CustomException(HttpStatus.NOT_FOUND, "Factura no encontrada");
-        if (!invoiceToEdit.getUser_id().equals(user_id)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Esta factura no pertenece a este usuario");
+        if (oldProduct == null) throw new CustomException(HttpStatus.NOT_FOUND, "Producto no encontrado");
+        if (!oldProduct.getUser_id().equals(user_id)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Este producto no pertenece a este usuario");
+        if (newProduct == null) throw new CustomException(HttpStatus.NOT_FOUND, "Producto no encontrado");
+        if (!newProduct.getUser_id().equals(user_id)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Este producto no pertenece a este usuario");
+        if (oldInvoice == null) throw new CustomException(HttpStatus.NOT_FOUND, "Factura no encontrada");
+        if (!oldInvoice.getUser_id().equals(user_id)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Esta factura no pertenece a este usuario");
 
-        invoiceToEdit.setTotal(invoiceToEdit.getTotal() - (orderToEdit.getQuantity() * oldProduct.getPrice()));
-        invoiceToEdit.setTotal(invoiceToEdit.getTotal() + (order.getQuantity() * newProduct.getPrice()));
+        if (orderToEdit.getTable_id().equals(order.getTable_id())) {
+
+            oldInvoice.setTotal(oldInvoice.getTotal() - (orderToEdit.getQuantity() * oldProduct.getPrice()));
+            oldInvoice.setTotal(oldInvoice.getTotal() + (order.getQuantity() * newProduct.getPrice()));
+
+            invoiceInterface.save(oldInvoice);
+        } else {
+            Invoice invoiceToEdit = invoiceInterface.findInvoiceByTableIdAndPaidFalse(order.getTable_id()).orElse(null);
+
+            oldInvoice.setTotal(oldInvoice.getTotal() - (orderToEdit.getQuantity() * oldProduct.getPrice()));
+            invoiceInterface.save(oldInvoice);
+
+            if (invoiceToEdit == null) {
+                Invoice newInvoice = new Invoice();
+                newInvoice.setTotal(newProduct.getPrice() * order.getQuantity());
+                newInvoice.setPaid(false);
+                newInvoice.setTable_id(order.getTable_id());
+                newInvoice.setUser_id(user_id);
+                newInvoice.setInvoice_date(new Timestamp(System.currentTimeMillis()));
+
+                invoiceInterface.save(newInvoice);
+
+                Invoice invoiceToSave = invoiceInterface.findInvoiceByTableIdAndPaidFalse(order.getTable_id()).orElse(null);
+                orderToEdit.setInvoice_id(invoiceToSave.getInvoice_id());
+            } else {
+                invoiceToEdit.setTotal(invoiceToEdit.getTotal() + (order.getQuantity() * newProduct.getPrice()));
+                invoiceInterface.save(invoiceToEdit);
+
+                orderToEdit.setInvoice_id(invoiceToEdit.getInvoice_id());
+            }
+        }
 
         orderToEdit.setQuantity(order.getQuantity());
         orderToEdit.setProduct_id(order.getProduct_id());
@@ -147,7 +180,6 @@ public class OrderService implements InterfaceOrderService {
         orderToEdit.setTable_id(order.getTable_id());
 
         orderInterface.save(orderToEdit);
-        invoiceInterface.save(invoiceToEdit);
     }
 
     @Override
@@ -185,6 +217,8 @@ public class OrderService implements InterfaceOrderService {
         if (!orderToDelete.getUser_id().equals(user_id)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Este pedido no pertenece a este usuario");
         if (invoiceToEdit == null) throw new CustomException(HttpStatus.NOT_FOUND, "Factura no encontrada");
         if (!invoiceToEdit.getUser_id().equals(user_id)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Esta factura no pertenece a este usuario");
+
+        if (orderToDelete.getStatus() != OrderStatus.PENDING) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Esta orden no se puede eliminar debido a su estado");
 
         invoiceToEdit.setTotal(invoiceToEdit.getTotal() - (orderToDelete.getQuantity() * product.getPrice()));
 

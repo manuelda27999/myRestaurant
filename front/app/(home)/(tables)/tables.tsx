@@ -73,11 +73,21 @@ const Tables = () => {
               </Text>
             </View>
             <View className="flex flex-row flex-1 h-full justify-end items-center gap-8">
-              <MaterialCommunityIcons
-                name="file-document-edit-outline"
-                size={34}
-                color="black"
-              />
+              <Pressable
+                onPress={() =>
+                  router.push({
+                    pathname: "new-order-modal",
+                    params: { tableIdProp: table.table_id },
+                  })
+                }
+              >
+                <MaterialCommunityIcons
+                  name="file-document-edit-outline"
+                  size={34}
+                  color="black"
+                />
+              </Pressable>
+
               <Pressable>
                 <FontAwesome6
                   name="file-invoice-dollar"

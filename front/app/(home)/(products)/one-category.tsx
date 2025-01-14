@@ -87,7 +87,17 @@ const OneCategory = () => {
               >
                 <MaterialIcons name="edit" size={32} color="black" />
               </Pressable>
-              <Pressable>
+              <Pressable
+                onPress={() =>
+                  router.push({
+                    pathname: "new-order-modal",
+                    params: {
+                      productIdProp: product.product_id,
+                      categoryIdProp: categoryIdProp,
+                    },
+                  })
+                }
+              >
                 <MaterialCommunityIcons
                   name="file-document-edit-outline"
                   size={32}
