@@ -8,6 +8,8 @@ import java.util.List;
 public interface InterfaceInvoiceService {
     public List<Invoice> getInvoices(Integer user_id);
 
+    public List<CustomInvoice> getCustomInvoices(Integer user_id);
+
     public CustomInvoice getCustomInvoice(Integer user_id, Integer invoice_id);
 
     public Invoice getInvoice(Integer user_id, Integer invoice_id);

@@ -37,11 +37,65 @@ public class InvoiceService implements InterfaceInvoiceService {
 
     @Override
     public List<Invoice> getInvoices(Integer user_id) {
-        List<Invoice> invoices = invoiceInterface.findInvoicesByUserId(user_id);
 
-        invoices.forEach(invoice -> invoice.setUser_id(null));
+        return invoiceInterface.findInvoicesByUserId(user_id);
+    }
 
-        return invoices;
+    @Override
+    public List<CustomInvoice> getCustomInvoices(Integer user_id) {
+        List<CustomInvoice> customInvoices = new ArrayList<>();
+        List <Invoice> invoices = invoiceInterface.findInvoicesByUserId(user_id);
+
+        invoices.forEach(invoice -> {
+            CustomInvoice customInvoice = new CustomInvoice();
+            List<CustomOrder> customOrders = new ArrayList<>();
+
+            Table table = tableInterface.findById(invoice.getTable_id()).orElse(null);
+            List<Order> orders = orderInterface.getOrdersByInvoiceId(invoice.getInvoice_id());
+
+            if (invoice == null) throw new CustomException(HttpStatus.NOT_FOUND, "Factura no encontrada.");
+            if (!invoice.getUser_id().equals(user_id)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY ,"El usuario no tiene permiso para acceder a esta factura.");
+            if (table == null) throw new CustomException(HttpStatus.NOT_FOUND, "Mesa no encontrada.");
+            if (!table.getUser_id().equals(user_id)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY ,"El usuario no tiene permiso para acceder a esta mesa.");
+
+            customInvoice.setInvoice_id(invoice.getInvoice_id());
+            customInvoice.setTotal(invoice.getTotal());
+
+            LocalDateTime dateTimeForInvoice = invoice.getInvoice_date().toLocalDateTime();
+            DateTimeFormatter dateFormatterForInvoice = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            customInvoice.setInvoice_date(dateTimeForInvoice.format(dateFormatterForInvoice));
+
+            customInvoice.setPaid(invoice.getPaid());
+            customInvoice.setTable_name(table.getTable_name());
+
+            orders.forEach(order -> {
+                Product product = productInterface.findById(order.getProduct_id()).orElse(null);
+
+                CustomOrder customOrder = new CustomOrder();
+                customOrder.setOrder_id(order.getOrder_id());
+                customOrder.setProduct_name(product.getProduct_name());
+                customOrder.setTable_id(order.getTable_id());
+                customOrder.setTable_name(table.getTable_name());
+                customOrder.setProduct_id(order.getProduct_id());
+                customOrder.setProduct_name(product.getProduct_name());
+                customOrder.setPrice(product.getPrice());
+                customOrder.setQuantity(order.getQuantity());
+                customOrder.setTotal(product.getPrice() * order.getQuantity());
+
+                LocalDateTime dateTime = order.getOrder_date().toLocalDateTime();
+                DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                customOrder.setOrder_date(dateTime.format(dateFormatter));
+
+                customOrder.setStatus(order.getStatus());
+
+                customOrders.add(customOrder);
+            });
+
+            customInvoice.setOrders(customOrders);
+            customInvoices.add(customInvoice);
+        });
+
+        return customInvoices;
     }
 
     @Override
@@ -60,7 +114,11 @@ public class InvoiceService implements InterfaceInvoiceService {
 
         customInvoice.setInvoice_id(invoice_id);
         customInvoice.setTotal(invoice.getTotal());
-        customInvoice.setInvoice_date(invoice.getInvoice_date());
+
+        LocalDateTime dateTimeForInvoice = invoice.getInvoice_date().toLocalDateTime();
+        DateTimeFormatter dateFormatterForInvoice = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        customInvoice.setInvoice_date(dateTimeForInvoice.format(dateFormatterForInvoice));
+
         customInvoice.setPaid(invoice.getPaid());
         customInvoice.setTable_name(table.getTable_name());
 

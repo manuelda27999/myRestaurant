@@ -44,7 +44,7 @@ const HomeTabs = () => {
         }}
       />
       <Tabs.Screen
-        name="invoices"
+        name="(invoices)"
         options={{
           title: "Facturas",
           tabBarIcon: ({ color, size }) => (

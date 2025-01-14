@@ -29,7 +29,7 @@ public class InvoiceController {
             String token = bearerToken.replace("Bearer ", "");
             int user_id = JWTUtils.getIdFromToken(token);
 
-            List<Invoice> invoices = invoiceService.getInvoices(user_id);
+            List<CustomInvoice> invoices = invoiceService.getCustomInvoices(user_id);
             return ResponseEntity.ok(invoices);
         } catch (CustomException exception) {
             Map<String, String> response = new HashMap<>();

@@ -50,7 +50,6 @@ export function validateName(name: string) {
 }
 
 export function validateId(id: string) {
-  debugger;
   if (typeof id !== "string") throw new Error("id is not a number");
   if (id === null) throw new Error("id is null");
 }
