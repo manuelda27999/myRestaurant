@@ -92,7 +92,7 @@ public class InvoiceService implements InterfaceInvoiceService {
             });
 
             customInvoice.setOrders(customOrders);
-            customInvoices.add(customInvoice);
+            customInvoices.addFirst(customInvoice);
         });
 
         return customInvoices;

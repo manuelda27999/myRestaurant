@@ -3,7 +3,9 @@ import React, { useEffect, useState } from "react";
 import { getData } from "../../../utilities/encryptedStorage";
 import getInvoices from "../../../logic/invoices/getInvoices";
 import { MaterialIcons } from "@expo/vector-icons";
-import Entypo from "@expo/vector-icons/Entypo";
+import { useIsFocused } from "@react-navigation/native";
+import { router } from "expo-router";
+import classNames from "classnames";
 
 type Order = {
   order_id: number;
@@ -29,6 +31,8 @@ type Invoice = {
 };
 
 const Invoices = () => {
+  const isFocused = useIsFocused();
+
   const [token, setToken] = useState<string>(null);
   const [invoices, setInvoices] = useState<Array<Invoice>>([]);
 
@@ -54,7 +58,7 @@ const Invoices = () => {
     if (token) {
       handleGetInvoices();
     }
-  }, [token]);
+  }, [token, isFocused]);
 
   return (
     <View className="flex flex-1 w-full items-center">
@@ -89,7 +93,22 @@ const Invoices = () => {
               </View>
               <View className="flex flex-row justify-between w-full mt-2">
                 <Text className="w-12"></Text>
-                <Pressable className="bg-red-600 w-1/4 my-1 py-1 rounded-2xl">
+                <Pressable
+                  className={classNames(
+                    "bg-red-600 w-1/4 my-1 py-1 rounded-2xl",
+                    {
+                      "bg-green-600": invoice.paid,
+                    }
+                  )}
+                  onPress={() => {
+                    if (!invoice.paid) {
+                      router.push({
+                        pathname: "pay-invoice-modal",
+                        params: { invoiceIdProp: invoice.invoice_id },
+                      });
+                    }
+                  }}
+                >
                   <Text className="text-center text-white text-lg font-extrabold">
                     {invoice.paid ? "Pagado" : "Pagar"}
                   </Text>

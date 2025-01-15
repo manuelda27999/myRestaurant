@@ -7,6 +7,7 @@ import classNames from "classnames";
 import changeStatus from "../../../logic/orders/changeStatus";
 import lodash from "lodash";
 import { router } from "expo-router";
+import { useIsFocused } from "@react-navigation/native";
 
 type Order = {
   order_id: number;
@@ -23,6 +24,8 @@ type Order = {
 };
 
 const Orders = () => {
+  const isFocused = useIsFocused();
+
   const [token, setToken] = useState<string | null>(null);
   const [orders, setOrders] = useState<Array<Order>>([]);
 
@@ -44,7 +47,7 @@ const Orders = () => {
 
   const handleChangeStatus = async (order_id: number) => {
     try {
-      const result = await changeStatus(token, order_id);
+      await changeStatus(token, order_id);
 
       const ordersEdited = lodash.cloneDeep(orders);
       const index = orders.findIndex((order) => order.order_id == order_id);

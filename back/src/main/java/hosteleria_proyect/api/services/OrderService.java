@@ -89,7 +89,7 @@ public class OrderService implements InterfaceOrderService {
             customOrder.setStatus(order.getStatus());
             customOrder.setInvoice_id(order.getInvoice_id());
 
-            customOrders.add(customOrder);
+            customOrders.addFirst(customOrder);
         });
 
         return customOrders;
