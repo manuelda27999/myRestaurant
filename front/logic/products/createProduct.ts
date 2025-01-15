@@ -1,4 +1,4 @@
-import { validateId } from "../../utilities/validators";
+import { validateToken } from "../../utilities/validators";
 
 type Product = {
   product_name: string;
@@ -15,7 +15,7 @@ export default async function createProduct(
 ): Promise<boolean> {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
-  validateId(token);
+  validateToken(token);
 
   return fetch(`${apiUrl}/products/${category_id}`, {
     method: "POST",

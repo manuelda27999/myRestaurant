@@ -68,10 +68,25 @@ const Invoices = () => {
             className="border-solid border-b-2 border-gray-300 w-full py-2 px-2 flex flex-column justify-between"
             key={invoice.invoice_id}
           >
-            <View className="flex flex-col pb-1 w-full">
-              <Text className="text-xl font-bold">{invoice.invoice_date}</Text>
-              <Text className="text-lg">{invoice.table_name}</Text>
-              <Text className="text-lg">Comandas</Text>
+            <View className="flex flex-row w-full justify-between">
+              <View className="flex flex-col pb-1 w-2/3 ">
+                <Text className="text-xl font-bold">
+                  {invoice.invoice_date}
+                </Text>
+                <Text className="text-lg">{invoice.table_name}</Text>
+                <Text className="text-lg">Comandas</Text>
+              </View>
+              <Pressable
+                className="w-12 flex items-end "
+                onPress={() => {
+                  router.push({
+                    pathname: "edit-invoice-modal",
+                    params: { invoiceIdProp: invoice.invoice_id },
+                  });
+                }}
+              >
+                <MaterialIcons name="edit" size={32} color="black" />
+              </Pressable>
             </View>
             <View className="flex flex-col w-full border-y-2 border-dashed py-1">
               {invoice.orders.map((order) => (
@@ -91,15 +106,12 @@ const Invoices = () => {
                 <Text className=" text-lg font-semibold">Total</Text>
                 <Text className=" text-lg font-semibold">{invoice.total}</Text>
               </View>
-              <View className="flex flex-row justify-between w-full mt-2">
-                <Text className="w-12"></Text>
+              <View className="flex flex-row justify-center w-full mt-2">
                 <Pressable
-                  className={classNames(
-                    "bg-red-600 w-1/4 my-1 py-1 rounded-2xl",
-                    {
-                      "bg-green-600": invoice.paid,
-                    }
-                  )}
+                  className={classNames(" w-1/4 my-1 py-1 rounded-2xl", {
+                    "bg-green-600": invoice.paid,
+                    "bg-red-600": !invoice.paid,
+                  })}
                   onPress={() => {
                     if (!invoice.paid) {
                       router.push({
@@ -112,12 +124,6 @@ const Invoices = () => {
                   <Text className="text-center text-white text-lg font-extrabold">
                     {invoice.paid ? "Pagado" : "Pagar"}
                   </Text>
-                </Pressable>
-                <Pressable
-                  className="w-12 flex flex-row-reverse items-end"
-                  onPress={() => {}}
-                >
-                  <MaterialIcons name="edit" size={32} color="black" />
                 </Pressable>
               </View>
             </View>

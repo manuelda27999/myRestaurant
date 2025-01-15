@@ -1,4 +1,4 @@
-import { validateId } from "../../utilities/validators";
+import { validateToken } from "../../utilities/validators";
 
 export default async function deleteCategory(
   category_id: number,
@@ -6,7 +6,7 @@ export default async function deleteCategory(
 ): Promise<boolean> {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
-  validateId(token);
+  validateToken(token);
 
   return fetch(`${apiUrl}/categoryProduct/${category_id}`, {
     method: "DELETE",

@@ -1,4 +1,4 @@
-import { validateId } from "../../utilities/validators";
+import { validateToken } from "../../utilities/validators";
 
 type Order = {
   order_id: number;
@@ -17,7 +17,7 @@ type Order = {
 export default async function getOrders(token: string): Promise<Array<Order>> {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
-  validateId(token);
+  validateToken(token);
 
   return fetch(`${apiUrl}/orders`, {
     method: "GET",

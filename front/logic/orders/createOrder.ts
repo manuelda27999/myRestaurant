@@ -1,4 +1,4 @@
-import { validateId } from "../../utilities/validators";
+import { validateToken } from "../../utilities/validators";
 
 export default async function createOrder(
   token: string,
@@ -8,7 +8,7 @@ export default async function createOrder(
 ): Promise<boolean | string> {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
-  validateId(token);
+  validateToken(token);
 
   return fetch(`${apiUrl}/orders`, {
     method: "POST",

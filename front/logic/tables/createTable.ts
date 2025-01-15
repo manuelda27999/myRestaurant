@@ -1,4 +1,4 @@
-import { validateId, validateName } from "../../utilities/validators";
+import { validateToken, validateName } from "../../utilities/validators";
 
 export default async function createTable(
   table_name: string,
@@ -7,7 +7,7 @@ export default async function createTable(
 ): Promise<boolean> {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
-  validateId(token);
+  validateToken(token);
   validateName(table_name);
 
   return fetch(`${apiUrl}/tables`, {

@@ -88,13 +88,6 @@ const Tables = () => {
                 />
               </Pressable>
 
-              <Pressable>
-                <FontAwesome6
-                  name="file-invoice-dollar"
-                  size={28}
-                  color="black"
-                />
-              </Pressable>
               <Pressable
                 onPress={() =>
                   router.push({

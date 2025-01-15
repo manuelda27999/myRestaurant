@@ -1,19 +1,17 @@
-import { validateToken } from "../../utilities/validators";
-
-export default async function deleteProduct(
+export default async function editInvoice(
   token: string,
-  product_id: number
-): Promise<boolean> {
+  invoiceId: number,
+  tableId: number
+) {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
-  validateToken(token);
-
-  return fetch(`${apiUrl}/products/${product_id}`, {
-    method: "DELETE",
+  return fetch(`${apiUrl}/invoices/${invoiceId}`, {
+    method: "PATCH",
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
+    body: JSON.stringify({ table_id: tableId }),
   }).then((response) => {
     if (response.status === 204) {
       return true;

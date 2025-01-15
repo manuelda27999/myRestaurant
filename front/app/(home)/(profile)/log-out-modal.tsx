@@ -7,7 +7,7 @@ import { deleteData } from "../../../utilities/encryptedStorage";
 const Logout = () => {
   const handleLogout = async () => {
     await deleteData("token");
-    router.push("/");
+    router.replace("/");
   };
 
   const handleCancelLogout = () => {

@@ -118,11 +118,20 @@ const Orders = () => {
                 </Text>
               </Pressable>
               <View className="flex flex-row-reverse w-2/5 gap-6 py-1 pr-1">
-                <FontAwesome6
-                  name="file-invoice-dollar"
-                  size={28}
-                  color="black"
-                />
+                <Pressable
+                  onPress={() =>
+                    router.push({
+                      pathname: "edit-invoice-modal",
+                      params: { invoiceIdProp: order.invoice_id },
+                    })
+                  }
+                >
+                  <FontAwesome6
+                    name="file-invoice-dollar"
+                    size={28}
+                    color="black"
+                  />
+                </Pressable>
                 <Pressable
                   onPress={() =>
                     router.push({

@@ -1,20 +1,37 @@
 import { validateToken } from "../../utilities/validators";
 
-type Category = {
-  category_id: number;
-  category_name: string;
-  user_id: null;
+type Order = {
+  order_id: number;
+  table_id: number;
+  table_name: string;
+  product_id: number;
+  product_name: string;
+  quantity: number;
+  price: null;
+  total: null;
+  order_date: string;
+  status: string;
+  invoice_id: number;
 };
 
-export default async function getCategory(
+type Invoice = {
+  invoice_id: number;
+  total: number;
+  invoice_date: string;
+  paid: boolean;
+  table_name: string;
+  orders: Array<Order>;
+};
+
+export default async function getInvoice(
   token: string,
-  categoryId: number
-): Promise<Category> {
+  invoiceID: number
+): Promise<Invoice> {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
   validateToken(token);
 
-  return fetch(`${apiUrl}/categoryProduct/${categoryId}`, {
+  return fetch(`${apiUrl}/invoices/${invoiceID}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,

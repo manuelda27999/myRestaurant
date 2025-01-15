@@ -1,4 +1,4 @@
-import { validateId } from "../../utilities/validators";
+import { validateToken } from "../../utilities/validators";
 
 type Table = {
   table_id: number;
@@ -12,7 +12,7 @@ export default async function getTables(
 ): Promise<Array<Table> | null> {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
-  validateId(token);
+  validateToken(token);
 
   return fetch(`${apiUrl}/tables`, {
     method: "GET",

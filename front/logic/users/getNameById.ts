@@ -1,4 +1,4 @@
-import { validateId } from "../../utilities/validators";
+import { validateToken } from "../../utilities/validators";
 
 interface GetNameByIdInterface {
   string?: string;
@@ -10,7 +10,7 @@ export default async function getNameById(
 ): Promise<void | GetNameByIdInterface> {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
-  validateId(token);
+  validateToken(token);
 
   return fetch(`${apiUrl}/users/name/`, {
     method: "GET",

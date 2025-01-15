@@ -1,4 +1,4 @@
-import { validateId, validateName } from "../../utilities/validators";
+import { validateToken, validateName } from "../../utilities/validators";
 
 interface ChangeNameUserResponse {
   error?: string;
@@ -10,7 +10,7 @@ export default async function changeNameUser(
 ): Promise<boolean | ChangeNameUserResponse> {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
-  validateId(token);
+  validateToken(token);
   validateName(name);
 
   return fetch(`${apiUrl}/users/`, {

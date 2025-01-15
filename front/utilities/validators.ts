@@ -49,7 +49,7 @@ export function validateName(name: string) {
   if (name === "") throw new Error("name is empty");
 }
 
-export function validateId(id: string) {
+export function validateToken(id: string) {
   if (typeof id !== "string") throw new Error("id is not a number");
   if (id === null) throw new Error("id is null");
 }

@@ -1,4 +1,4 @@
-import { validateId } from "../../utilities/validators";
+import { validateToken } from "../../utilities/validators";
 
 export default async function editOrder(
   token: string,
@@ -10,7 +10,7 @@ export default async function editOrder(
 ): Promise<boolean> {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
-  validateId(token);
+  validateToken(token);
 
   return fetch(`${apiUrl}/orders/${order_id}`, {
     method: "PATCH",

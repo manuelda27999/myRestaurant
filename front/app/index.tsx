@@ -18,7 +18,7 @@ const Login = () => {
 
         await setData("token", token);
 
-        router.push("(home)/tables");
+        router.replace("(home)/tables");
       }
     } catch (error: any) {
       alert(error.message);

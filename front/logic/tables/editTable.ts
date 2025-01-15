@@ -1,4 +1,4 @@
-import { validateId, validateName } from "../../utilities/validators";
+import { validateToken, validateName } from "../../utilities/validators";
 
 export default async function editTable(
   table_id: number,
@@ -8,7 +8,7 @@ export default async function editTable(
 ): Promise<boolean | string> {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
-  validateId(token);
+  validateToken(token);
   validateName(table_name);
 
   return fetch(`${apiUrl}/tables/${table_id}`, {
