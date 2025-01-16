@@ -172,7 +172,7 @@ const EditOrderModal = () => {
       );
 
       if (result && typeof result === "boolean") {
-        createToastClass("Orden editada");
+        createToastClass("Comanda editada");
         router.push("orders");
       }
     } catch (error) {
@@ -184,7 +184,7 @@ const EditOrderModal = () => {
     try {
       const result: boolean = await deleteOrder(token, Number(orderIdProp));
       if (result && typeof result === "boolean") {
-        createToastClass("Orden eliminada");
+        createToastClass("Comanda eliminada");
         router.push("orders");
       }
     } catch (error) {

@@ -3,7 +3,7 @@ import React from "react";
 import { useState } from "react";
 import { Link, router } from "expo-router";
 import registerUser from "./../logic/users/registerUser";
-import customAlert from "./../utilities/customAlert";
+import customAlert from "../utilities/customAlert";
 import createToastClass from "../utilities/toastClass";
 
 const Register: React.FC = () => {

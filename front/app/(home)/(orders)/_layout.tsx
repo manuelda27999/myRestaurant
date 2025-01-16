@@ -7,11 +7,11 @@ const Layout = () => {
       <Stack.Screen name="orders" options={{ headerShown: false }} />
       <Stack.Screen
         name="edit-order-modal"
-        options={{ presentation: "modal", title: "Editar orden" }}
+        options={{ presentation: "modal", title: "Editar comanda" }}
       />
       <Stack.Screen
         name="new-order-modal"
-        options={{ presentation: "modal", title: "Nueva orden" }}
+        options={{ presentation: "modal", title: "Nueva comanda" }}
       />
     </Stack>
   );

@@ -37,7 +37,7 @@ const HomeTabs = () => {
       <Tabs.Screen
         name="(orders)"
         options={{
-          title: "Pedidos",
+          title: "Comandas",
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="list-ul" size={24} color="black" />
           ),

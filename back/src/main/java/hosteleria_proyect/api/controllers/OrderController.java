@@ -60,7 +60,7 @@ public class OrderController {
             int user_id = JWTUtils.getIdFromToken(token);
 
             orderService.createOrder(user_id, order);
-            return new ResponseEntity<>("Pedido creado con éxito", HttpStatus.CREATED);
+            return new ResponseEntity<>("Comanda creada con éxito", HttpStatus.CREATED);
         } catch (CustomException exception) {
             Map<String, String> response = new HashMap<>();
             response.put("message", exception.getMessage());
@@ -75,7 +75,7 @@ public class OrderController {
             int user_id = JWTUtils.getIdFromToken(token);
 
             orderService.editOrder(user_id, order_id, order);
-            return new ResponseEntity<>("Pedido editado con éxito", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("Comanda editada con éxito", HttpStatus.NO_CONTENT);
         } catch (CustomException exception) {
             Map<String, String> response = new HashMap<>();
             response.put("message", exception.getMessage());
@@ -105,7 +105,7 @@ public class OrderController {
             int user_id = JWTUtils.getIdFromToken(token);
 
             orderService.deleteOrder(user_id, order_id);
-            return new ResponseEntity<>("Pedido eliminado", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("Comanda eliminada", HttpStatus.NO_CONTENT);
         } catch (CustomException exception) {
             Map<String, String> response = new HashMap<>();
             response.put("message", exception.getMessage());

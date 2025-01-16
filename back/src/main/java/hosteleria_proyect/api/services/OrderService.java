@@ -42,8 +42,8 @@ public class OrderService implements InterfaceOrderService {
         CustomOrder customOrder = new CustomOrder();
         Order order = orderInterface.findById(order_id).orElse(null);
 
-        if (order == null) throw new CustomException(HttpStatus.NOT_FOUND, "Pedido no encontrado");
-        if (!order.getUser_id().equals(user_id)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Este pedido no pertenece a este usuario");
+        if (order == null) throw new CustomException(HttpStatus.NOT_FOUND, "Comanda no encontrada");
+        if (!order.getUser_id().equals(user_id)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Esta comanda no pertenece a este usuario");
 
         Product product = productInterface.findById(order.getProduct_id()).orElse(null);
         Table table = tableInterface.findById(order.getTable_id()).orElse(null);
@@ -133,8 +133,8 @@ public class OrderService implements InterfaceOrderService {
         Product newProduct = productInterface.findById(order.getProduct_id()).orElse(null);
         Invoice oldInvoice = invoiceInterface.findById(orderToEdit.getInvoice_id()).orElse(null);
 
-        if (orderToEdit == null) throw new CustomException(HttpStatus.NOT_FOUND, "Pedido no encontrado");
-        if (!orderToEdit.getUser_id().equals(user_id)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Este pedido no pertenece a este usuario");
+        if (orderToEdit == null) throw new CustomException(HttpStatus.NOT_FOUND, "Comanda no encontrada");
+        if (!orderToEdit.getUser_id().equals(user_id)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Esta comanda no pertenece a este usuario");
         if (oldProduct == null) throw new CustomException(HttpStatus.NOT_FOUND, "Producto no encontrado");
         if (!oldProduct.getUser_id().equals(user_id)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Este producto no pertenece a este usuario");
         if (newProduct == null) throw new CustomException(HttpStatus.NOT_FOUND, "Producto no encontrado");
@@ -186,8 +186,8 @@ public class OrderService implements InterfaceOrderService {
     public void changeStatus(Integer user_id, Integer order_id) {
         Order orderToEdit = orderInterface.findById(order_id).orElse(null);
 
-        if (orderToEdit == null) throw new CustomException(HttpStatus.NOT_FOUND, "Pedido no encontrado");
-        if (!orderToEdit.getUser_id().equals(user_id)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Este pedido no pertenece a este usuario");
+        if (orderToEdit == null) throw new CustomException(HttpStatus.NOT_FOUND, "Comanda no encontrada");
+        if (!orderToEdit.getUser_id().equals(user_id)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Esta comanda no pertenece a este usuario");
 
         switch (orderToEdit.getStatus()) {
             case OrderStatus.PENDING:
@@ -213,12 +213,12 @@ public class OrderService implements InterfaceOrderService {
         Invoice invoiceToEdit = invoiceInterface.findById(orderToDelete.getInvoice_id()).orElse(null);
         Product product = productInterface.findById(orderToDelete.getProduct_id()).orElse(null);
 
-        if (orderToDelete == null) throw new CustomException(HttpStatus.NOT_FOUND, "Pedido no encontrado");
-        if (!orderToDelete.getUser_id().equals(user_id)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Este pedido no pertenece a este usuario");
+        if (orderToDelete == null) throw new CustomException(HttpStatus.NOT_FOUND, "Comanda no encontrada");
+        if (!orderToDelete.getUser_id().equals(user_id)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Esta comanda no pertenece a este usuario");
         if (invoiceToEdit == null) throw new CustomException(HttpStatus.NOT_FOUND, "Factura no encontrada");
         if (!invoiceToEdit.getUser_id().equals(user_id)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Esta factura no pertenece a este usuario");
 
-        if (orderToDelete.getStatus() != OrderStatus.PENDING) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Esta orden no se puede eliminar debido a su estado");
+        if (orderToDelete.getStatus() != OrderStatus.PENDING) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Esta comanda no se puede eliminar debido a su estado");
 
         invoiceToEdit.setTotal(invoiceToEdit.getTotal() - (orderToDelete.getQuantity() * product.getPrice()));
 

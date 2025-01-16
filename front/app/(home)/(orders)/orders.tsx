@@ -84,76 +84,82 @@ const Orders = () => {
   return (
     <View className="flex flex-1 items-center w-full">
       <ScrollView className="flex flex-col w-full">
-        {orders.map((order) => (
-          <View key={order.order_id} className="flex flex-col border-b-4">
-            <View className="px-2 border-b-2 py-1">
-              <Text className="text-lg font-semibold">
-                {order.product_name} X {order.quantity}
-              </Text>
-              <Text>{order.table_name}</Text>
-              <Text className="">Fecha: {order.order_date}</Text>
-            </View>
-            <View
-              className={classNames(
-                "px-2 flex flex-row items-center justify-between w-full",
-                {
-                  "bg-red-100": order.status === "PENDING",
-                  "bg-yellow-100": order.status === "PREPARING",
-                  "bg-green-100": order.status === "READY",
-                  "bg-green-300": order.status === "DELIVERED",
-                }
-              )}
-            >
-              <Pressable
-                className="w-2/5"
-                onPress={() => handleChangeStatus(order.order_id)}
-              >
-                <Text className="font-semibold text-lg">
-                  {order.status === "PENDING"
-                    ? "Pendiente"
-                    : order.status === "PREPARING"
-                    ? "Preparando"
-                    : order.status === "READY"
-                    ? "Listo"
-                    : "Entregado"}
+        {orders.length > 0 ? (
+          orders.map((order) => (
+            <View key={order.order_id} className="flex flex-col border-b-4">
+              <View className="px-2 border-b-2 py-1">
+                <Text className="text-lg font-semibold">
+                  {order.product_name} X {order.quantity}
                 </Text>
-              </Pressable>
-              <View className="flex flex-row-reverse w-2/5 gap-6 py-1 pr-1">
-                <Pressable
-                  onPress={() =>
-                    router.push({
-                      pathname: "edit-invoice-modal",
-                      params: { invoiceIdProp: order.invoice_id },
-                    })
+                <Text>{order.table_name}</Text>
+                <Text className="">Fecha: {order.order_date}</Text>
+              </View>
+              <View
+                className={classNames(
+                  "px-2 flex flex-row items-center justify-between w-full",
+                  {
+                    "bg-red-100": order.status === "PENDING",
+                    "bg-yellow-100": order.status === "PREPARING",
+                    "bg-green-100": order.status === "READY",
+                    "bg-green-300": order.status === "DELIVERED",
                   }
-                >
-                  <FontAwesome6
-                    name="file-invoice-dollar"
-                    size={28}
-                    color="black"
-                  />
-                </Pressable>
+                )}
+              >
                 <Pressable
-                  onPress={() =>
-                    router.push({
-                      pathname: "edit-order-modal",
-                      params: { orderIdProp: order.order_id },
-                    })
-                  }
+                  className="w-2/5"
+                  onPress={() => handleChangeStatus(order.order_id)}
                 >
-                  <MaterialIcons name="edit" size={32} color="black" />
+                  <Text className="font-semibold text-lg">
+                    {order.status === "PENDING"
+                      ? "Pendiente"
+                      : order.status === "PREPARING"
+                      ? "Preparando"
+                      : order.status === "READY"
+                      ? "Listo"
+                      : "Entregado"}
+                  </Text>
                 </Pressable>
+                <View className="flex flex-row-reverse w-2/5 gap-6 py-1 pr-1">
+                  <Pressable
+                    onPress={() =>
+                      router.push({
+                        pathname: "edit-invoice-modal",
+                        params: { invoiceIdProp: order.invoice_id },
+                      })
+                    }
+                  >
+                    <FontAwesome6
+                      name="file-invoice-dollar"
+                      size={28}
+                      color="black"
+                    />
+                  </Pressable>
+                  <Pressable
+                    onPress={() =>
+                      router.push({
+                        pathname: "edit-order-modal",
+                        params: { orderIdProp: order.order_id },
+                      })
+                    }
+                  >
+                    <MaterialIcons name="edit" size={32} color="black" />
+                  </Pressable>
+                </View>
               </View>
             </View>
-          </View>
-        ))}
+          ))
+        ) : (
+          <Text className="text-xl w-full text-center my-6 px-12 ">
+            No se ha encontrado ninguna comanda
+          </Text>
+        )}
       </ScrollView>
       <Pressable
         className="bg-red-600 w-2/4 my-3 py-3 rounded-2xl"
         onPress={() => router.push({ pathname: "new-order-modal" })}
       >
         <Text className="text-center text-white text-xl font-extrabold">
-          Nueva orden
+          Nueva comanda
         </Text>
       </Pressable>
     </View>

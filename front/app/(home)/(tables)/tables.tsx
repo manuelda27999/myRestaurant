@@ -61,46 +61,52 @@ const Tables = () => {
         {name}
       </Text>
       <View className="flex flex-1 flex-col border-solid w-full">
-        {tables.map((table) => (
-          <View
-            key={table.table_id}
-            className="border-b-2 border-solid px-4 py-1 flex flex-row w-full"
-          >
-            <View className="flex flex-col w-3/6">
-              <Text className="text-lg font-bold">{table.table_name}</Text>
-              <Text className="text-lg">
-                {table.available ? "Libre" : "Ocupada"}
-              </Text>
-            </View>
-            <View className="flex flex-row flex-1 h-full justify-end items-center gap-8">
-              <Pressable
-                onPress={() =>
-                  router.push({
-                    pathname: "new-order-modal",
-                    params: { tableIdProp: table.table_id },
-                  })
-                }
-              >
-                <MaterialCommunityIcons
-                  name="file-document-edit-outline"
-                  size={34}
-                  color="black"
-                />
-              </Pressable>
+        {tables.length > 0 ? (
+          tables.map((table) => (
+            <View
+              key={table.table_id}
+              className="border-b-2 border-solid px-4 py-1 flex flex-row w-full"
+            >
+              <View className="flex flex-col w-3/6">
+                <Text className="text-lg font-bold">{table.table_name}</Text>
+                <Text className="text-lg">
+                  {table.available ? "Libre" : "Ocupada"}
+                </Text>
+              </View>
+              <View className="flex flex-row flex-1 h-full justify-end items-center gap-8">
+                <Pressable
+                  onPress={() =>
+                    router.push({
+                      pathname: "new-order-modal",
+                      params: { tableIdProp: table.table_id },
+                    })
+                  }
+                >
+                  <MaterialCommunityIcons
+                    name="file-document-edit-outline"
+                    size={34}
+                    color="black"
+                  />
+                </Pressable>
 
-              <Pressable
-                onPress={() =>
-                  router.push({
-                    pathname: "edit-table-modal",
-                    params: { tableIdProp: table.table_id },
-                  })
-                }
-              >
-                <MaterialIcons name="edit" size={32} color="black" />
-              </Pressable>
+                <Pressable
+                  onPress={() =>
+                    router.push({
+                      pathname: "edit-table-modal",
+                      params: { tableIdProp: table.table_id },
+                    })
+                  }
+                >
+                  <MaterialIcons name="edit" size={32} color="black" />
+                </Pressable>
+              </View>
             </View>
-          </View>
-        ))}
+          ))
+        ) : (
+          <Text className="text-xl w-full text-center my-3 px-12 ">
+            Empieza a gestionar tu negocio registrando tus mesas
+          </Text>
+        )}
       </View>
       <Pressable
         className="bg-red-600 w-2/4 my-4 py-3 rounded-2xl"

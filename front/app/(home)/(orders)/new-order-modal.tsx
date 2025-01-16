@@ -111,7 +111,7 @@ const NewOrderModal = () => {
       const result = await createOrder(token, tableId, product_id, quantity);
 
       if (result && typeof result === "boolean") {
-        createToastClass("Orden creada");
+        createToastClass("Comanda creada");
         router.push("orders");
       }
     } catch (error) {
