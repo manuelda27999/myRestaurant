@@ -58,12 +58,6 @@ const CreateCategoryModal = () => {
           Crear
         </Text>
       </Pressable>
-      <Link
-        className="text-red-800 font-bold underline mt-4 text-lg"
-        href={"product-categories"}
-      >
-        Cancelar
-      </Link>
     </View>
   );
 };

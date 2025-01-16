@@ -1,5 +1,7 @@
-import { Tabs, Stack } from "expo-router";
 import React from "react";
+import { Pressable } from "react-native";
+import { Tabs, Stack, router } from "expo-router";
+
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
@@ -32,6 +34,14 @@ const HomeTabs = () => {
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="table-restaurant" size={28} color="black" />
           ),
+          headerRight: () => (
+            <Pressable
+              className="mr-5"
+              onPress={() => router.push("../../(profile)/profile")}
+            >
+              <FontAwesome5 name="user-alt" size={26} color="white" />
+            </Pressable>
+          ),
         }}
       />
       <Tabs.Screen
@@ -40,6 +50,14 @@ const HomeTabs = () => {
           title: "Comandas",
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="list-ul" size={24} color="black" />
+          ),
+          headerRight: () => (
+            <Pressable
+              className="mr-5"
+              onPress={() => router.push("../../(profile)/profile")}
+            >
+              <FontAwesome5 name="user-alt" size={26} color="white" />
+            </Pressable>
           ),
         }}
       />
@@ -50,6 +68,14 @@ const HomeTabs = () => {
           tabBarIcon: ({ color, size }) => (
             <FontAwesome6 name="file-invoice-dollar" size={24} color="black" />
           ),
+          headerRight: () => (
+            <Pressable
+              className="mr-5"
+              onPress={() => router.push("../../(profile)/profile")}
+            >
+              <FontAwesome5 name="user-alt" size={26} color="white" />
+            </Pressable>
+          ),
         }}
       />
       <Tabs.Screen
@@ -59,14 +85,13 @@ const HomeTabs = () => {
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="restaurant" size={24} color="black" />
           ),
-        }}
-      />
-      <Tabs.Screen
-        name="(profile)"
-        options={{
-          title: "Perfil",
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome5 name="user-alt" size={24} color="black" />
+          headerRight: () => (
+            <Pressable
+              className="mr-5"
+              onPress={() => router.push("../../(profile)/profile")}
+            >
+              <FontAwesome5 name="user-alt" size={26} color="white" />
+            </Pressable>
           ),
         }}
       />

@@ -297,24 +297,13 @@ const EditOrderModal = () => {
             Editar
           </Text>
         </Pressable>
-        <Pressable
-          onPress={() => handleDeleteOrder()}
-          className="bg-red-600 rounded-lg w-1/2 h-12 flex justify-center mt-10 mb-4"
-        >
-          <Text className="text-white font-semibold text-3xl text-center">
-            Eliminar
-          </Text>
-        </Pressable>
       </View>
-
       <Pressable
-        className="w-1/3 mb-2"
-        onPress={() => {
-          router.back();
-        }}
+        onPress={() => handleDeleteOrder()}
+        className="bg-red-600 rounded-lg w-1/2 h-12 flex justify-center mt-10 mb-4"
       >
-        <Text className="text-red-800 font-bold underline text-lg text-center">
-          Cancelar
+        <Text className="text-white font-semibold text-3xl text-center">
+          Eliminar
         </Text>
       </Pressable>
     </View>

@@ -11,6 +11,7 @@ const RootRender = () => {
   const [token, setToken] = useState<string | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [initialRouteName, setInitialRouteName] = useState<string>("index");
+  const [backArrorProfile, setBackArrowProfile] = useState<boolean>(false);
 
   const handleGetId = async () => {
     try {
@@ -22,6 +23,10 @@ const RootRender = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleChangeBackArrow = () => {
+    setBackArrowProfile(!backArrorProfile);
   };
 
   useEffect(() => {
@@ -61,6 +66,22 @@ const RootRender = () => {
         <Stack.Screen
           name="(home)"
           options={{ title: "Home", headerShown: false }}
+        />
+        <Stack.Screen
+          name="(profile)"
+          options={{
+            title: "Perfil",
+            headerShown: true,
+            headerBackVisible: false,
+            headerStyle: {
+              backgroundColor: "red",
+            },
+            headerTintColor: "white",
+            headerTitleStyle: {
+              fontWeight: "bold",
+              fontSize: 22,
+            },
+          }}
         />
       </Stack>
     </RootSiblingParent>

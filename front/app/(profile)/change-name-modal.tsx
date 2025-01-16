@@ -2,12 +2,12 @@ import { Text, View } from "react-native";
 import React, { useState, useEffect } from "react";
 import { Pressable } from "react-native";
 import { router, Link } from "expo-router";
-import getNameById from "../../../logic/users/getNameById";
+import getNameById from "../../logic/users/getNameById";
 import { TextInput } from "react-native";
-import changeNameUser from "../../../logic/users/changeName";
-import { getData } from "../../../utilities/encryptedStorage";
-import createToastClass from "../../../utilities/toastClass";
-import customAlert from "../../../utilities/customAlert";
+import changeNameUser from "../../logic/users/changeName";
+import { getData } from "../../utilities/encryptedStorage";
+import createToastClass from "../../utilities/toastClass";
+import customAlert from "../../utilities/customAlert";
 
 const ChangeNameModal = () => {
   const [newName, setNewName] = useState<string>("");
@@ -77,12 +77,6 @@ const ChangeNameModal = () => {
           Cambiar
         </Text>
       </Pressable>
-      <Link
-        className="text-red-800 font-bold underline mt-4 text-lg"
-        href={"profile"}
-      >
-        Cancelar
-      </Link>
     </View>
   );
 };

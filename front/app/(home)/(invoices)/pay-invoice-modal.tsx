@@ -53,12 +53,6 @@ const PayModal = () => {
           </Pressable>
         </View>
       </View>
-      <Link
-        className="text-red-800 font-bold underline mt-4 text-lg"
-        href={"invoices"}
-      >
-        Cancelar
-      </Link>
     </View>
   );
 };

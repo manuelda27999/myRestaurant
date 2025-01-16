@@ -2,10 +2,10 @@ import { Pressable, Text, TextInput, View } from "react-native";
 import { Link } from "expo-router";
 import React, { useState, useEffect } from "react";
 import { router } from "expo-router";
-import changePassword from "../../../logic/users/changePassword";
-import { getData } from "../../../utilities/encryptedStorage";
-import createToastClass from "../../../utilities/toastClass";
-import customAlert from "../../../utilities/customAlert";
+import changePassword from "../../logic/users/changePassword";
+import { getData } from "../../utilities/encryptedStorage";
+import createToastClass from "../../utilities/toastClass";
+import customAlert from "../../utilities/customAlert";
 
 const ChangePasswordModal = () => {
   const [token, setToken] = useState<string | null>(null);
@@ -78,12 +78,6 @@ const ChangePasswordModal = () => {
           Cambiar
         </Text>
       </Pressable>
-      <Link
-        className="text-red-800 font-bold underline mt-4 text-lg"
-        href={"profile"}
-      >
-        Cancelar
-      </Link>
     </View>
   );
 };

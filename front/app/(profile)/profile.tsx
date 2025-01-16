@@ -1,10 +1,10 @@
 import { Pressable, Text, View } from "react-native";
 import React, { useState, useEffect } from "react";
-import { getData } from "../../../utilities/encryptedStorage";
-import getNameById from "../../../logic/users/getNameById";
-import { router } from "expo-router";
+import { getData } from "../../utilities/encryptedStorage";
+import getNameById from "../../logic/users/getNameById";
+import { router, Link } from "expo-router";
 
-const Profile = () => {
+const Profile = (props) => {
   const [name, setName] = useState<string>("");
   const [token, setToken] = useState<string | null>(null);
 
@@ -69,6 +69,11 @@ const Profile = () => {
       >
         <Text className="text-red-700 text-xl text-center font-extrabold">
           Cerrar sesión
+        </Text>
+      </Pressable>
+      <Pressable className="mb-4 mt-8" onPress={() => router.back()}>
+        <Text className="text-red-800 font-bold underline text-lg">
+          Volver atrás
         </Text>
       </Pressable>
     </View>

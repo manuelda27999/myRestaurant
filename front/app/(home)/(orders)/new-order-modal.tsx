@@ -1,4 +1,4 @@
-import { Text, View, TextInput, Pressable } from "react-native";
+import { Text, View, TextInput, Pressable, BackHandler } from "react-native";
 import React, { useEffect, useState } from "react";
 import { getData } from "../../../utilities/encryptedStorage";
 import { useLocalSearchParams } from "expo-router";
@@ -131,7 +131,16 @@ const NewOrderModal = () => {
 
   useEffect(() => {
     if (category_id && token) handleGetProducts();
-  }, [token, category_id]);
+  }, [category_id]);
+
+  useEffect(() => {
+    return () => {
+      setTableId(null);
+      setCategory_id(null);
+      setProduct_id(null);
+      setQuantity(null);
+    };
+  }, []);
 
   useEffect(() => {
     if (tableIdProp) setTableId(Number(tableIdProp));
@@ -199,20 +208,6 @@ const NewOrderModal = () => {
           </Text>
         </Pressable>
       </View>
-      <Pressable
-        onPress={() => {
-          setTableId(null);
-          setCategory_id(null);
-          setProduct_id(null);
-          setQuantity(null);
-          router.push("orders");
-        }}
-        className=" w-1/2 h-12 flex justify-center mt-2 mb-4"
-      >
-        <Text className="text-red-800 font-bold text-center underline mt-4 text-lg">
-          Cancelar
-        </Text>
-      </Pressable>
     </View>
   );
 };

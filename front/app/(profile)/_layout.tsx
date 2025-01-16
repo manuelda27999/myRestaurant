@@ -1,6 +1,10 @@
 import { Stack } from "expo-router";
 import React from "react";
 
+interface ProfileProps {
+  changeBackArrow: () => void;
+}
+
 const Layout = () => {
   return (
     <Stack>

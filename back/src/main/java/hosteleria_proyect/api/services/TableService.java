@@ -20,7 +20,7 @@ public class TableService implements InterfaceTableService {
         List<Table> tables = tableInterface.findAllByUser_id(user_id);
 
         tables.forEach(table -> {
-            if (table.getUser_id().equals(user_id)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Esta mesa no pertenece a este usuario");
+            if (!table.getUser_id().equals(user_id)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Esta mesa no pertenece a este usuario");
             table.setUser_id(null);
         });
 
