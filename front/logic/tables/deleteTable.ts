@@ -1,4 +1,4 @@
-import { validateToken } from "../../utilities/validators";
+import { validateId, validateToken } from "../../utilities/validators";
 
 export default async function deleteTable(
   table_id: number,
@@ -7,6 +7,7 @@ export default async function deleteTable(
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
   validateToken(token);
+  validateId(table_id);
 
   return fetch(`${apiUrl}/tables/${table_id}`, {
     method: "DELETE",

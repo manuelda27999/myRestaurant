@@ -10,6 +10,7 @@ import createToastClass from "../../../utilities/toastClass";
 import getTables from "../../../logic/tables/getTables";
 import RNPickerSelect from "react-native-picker-select";
 import { useIsFocused } from "@react-navigation/core";
+import customAlert from "../../../utilities/customAlert";
 
 type Order = {
   order_id: number;
@@ -88,7 +89,7 @@ const EditInvoiceModal = () => {
         setOrders(result.orders);
       }
     } catch (error) {
-      alert(error);
+      customAlert(error.message);
     }
   };
 
@@ -107,7 +108,7 @@ const EditInvoiceModal = () => {
         }
       }
     } catch (error) {
-      alert(error);
+      customAlert(error.message);
     }
   };
 
@@ -124,7 +125,7 @@ const EditInvoiceModal = () => {
         router.back();
       }
     } catch (error) {
-      alert(error);
+      customAlert(error.message);
     }
   };
 

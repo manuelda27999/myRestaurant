@@ -4,9 +4,9 @@ import getNameById from "../../../logic/users/getNameById";
 import { getData } from "../../../utilities/encryptedStorage";
 import getTables from "../../../logic/tables/getTables";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { router } from "expo-router";
+import customAlert from "../../../utilities/customAlert";
 
 type Table = {
   table_id: number;
@@ -33,7 +33,7 @@ const Tables = () => {
         setName(result);
       }
     } catch (error) {
-      alert(error);
+      customAlert(error.message);
     }
   };
 
@@ -43,7 +43,7 @@ const Tables = () => {
 
       if (result && typeof result != "string") setTables(result);
     } catch (error) {
-      alert(error);
+      customAlert(error.message);
     }
   };
 

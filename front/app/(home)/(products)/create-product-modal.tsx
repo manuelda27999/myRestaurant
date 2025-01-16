@@ -7,6 +7,7 @@ import { getData } from "../../../utilities/encryptedStorage";
 import createToastClass from "../../../utilities/toastClass";
 import createProduct from "../../../logic/products/createProduct";
 import getCategory from "../../../logic/categories/getCategory";
+import customAlert from "../../../utilities/customAlert";
 
 const CreateProductModal = () => {
   const { categoryIdProp } = useLocalSearchParams<{ categoryIdProp: string }>();
@@ -29,7 +30,7 @@ const CreateProductModal = () => {
       const result = await getCategory(token, Number(categoryIdProp));
       setCategoryName(result.category_name);
     } catch (error) {
-      alert(Error);
+      customAlert(error.message);
     }
   };
 
@@ -58,7 +59,7 @@ const CreateProductModal = () => {
         });
       }
     } catch (error) {
-      alert(error);
+      customAlert(error.message);
     }
   };
 

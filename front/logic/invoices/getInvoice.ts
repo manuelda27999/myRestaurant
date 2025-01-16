@@ -1,4 +1,4 @@
-import { validateToken } from "../../utilities/validators";
+import { validateId, validateToken } from "../../utilities/validators";
 
 type Order = {
   order_id: number;
@@ -30,6 +30,7 @@ export default async function getInvoice(
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
   validateToken(token);
+  validateId(invoiceID);
 
   return fetch(`${apiUrl}/invoices/${invoiceID}`, {
     method: "GET",

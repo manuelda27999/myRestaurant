@@ -7,6 +7,7 @@ import { router } from "expo-router";
 import editTable from "../../../logic/tables/editTable";
 import createToastClass from "../../../utilities/toastClass";
 import { useLocalSearchParams } from "expo-router";
+import customAlert from "../../../utilities/customAlert";
 
 type Table = {
   available: boolean;
@@ -38,7 +39,7 @@ const EditTableModal = () => {
         setAvailable(result.available);
       }
     } catch (error) {
-      alert(error);
+      customAlert(error.message);
     }
   };
 
@@ -57,7 +58,7 @@ const EditTableModal = () => {
         router.push("tables");
       }
     } catch (error) {
-      alert(error);
+      customAlert(error.message);
     }
   };
 
@@ -71,7 +72,7 @@ const EditTableModal = () => {
         router.push("tables");
       }
     } catch (error) {
-      alert(error);
+      customAlert(error.message);
     }
   };
 

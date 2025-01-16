@@ -8,6 +8,7 @@ import changeStatus from "../../../logic/orders/changeStatus";
 import lodash from "lodash";
 import { router } from "expo-router";
 import { useIsFocused } from "@react-navigation/native";
+import customAlert from "../../../utilities/customAlert";
 
 type Order = {
   order_id: number;
@@ -41,7 +42,7 @@ const Orders = () => {
 
       setOrders(result);
     } catch (error) {
-      alert(error);
+      customAlert(error.message);
     }
   };
 
@@ -69,7 +70,7 @@ const Orders = () => {
 
       setOrders(ordersEdited);
     } catch (error) {
-      alert(error);
+      customAlert(error.message);
     }
   };
 

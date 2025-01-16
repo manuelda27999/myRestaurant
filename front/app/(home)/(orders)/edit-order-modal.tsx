@@ -13,6 +13,7 @@ import editOrder from "../../../logic/orders/editOrder";
 import createToastClass from "../../../utilities/toastClass";
 import { router } from "expo-router";
 import deleteOrder from "../../../logic/orders/deleteOrder";
+import customAlert from "../../../utilities/customAlert";
 
 type Order = {
   order_id: number;
@@ -102,7 +103,7 @@ const EditOrderModal = () => {
       setProduct_id(result.product_id);
       setStatus(result.status);
     } catch (error) {
-      alert(error);
+      customAlert(error.message);
     }
   };
 
@@ -111,7 +112,7 @@ const EditOrderModal = () => {
       const result = await getTables(token);
       setTables(result);
     } catch (error) {
-      alert(error);
+      customAlert(error.message);
     }
   };
 
@@ -120,7 +121,7 @@ const EditOrderModal = () => {
       const result = await getCategories(token);
       setCategories(result);
     } catch (error) {
-      alert(error);
+      customAlert(error.message);
     }
   };
 
@@ -129,7 +130,7 @@ const EditOrderModal = () => {
       const result = await getProducts(token, category_id);
       setProducts(result);
     } catch (error) {
-      alert(error);
+      customAlert(error.message);
     }
   };
 
@@ -138,7 +139,7 @@ const EditOrderModal = () => {
       const result = await getProduct(token, Number(product_id));
       setCategory_id(result.category_id);
     } catch (error) {
-      alert(error);
+      customAlert(error.message);
     }
   };
 
@@ -175,7 +176,7 @@ const EditOrderModal = () => {
         router.push("orders");
       }
     } catch (error) {
-      alert(error);
+      customAlert(error.message);
     }
   };
 
@@ -187,7 +188,7 @@ const EditOrderModal = () => {
         router.push("orders");
       }
     } catch (error) {
-      alert(error);
+      customAlert(error.message);
     }
   };
 

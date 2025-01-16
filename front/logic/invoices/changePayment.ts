@@ -1,8 +1,13 @@
+import { validateId, validateToken } from "../../utilities/validators";
+
 export default async function changePayment(
   token: string,
   invoiceId: number
 ): Promise<boolean> {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
+
+  validateToken(token);
+  validateId(invoiceId);
 
   return fetch(`${apiUrl}/invoices/${invoiceId}/paid`, {
     method: "PATCH",

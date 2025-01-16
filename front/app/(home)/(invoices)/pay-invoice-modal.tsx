@@ -7,6 +7,7 @@ import { useState } from "react";
 import { getData } from "../../../utilities/encryptedStorage";
 import createToastClass from "../../../utilities/toastClass";
 import { router } from "expo-router";
+import customAlert from "../../../utilities/customAlert";
 
 const PayModal = () => {
   const { invoiceIdProp } = useLocalSearchParams();
@@ -27,7 +28,7 @@ const PayModal = () => {
         router.push("invoices");
       }
     } catch (error) {
-      alert(error);
+      customAlert(error.message);
     }
   };
 

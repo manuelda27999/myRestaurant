@@ -9,6 +9,7 @@ import getTables from "../../../logic/tables/getTables";
 import createToastClass from "../../../utilities/toastClass";
 import { router } from "expo-router";
 import createOrder from "../../../logic/orders/createOrder";
+import customAlert from "../../../utilities/customAlert";
 
 type Table = {
   table_id: number;
@@ -83,7 +84,7 @@ const NewOrderModal = () => {
       const result = await getTables(token);
       setTables(result);
     } catch (error) {
-      alert(error);
+      customAlert(error.message);
     }
   };
 
@@ -92,7 +93,7 @@ const NewOrderModal = () => {
       const result = await getCategories(token);
       setCategories(result);
     } catch (error) {
-      alert(error);
+      customAlert(error.message);
     }
   };
 
@@ -101,7 +102,7 @@ const NewOrderModal = () => {
       const result = await getProducts(token, category_id);
       setProducts(result);
     } catch (error) {
-      alert(error);
+      customAlert(error.message);
     }
   };
 
@@ -114,7 +115,7 @@ const NewOrderModal = () => {
         router.push("orders");
       }
     } catch (error) {
-      alert(error);
+      customAlert(error.message);
     }
   };
 

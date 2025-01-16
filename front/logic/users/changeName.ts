@@ -1,4 +1,4 @@
-import { validateToken, validateName } from "../../utilities/validators";
+import { validateToken, validateString } from "../../utilities/validators";
 
 interface ChangeNameUserResponse {
   error?: string;
@@ -11,7 +11,7 @@ export default async function changeNameUser(
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
   validateToken(token);
-  validateName(name);
+  validateString(name);
 
   return fetch(`${apiUrl}/users/`, {
     method: "PATCH",

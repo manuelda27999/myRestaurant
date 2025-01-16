@@ -7,6 +7,7 @@ import { TextInput } from "react-native";
 import changeNameUser from "../../../logic/users/changeName";
 import { getData } from "../../../utilities/encryptedStorage";
 import createToastClass from "../../../utilities/toastClass";
+import customAlert from "../../../utilities/customAlert";
 
 const ChangeNameModal = () => {
   const [newName, setNewName] = useState<string>("");
@@ -39,10 +40,10 @@ const ChangeNameModal = () => {
           router.push("profile", { relativeToDirectory: true });
         })
         .catch((error) => {
-          alert(error.message);
+          customAlert(error.message);
         });
     } catch (Error) {
-      alert(Error);
+      customAlert(Error);
     }
   };
 

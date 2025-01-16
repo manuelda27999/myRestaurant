@@ -4,6 +4,7 @@ import { Link, router } from "expo-router";
 import { getData } from "../../../utilities/encryptedStorage";
 import createTable from "../../../logic/tables/createTable";
 import createToastClass from "../../../utilities/toastClass";
+import customAlert from "../../../utilities/customAlert";
 
 const NewTableModal = () => {
   const [tableName, setTableName] = useState<string>("");
@@ -26,7 +27,7 @@ const NewTableModal = () => {
         router.push("tables");
       }
     } catch (error) {
-      alert(error);
+      customAlert(error.message);
     }
   };
 

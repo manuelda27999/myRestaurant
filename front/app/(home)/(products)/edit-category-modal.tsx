@@ -8,6 +8,7 @@ import { router } from "expo-router";
 import deleteCategory from "../../../logic/categories/deleteCategory";
 import { getData } from "../../../utilities/encryptedStorage";
 import createToastClass from "../../../utilities/toastClass";
+import customAlert from "../../../utilities/customAlert";
 
 const EditCategoryModal = () => {
   const [token, setToken] = useState<string | null>(null);
@@ -22,10 +23,10 @@ const EditCategoryModal = () => {
 
   const handleGetCategory = async () => {
     try {
-      const result = await getCategory(token, categoryIdProp);
+      const result = await getCategory(token, Number(categoryIdProp));
       setCategoryName(result.category_name);
     } catch (error) {
-      alert(Error);
+      customAlert(error.message);
     }
   };
 
@@ -42,7 +43,7 @@ const EditCategoryModal = () => {
         router.push("categories");
       }
     } catch (error) {
-      alert(error);
+      customAlert(error.message);
     }
   };
 
@@ -57,7 +58,7 @@ const EditCategoryModal = () => {
         router.push("categories");
       }
     } catch (error) {
-      alert(error);
+      customAlert(error.message);
     }
   };
 

@@ -1,4 +1,4 @@
-import { validateToken } from "../../utilities/validators";
+import { validateId, validateToken } from "../../utilities/validators";
 
 export default async function deleteProduct(
   token: string,
@@ -7,6 +7,7 @@ export default async function deleteProduct(
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
   validateToken(token);
+  validateId(product_id);
 
   return fetch(`${apiUrl}/products/${product_id}`, {
     method: "DELETE",

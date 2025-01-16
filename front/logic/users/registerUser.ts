@@ -1,6 +1,6 @@
 import {
   validateEmail,
-  validateName,
+  validateString,
   validatePassword,
 } from "../../utilities/validators";
 
@@ -15,7 +15,7 @@ export default async function registerUser(
 ): Promise<boolean | RegisterUserResponse> {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
-  validateName(name);
+  validateString(name);
   validateEmail(email);
   validatePassword(password);
 
@@ -24,7 +24,7 @@ export default async function registerUser(
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name, email, password }),
   }).then((response) => {
-    if (response.status === 200) {
+    if (response.status === 201) {
       return true;
     } else {
       return response.json().then((body) => {

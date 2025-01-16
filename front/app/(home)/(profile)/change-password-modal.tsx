@@ -1,10 +1,11 @@
-import { Alert, Pressable, Text, TextInput, View } from "react-native";
+import { Pressable, Text, TextInput, View } from "react-native";
 import { Link } from "expo-router";
 import React, { useState, useEffect } from "react";
 import { router } from "expo-router";
 import changePassword from "../../../logic/users/changePassword";
 import { getData } from "../../../utilities/encryptedStorage";
 import createToastClass from "../../../utilities/toastClass";
+import customAlert from "../../../utilities/customAlert";
 
 const ChangePasswordModal = () => {
   const [token, setToken] = useState<string | null>(null);
@@ -27,10 +28,10 @@ const ChangePasswordModal = () => {
           router.push("profile", { relativeToDirectory: true });
         })
         .catch((error) => {
-          alert(error.message);
+          customAlert(error.message);
         });
     } catch (Error) {
-      alert(Error);
+      customAlert(Error);
     }
   };
 

@@ -5,6 +5,7 @@ import { getData } from "../../../utilities/encryptedStorage";
 import { Link } from "expo-router";
 import { router } from "expo-router";
 import createToastClass from "../../../utilities/toastClass";
+import customAlert from "../../../utilities/customAlert";
 
 const CreateCategoryModal = () => {
   const [categoryName, setCategoryName] = useState<string>(null);
@@ -25,7 +26,7 @@ const CreateCategoryModal = () => {
         router.push("(products)/product-categories");
       }
     } catch (Error) {
-      alert(Error);
+      customAlert(Error);
     }
   };
 

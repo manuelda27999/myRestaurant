@@ -9,6 +9,7 @@ import getProduct from "../../../logic/products/getProduct";
 import editProduct from "../../../logic/products/editProduct";
 import getCategory from "../../../logic/categories/getCategory";
 import deleteProduct from "../../../logic/products/deleteProduct";
+import customAlert from "../../../utilities/customAlert";
 
 type Product = {
   product_id: number;
@@ -48,7 +49,7 @@ const EditProductModal = () => {
       setPrice(result.price.toString());
       setCategoryId(result.category_id);
     } catch (error) {
-      alert(Error);
+      customAlert(error.message);
     }
   };
 
@@ -57,7 +58,7 @@ const EditProductModal = () => {
       const result = await getCategory(token, categoryId);
       setCategoryName(result.category_name);
     } catch (error) {
-      alert(Error);
+      customAlert(error.message);
     }
   };
 
@@ -82,7 +83,7 @@ const EditProductModal = () => {
         });
       }
     } catch (error) {
-      alert(error);
+      customAlert(error.message);
     }
   };
 
@@ -100,7 +101,7 @@ const EditProductModal = () => {
         });
       }
     } catch (error) {
-      alert(error);
+      customAlert(error.message);
     }
   };
 

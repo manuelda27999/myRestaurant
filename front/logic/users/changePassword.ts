@@ -1,3 +1,5 @@
+import { validatePassword, validateToken } from "../../utilities/validators";
+
 interface ChangePasswordResponse {
   error?: string;
 }
@@ -9,6 +11,11 @@ export default async function changePassword(
   newPasswordRepeat: string
 ): Promise<boolean | ChangePasswordResponse> {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
+
+  validateToken(token);
+  validatePassword(lastPassword);
+  validatePassword(newPassword);
+  validatePassword(newPasswordRepeat);
 
   return fetch(`${apiUrl}/users/changePassword`, {
     method: "PATCH",

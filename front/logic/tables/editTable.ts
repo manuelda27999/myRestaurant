@@ -1,4 +1,8 @@
-import { validateToken, validateName } from "../../utilities/validators";
+import {
+  validateToken,
+  validateString,
+  validateId,
+} from "../../utilities/validators";
 
 export default async function editTable(
   table_id: number,
@@ -9,7 +13,8 @@ export default async function editTable(
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
   validateToken(token);
-  validateName(table_name);
+  validateString(table_name);
+  validateId(table_id);
 
   return fetch(`${apiUrl}/tables/${table_id}`, {
     method: "PATCH",

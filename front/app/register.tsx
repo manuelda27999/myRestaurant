@@ -3,6 +3,8 @@ import React from "react";
 import { useState } from "react";
 import { Link, router } from "expo-router";
 import registerUser from "./../logic/users/registerUser";
+import customAlert from "./../utilities/customAlert";
+import createToastClass from "../utilities/toastClass";
 
 const Register: React.FC = () => {
   const [name, setName] = useState<string>("");
@@ -12,16 +14,20 @@ const Register: React.FC = () => {
   const handleRegister = () => {
     try {
       registerUser(name, email, password)
-        .then(() => {
-          setName("");
-          setEmail("");
-          setPassword("");
+        .then((result) => {
+          if (result) {
+            createToastClass("Usuario registrado con éxito");
+            setName("");
+            setEmail("");
+            setPassword("");
+            router.replace("/");
+          }
         })
         .catch((error) => {
-          alert(error.message);
+          customAlert(error.message);
         });
-    } catch (Error) {
-      alert(Error);
+    } catch (error) {
+      customAlert(error.message);
     }
   };
 

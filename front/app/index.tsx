@@ -4,6 +4,7 @@ import React from "react";
 import { Link, router } from "expo-router";
 import loginUser from "../logic/users/loginUser";
 import { setData } from "../utilities/encryptedStorage";
+import customAlert from "../utilities/customAlert";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
@@ -21,7 +22,7 @@ const Login = () => {
         router.replace("(home)/tables");
       }
     } catch (error: any) {
-      alert(error.message);
+      customAlert(error.message);
     }
   };
 

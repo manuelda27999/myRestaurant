@@ -6,6 +6,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useIsFocused } from "@react-navigation/native";
 import { router } from "expo-router";
 import classNames from "classnames";
+import customAlert from "../../../utilities/customAlert";
 
 type Order = {
   order_id: number;
@@ -48,7 +49,7 @@ const Invoices = () => {
 
       if (result && result.length > 0) setInvoices(result);
     } catch (error) {
-      alert(error);
+      customAlert(error.message);
     }
   };
 

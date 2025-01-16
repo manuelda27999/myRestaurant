@@ -1,4 +1,4 @@
-import { validateToken, validateName } from "../../utilities/validators";
+import { validateToken, validateString } from "../../utilities/validators";
 
 export default async function editCategory(
   category_id: number,
@@ -8,7 +8,7 @@ export default async function editCategory(
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
   validateToken(token);
-  validateName(category_name);
+  validateString(category_name);
 
   return fetch(`${apiUrl}/categoryProduct/${category_id}`, {
     method: "PATCH",

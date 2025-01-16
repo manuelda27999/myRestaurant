@@ -7,6 +7,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { router } from "expo-router";
 import { ScrollView } from "react-native";
+import customAlert from "../../../utilities/customAlert";
 
 type Product = {
   product_id: number;
@@ -38,7 +39,7 @@ const OneCategory = () => {
       const result = await getProducts(token, Number(categoryIdProp));
       setProducts(result);
     } catch (error) {
-      alert(error);
+      customAlert(error.message);
     }
   };
 

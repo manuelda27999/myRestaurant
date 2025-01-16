@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import getCategories from "../../../logic/categories/getCategories";
 import { router } from "expo-router";
 import { getData } from "../../../utilities/encryptedStorage";
+import customAlert from "../../../utilities/customAlert";
 
 type Category = {
   category_id: number;
@@ -25,7 +26,7 @@ const Categories = () => {
       const result = await getCategories(token);
       setCategories(result);
     } catch (error) {
-      alert(error);
+      customAlert(error.message);
     }
   };
 

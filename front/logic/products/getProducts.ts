@@ -1,4 +1,4 @@
-import { validateToken } from "../../utilities/validators";
+import { validateId, validateToken } from "../../utilities/validators";
 
 type Product = {
   product_id: number;
@@ -18,6 +18,7 @@ export default async function getProducts(
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
   validateToken(token);
+  validateId(category_id);
 
   return fetch(`${apiUrl}/products/${category_id}`, {
     method: "GET",
