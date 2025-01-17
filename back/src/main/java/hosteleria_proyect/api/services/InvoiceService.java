@@ -162,6 +162,11 @@ public class InvoiceService implements InterfaceInvoiceService {
         if (invoice == null) throw new CustomException(HttpStatus.NOT_FOUND, "Factura no encontrada.");
         if (!invoice.getUser_id().equals(user_id)) throw new CustomException(HttpStatus.UNPROCESSABLE_ENTITY ,"El usuario no tiene permiso para modificar esta factura.");
 
+        Table table = tableInterface.findById(invoice.getTable_id()).orElse(null);
+        if (table == null) throw new CustomException(HttpStatus.NOT_FOUND, "Mesa no encontrada");
+
+        table.setAvailable(!table.getAvailable());
+
         invoice.setPaid(!invoice.getPaid());
 
         invoiceInterface.save(invoice);

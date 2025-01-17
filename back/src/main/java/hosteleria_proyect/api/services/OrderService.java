@@ -19,7 +19,6 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -98,7 +97,13 @@ public class OrderService implements InterfaceOrderService {
     @Override
     public void createOrder(Integer user_id, Order order) {
         Invoice invoice = invoiceInterface.findInvoiceByTableIdAndPaidFalse(order.getTable_id()).orElse(null);
+        Table table = tableInterface.findById(order.getTable_id()).orElse(null);
         Product product = productInterface.findById(order.getProduct_id()).orElse(null);
+
+        if (table == null) throw new CustomException(HttpStatus.NOT_FOUND, "Mesa no encontrada");
+
+        if (table.getAvailable()) table.setAvailable(false);
+        tableInterface.save(table);
 
         if (invoice == null) {
             Invoice newInvoice = new Invoice();
@@ -118,6 +123,8 @@ public class OrderService implements InterfaceOrderService {
 
             order.setInvoice_id(invoice.getInvoice_id());
         }
+
+
 
         order.setUser_id(user_id);
         order.setOrder_date(new Timestamp(System.currentTimeMillis()));

@@ -15,7 +15,7 @@ type Table = {
 };
 
 const Tables = () => {
-  const [name, setName] = useState<string>("un desconocido");
+  const [name, setName] = useState<string>("");
   const [token, setToken] = useState<string | null>(null);
   const [tables, setTables] = useState<Array<Table>>([]);
 

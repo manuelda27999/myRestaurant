@@ -1,9 +1,7 @@
 package hosteleria_proyect.api.entitys;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import hosteleria_proyect.api.customEntitys.CategoryColor;
+import jakarta.persistence.*;
 import jakarta.persistence.Table;
 import lombok.*;
 
@@ -20,4 +18,7 @@ public class CategoryProduct {
     private Integer category_id;
     private String category_name;
     private Integer user_id;
+
+    @Enumerated(EnumType.STRING)
+    private CategoryColor color;
 }

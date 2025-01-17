@@ -3,6 +3,7 @@ import { validateToken } from "../../utilities/validators";
 type Category = {
   category_id: number;
   category_name: string;
+  color: string;
   user_id: null;
 };
 
