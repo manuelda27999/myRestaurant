@@ -38,7 +38,7 @@ const NewTableModal = () => {
   return (
     <View className="w-full h-full flex flex-col justify-start items-center py-4 px-8">
       <Text className="font-bold text-2xl text-center ">
-        Introuduce el nombre de la mesa
+        Introduce el nombre de la mesa
       </Text>
       <TextInput
         placeholder="Nombre de la mesa"

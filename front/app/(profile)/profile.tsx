@@ -2,7 +2,7 @@ import { Pressable, Text, View } from "react-native";
 import React, { useState, useEffect } from "react";
 import { getData } from "../../utilities/encryptedStorage";
 import getNameById from "../../logic/users/getNameById";
-import { router, Link } from "expo-router";
+import { router } from "expo-router";
 
 const Profile = (props) => {
   const [name, setName] = useState<string>("");
