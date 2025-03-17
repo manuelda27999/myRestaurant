@@ -6,4 +6,4 @@ Welcome to MyRestaurant, a comprehensive restaurant management application desig
 
 ## Final proyect pdf (spanish)
 
-[PDF document]()
+[PDF document](https://github.com/manuelda27999/myRestaurant/blob/develop/Proyecto%20Universae%20-%20My%20Restaurant.pdf)
