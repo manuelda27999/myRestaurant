@@ -2,8 +2,8 @@
 
 Welcome to MyRestaurant, a comprehensive restaurant management application designed to streamline your restaurant operations and enhance customer experience.
 
-![waitress taking a note in a notebook](https://imgs.search.brave.com/_rA9HHJJAYokKxtedYPjACAgo_J-pb-CaJLHwvtei0M/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzAxLzQ1LzgxLzk0/LzM2MF9GXzE0NTgx/OTQ2MV9nRU9hSEhY/cDFqT09RekZZa2lh/Z3dpNHlySEU3YVdM/Ny5qcGc)
+![waitress taking a note in a notebook](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExejR4NWFocmplaW5zc2J2bGQwMmZrNHVxMXNnMmF1eXF3aTBpYjlkeSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/uhYKP2f4xRz7q/giphy.gif)
 
-## Final proyect pdf (spanish)
+## Complete documentation (spanish)
 
-[PDF document](https://github.com/manuelda27999/myRestaurant/blob/develop/Proyecto%20Universae%20-%20My%20Restaurant.pdf)
+[Download PDF](https://github.com/manuelda27999/myRestaurant/blob/develop/Proyecto%20Universae%20-%20My%20Restaurant.pdf)
