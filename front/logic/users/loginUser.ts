@@ -18,6 +18,7 @@ export default async function loginUser(
 ): Promise<void | LoginUserResponse> {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
+  debugger;
   validateEmail(email);
   validatePassword(password);
 

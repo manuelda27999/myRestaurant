@@ -16,7 +16,6 @@ type Category = {
 const Categories = () => {
   const [token, setToken] = useState<string | null>(null);
   const [categories, setCategories] = useState<Array<Category>>([]);
-  console.log(categories);
 
   const getToken = async () => {
     const tokenResult = await getData("token");
